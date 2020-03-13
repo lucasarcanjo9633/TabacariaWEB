@@ -81,7 +81,7 @@
                                     <input type="hidden" value="${p.nome}" name="nome">
                                     <input type="hidden" value="${p.valor}" name="valor">                                   
                                     <input type="hidden" value="${p.desc}" name="descricao">
-                                    <input type="hidden" value="${p.pChave}" name="qtd">
+                                    <input type="hidden" value="${p.pChave}" name="pChave">
                                     <button class="btn btn-primary" type="submit">Editar</button>
                                 </form>                            
                             </td>

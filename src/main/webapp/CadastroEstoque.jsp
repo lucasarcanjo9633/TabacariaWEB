@@ -6,23 +6,30 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<head>
-        <meta http-equiv="Content-Type" content="text/html" charset=UTF-8">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/cssPaginaInicial.css" />
-        <title>Cadastrar Produto</title>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html" charset=UTF-8">       
         <script> src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js";</script>
         <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
-        <script> src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js";</script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>        
+        <script> src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js";</script>              
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-notify.min.js"></script>
-        <link rel="shortcut icon" href="http://www.tabacariaroma.com.br/wp-content/uploads/2017/09/cafe.png">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">      
+        <link href="https://getbootstrap.com.br/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://getbootstrap.com.br/docs/4.1/examples/navbar-fixed/navbar-top-fixed.css" rel="stylesheet">
+        <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>');</script>
+        <script src="https://getbootstrap.com.br/docs/4.1/assets/js/vendor/popper.min.js"></script>
+        <script src="https://getbootstrap.com.br/docs/4.1/dist/js/bootstrap.min.js"></script>
+
+        <title>Cadastrar Estoque</title>
+
         <script>
             function validacao() {
                 var formulario = document.forms["formCadastroProduto"];
                 var qtdP = formulario.qtd.value;
-                var erro = false;               
-                
+                var erro = false;
+
                 if (qtdP.length < 1) {
                     document.getElementById("qtdProduto").style.backgroundColor = "#ffcccc";
                     document.getElementById("qtdProduto").focus();
@@ -48,7 +55,23 @@
 
         </script>
     </head>
-    <body>       
+    <body> 
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top btn-primary">
+            <a class="navbar-brand">Tabacaria</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/PaginaInicial.jsp">Home <span class="sr-only">(atual)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
         <div class="itens">                  
             <div class="form-group">
                 <div class="container">
@@ -96,18 +119,14 @@
                         <div class="form-group">
                             <label>Quantidade: </label>
                             <div>
-                                <input type="number" id="qtdProduto" name="qtd" value="${qtdAttr}" placeholder="Quantidade do Produto" class="form-control">
+                                <input type="number" id="qtdProduto" name="qtd" value="${qtdAttr}" required placeholder="Quantidade do Produto" class="form-control">
                             </div>
                         </div>
 
                         <div class="posicaoButtons">
                             <input type="hidden" value="salvar" name="acao">
-                            <button class="btn btn-primary" type="submit">Cadastrar
-                                <span class = "glyphicon glyphicon-send"></span>
-                            </button> 
-                            <button class="btn btn-primary" type="reset">Resetar
-                                <span class = "glyphicon glyphicon-refresh"></span>
-                            </button>                      
+                            <button class="btn btn-primary" type="submit">Cadastrar</button> 
+                            <button class="btn btn-primary" type="reset">Resetar</button>                      
                         </div>
                     </form>
                     <div class="campoVoltarPosicao">
@@ -115,9 +134,7 @@
                         <div>
                             <form action="${pageContext.request.contextPath}/EstoqueController" method="get">
                                 <input type="hidden" value="listar" name="acao">
-                                <button class="btn btn-primary" type="submit" class="btn btn-primary">Voltar
-                                    <span class = "glyphicon glyphicon-arrow-left"></span>
-                                </button>
+                                <button class="btn btn-primary" type="submit" class="btn btn-primary">Voltar</button>
                             </form>
                         </div>
                     </div>
