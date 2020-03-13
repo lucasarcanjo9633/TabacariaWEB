@@ -126,7 +126,88 @@ public class ProdutoDAO {
         return retorno;
 
     }
-    
+
+    public static boolean excluir(int cID) {
+
+        boolean retorno = false;
+
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement("UPDATE produto SET status=0 WHERE id= ?");
+
+            comando.setInt(1, cID);
+
+            int linhasAfetadas = comando.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+
+        } catch (ClassNotFoundException ex) {
+            retorno = false;
+        } catch (SQLException ex) {
+            retorno = false;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                retorno = false;
+            }
+
+        }
+        return retorno;
+
+    }
+
+    public static boolean atualizar(int id, String nomeProduto, double valor, String desc, String pChave) {
+
+        boolean retorno = false;
+        Produto p = new Produto(id, nomeProduto, valor, desc, pChave);
+
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement("UPDATE produto, entrada_produto SET produto.nome=?, entrada_produto.valor_venda= ?, produto.descricao=?, produto.palavra_chave=? WHERE entrada_produto.id_produto=? AND produto.id=?");
+
+            comando.setString(1, p.getNome());
+            comando.setDouble(2, p.getValor());
+            comando.setString(3, p.getDesc());
+            comando.setString(4, p.getpChave());
+            comando.setInt(5, p.getId());
+            comando.setInt(6, p.getId());
+
+            int linhasAfetadas = comando.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+
+        } catch (ClassNotFoundException ex) {
+            retorno = false;
+        } catch (SQLException ex) {
+            retorno = false;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                retorno = false;
+            }
+
+        }
+
+        return retorno;
+
+    }
+
     public static ArrayList<Produto> getProduto() {
 
         ArrayList<Produto> listaProdutos = new ArrayList<>();

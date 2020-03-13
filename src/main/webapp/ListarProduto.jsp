@@ -16,6 +16,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
         <title>Lista Produtos</title>
         <script>
             $(document).ready(function () {
@@ -53,7 +54,6 @@
                                     <input type="hidden" name="acao" value="visualizar">
                                     <input type="hidden" name="img" value="${p.img}">
                                     <input class="btn btn-primary" type="submit" value="Visalizar imagem" />
-                                    <span class = "glyphicon glyphicon-send"></span>
                                 </form>
                             </td>
                             <td> 
@@ -64,17 +64,14 @@
                                     <input type="hidden" value="${p.valor}" name="valor">                                   
                                     <input type="hidden" value="${p.desc}" name="descricao">
                                     <input type="hidden" value="${p.pChave}" name="pChave">
-                                    <input type="hidden" value="${p.img}" name="img">
                                     <button class="btn btn-primary" type="submit">Editar</button>
-                                    <span class = "glyphicon glyphicon-send"></span>
                                 </form>                            
                             </td>
                             <td>
                                 <form action="${pageContext.request.contextPath}/ProdutoController" method="post">
                                     <input type="hidden" value="excluir" name="acao">
                                     <input type="hidden" value="${p.id}" name="id">
-                                    <button class="btn btn-primary" type="submit">Excluir</button>
-                                    <span class = "glyphicon glyphicon-send"></span>
+                                    <button class="btn btn-primary" type="submit">Excluir</button>                                    
                                 </form>
                             </td>                            
                         </tr>
@@ -84,11 +81,22 @@
 
         </div>
         <div>           
-            <div style="text-align: center;">           
-                <form action="${pageContext.request.contextPath}/CadastroProduto.jsp" method="post">
-                    <button class="btn btn-primary" type="submit">Cadastrar</button>
-                    <span class = "glyphicon glyphicon-send"></span>
-                </form>
+            <div style="text-align: center; display: inline;"> 
+                <div style="display: flex;">
+                    <form action="${pageContext.request.contextPath}/ProdutoController" method="get">
+                        <input type="hidden" value="cadastrar" name="acao">
+                        <button class="btn btn-primary" type="submit">Cadastrar
+                        <span class = "glyphicon glyphicon-send"></span>
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <form action="${pageContext.request.contextPath}/PaginaInicial.jsp">
+                        <button class="btn btn-primary" type="submit" class="btn btn-primary">Voltar
+                            <span class = "glyphicon glyphicon-arrow-left"></span>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </body>

@@ -45,7 +45,14 @@ public class Produto {
         this.img = img;
     }
 
-    
+    public Produto(int id, String nome, double valor, String desc, String pChave) {
+        this.id = id;
+        this.nome = nome;
+        this.valor = valor;
+        this.desc = desc;
+        this.pChave = pChave;
+    }
+   
     public int getId() {
         return id;
     }

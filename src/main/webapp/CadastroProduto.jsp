@@ -110,10 +110,17 @@
                 <div class="container">
                     <div class = "h2">
                         <br>
-                        <h2>Cadastro de Produto</h2>
+                        <h2>${title}</h2>
                         <label>${message}</label>
                     </div>
                     <form action="${pageContext.request.contextPath}/ProdutoController" method="post" name="formCadastroProduto" enctype="multipart/form-data" onsubmit="return validacao()" >                        
+
+                        <div class="form-group">
+                            <label>ID: </label>
+                            <div>
+                                <input type="text" id="idProduto" name="idProduto" value="${idProdutoAttr}" readonly placeholder="ID do Produto" class="form-control">
+                            </div>				
+                        </div>
 
                         <div class="form-group">
                             <label>Nome: </label>
@@ -165,6 +172,7 @@
                                 <input type="hidden" value="listar" name="acao">
                                 <button class="btn btn-primary" type="submit" class="btn btn-primary">Voltar
                                     <span class = "glyphicon glyphicon-arrow-left"></span>
+                                </button>
                             </form>
                         </div>
                     </div>

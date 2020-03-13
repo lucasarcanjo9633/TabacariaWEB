@@ -24,7 +24,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-
 /**
  *
  * @author Ochaus
@@ -37,17 +36,18 @@ public class ProdutoController extends HttpServlet {
             throws ServletException, IOException {
         
         String acao = request.getParameter("acao");
+        String id = request.getParameter("id");
         
         switch (acao) {
-//            case "alterar":
-//                alterar(request, response);
-//                break;
-//            case "salvarAlterar":
-//                salvarAlterar(request, response);
-//                break;
-//            case "excluir":
-//                excluir(request, response);
-//                break;
+            case "alterar":
+                alterar(request, response);
+                break;
+            case "cadastrar":
+                cadastrar(request, response);
+                break;
+            case "excluir":
+                excluir(request, response);
+                break;
             case "listar":
                 listar(request, response);
                 break;
@@ -62,17 +62,63 @@ public class ProdutoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        salvar(request, response);
+        String acao = request.getParameter("acao");
+        
+        
+        if ("alterar".equals(acao)) {
+            alterar(request, response);
+        } else if ("excluir".equals(acao)) {
+            excluir(request, response);
+        } else {
+            salvar(request, response);
+        }
+    }
+    
+    protected void cadastrar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.setAttribute("title", "Cadastrar Produto");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroProduto.jsp");
+        dispatcher.forward(request, response);
+    }
+    
+    protected void alterar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        String id = request.getParameter("id");
+        String nomeProduto = request.getParameter("nome");
+        String valorCompra = request.getParameter("valor");
+        String descricao = request.getParameter("descricao");
+        String pChave = request.getParameter("pChave");
+        
+        request.setAttribute("title", "Editar Produto");
+        request.setAttribute("idProdutoAttr", id);
+        request.setAttribute("nomeProdutoAttr", nomeProduto);
+        request.setAttribute("valorAttr", valorCompra);
+        request.setAttribute("descricaoAttr", descricao);
+        request.setAttribute("pChaveAttr", pChave);
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroProduto.jsp");
+        dispatcher.forward(request, response);
+    }
+    
+    protected void excluir(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        
+        int id = Integer.parseInt(request.getParameter("id"));
+        ProdutoDAO.excluir(id);
+        listar(request, response);
     }
     
     protected void salvar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        String id = null;
         String nomeProduto = null;
         String valorCompra = null;
         String descricao = null;
         String pChave = null;
         String img = null;
+        int idProx = 0;
         
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
@@ -83,6 +129,9 @@ public class ProdutoController extends HttpServlet {
                 for (FileItem item : multiparts) {
 
                     /*captura os dados dos input do formulario*/
+                    if (item.getFieldName().equals("idProduto")) {
+                        id = item.getString();
+                    }
                     if (item.getFieldName().equals("nomeProduto")) {
                         nomeProduto = item.getString();
                     }
@@ -97,18 +146,29 @@ public class ProdutoController extends HttpServlet {
                     }
                     if (!item.isFormField() && item.getFieldName().equals("file")) {
 
-                        /*Resgata o proximo auto increment do banco pra renomear a img*/
-                        int id = ProdutoDAO.proxId();
-                        /*converte o id em string*/
-                        img = String.valueOf(id);
                         /*Escreve a o arquivo na pasta WEB-INF*/
-                        item.write(new File(request.getServletContext().getRealPath("WEB-INF") + File.separator + img));
+                        if (id == null || id.isEmpty()) {
+                            /*Resgata o proximo auto increment do banco pra renomear a img*/
+                            idProx = ProdutoDAO.proxId();
+                            /*converte o id em string*/
+                            img = String.valueOf(idProx);
+                            item.write(new File(request.getServletContext().getRealPath("WEB-INF") + File.separator + img));
+                            
+                        } else if (id != null || !id.isEmpty()) {
+                            item.write(new File(request.getServletContext().getRealPath("WEB-INF") + File.separator + id));
+                        }
                     }
                 }
-                
-                if (Integer.parseInt(img) > 0) {
+                if (idProx > 0) {
                     if (ProdutoDAO.salvar(nomeProduto, Double.parseDouble(valorCompra), descricao, pChave, img)) {
+                        request.setAttribute("title", "Cadastrar Produto");
                         request.setAttribute("message", "Produto salvo com sucesso");
+                    }
+                    
+                } else if (id != null) {
+                    if (ProdutoDAO.atualizar(Integer.parseInt(id), nomeProduto, Double.parseDouble(valorCompra), descricao, pChave)) {
+                        request.setAttribute("title", "Editar Produto");
+                        request.setAttribute("message", "Produto alterado com sucesso");
                     }
                 } else {
                     request.setAttribute("message", "Falha ao salvar produto");
@@ -140,11 +200,11 @@ public class ProdutoController extends HttpServlet {
         for (String file : files.list()) {
             
             File f = new File(path + file);
-            if(f.getName().equals(img)){           
-            BufferedImage bi = ImageIO.read(f);
-            OutputStream out = response.getOutputStream();
-            ImageIO.write(bi, "jpg", out);
-            out.close();
+            if (f.getName().equals(img)) {
+                BufferedImage bi = ImageIO.read(f);
+                OutputStream out = response.getOutputStream();
+                ImageIO.write(bi, "jpg", out);
+                out.close();
             }
         }
     }
