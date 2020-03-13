@@ -207,6 +207,50 @@ public class ProdutoDAO {
         return retorno;
 
     }
+    
+    public static boolean atualizarEstoque(int id, int qtde, double valor) {
+
+        boolean retorno = false;
+        java.sql.Date mysqlDate = new java.sql.Date(new java.util.Date().getTime());
+
+        Produto p = new Produto(id, valor, qtde, mysqlDate);
+
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement("INSERT INTO entrada_produto (id_produto, qtde, valor_venda, data_entrada) VALUES (?, ?, ?, ?)");
+
+            comando.setInt(1, p.getId());
+            comando.setInt(2, p.getQtd());
+            comando.setDouble(3, p.getValor());
+            comando.setDate(4, (Date) p.getEntrada());
+
+            int linhasAfetadas = comando.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+
+        } catch (ClassNotFoundException ex) {
+            retorno = false;
+        } catch (SQLException ex) {
+            retorno = false;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                retorno = false;
+            }
+
+        }
+
+        return retorno;
+
+    }
 
     public static ArrayList<Produto> getProduto() {
 

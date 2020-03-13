@@ -26,6 +26,13 @@ public class Produto {
 
     }
 
+    public Produto(int id, double valor, int qtd, Date entrada) {
+        this.id = id;
+        this.valor = valor;
+        this.qtd = qtd;
+        this.entrada = entrada;
+    }   
+    
     public Produto(String nome, double valor, String desc, String pChave, String img, Date entrada) {
         this.nome = nome;
         this.valor = valor;

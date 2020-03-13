@@ -1,8 +1,9 @@
 <%-- 
-    Document   : ListarProduto
-    Created on : 12/03/2020, 19:55:32
+    Document   : ListarEstoque
+    Created on : 13/03/2020, 10:03:58
     Author     : Ochaus
 --%>
+
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.Produto"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -23,7 +24,7 @@
                 $('#example').DataTable();
             });
         </script>
-        
+
         <title>Lista Produtos</title>
     </head>
     <body>
@@ -53,11 +54,9 @@
                     <tr>
                         <th>Cod.</th>
                         <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Palavra Chave</th>
-                        <th>Imagem</th>
-                        <th>Editar</th>
-                        <th>Excluir</th>
+                        <th>Preço</th>
+                        <th>Quantidade</th>
+                        <th>Adicionar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,47 +64,27 @@
                         <tr>                       
                             <td>${p.id}</td>              
                             <td>${p.nome}</td>               
-                            <td>${p.desc}</td>
-                            <td>${p.pChave}</td>
-                            <td>
-                                <form action="${pageContext.request.contextPath}/ProdutoController" method="get" >
-                                    <input type="hidden" name="acao" value="visualizar">
-                                    <input type="hidden" name="img" value="${p.img}">
-                                    <button class="btn btn-primary" type="submit">Visualizar</button>
-                                </form>
-                            </td>
+                            <td>${p.valor}</td>
+                            <td>${p.qtd}</td>                           
                             <td> 
-                                <form action="${pageContext.request.contextPath}/ProdutoController" method="post">
+                                <form action="${pageContext.request.contextPath}/EstoqueController" method="post">
                                     <input type="hidden" value="alterar" name="acao">
                                     <input type="hidden" value="${p.id}" name="id">
                                     <input type="hidden" value="${p.nome}" name="nome">
                                     <input type="hidden" value="${p.valor}" name="valor">                                   
                                     <input type="hidden" value="${p.desc}" name="descricao">
-                                    <input type="hidden" value="${p.pChave}" name="qtd">
-                                    <button class="btn btn-primary" type="submit">Editar</button>
+                                    <input type="hidden" value="${p.pChave}" name="pChave">
+                                    <input type="hidden" value="${p.qtd}" name="pChave">
+                                    <button class="btn btn-primary" type="submit">Adicionar</button>
                                 </form>                            
-                            </td>
-                            <td>
-                                <form action="${pageContext.request.contextPath}/ProdutoController" method="post">
-                                    <input type="hidden" value="excluir" name="acao">
-                                    <input type="hidden" value="${p.id}" name="id">
-                                    <button class="btn btn-primary" type="submit">Excluir</button>                                    
-                                </form>
-                            </td>                            
+                            </td>                                                      
                         </tr>
                     </c:forEach>
                 </tbody>                
             </table>       
-
         </div>
         <div>           
-            <div style="text-align: center; display: inline;"> 
-                <div style="display: flex;">
-                    <form action="${pageContext.request.contextPath}/ProdutoController" method="get">
-                        <input type="hidden" value="cadastrar" name="acao">
-                        <button class="btn btn-primary" type="submit">Cadastrar</button>
-                    </form>
-                </div>
+            <div style="text-align: center; display: inline;">                 
                 <div>
                     <form action="${pageContext.request.contextPath}/PaginaInicial.jsp">
                         <button class="btn btn-primary" type="submit" class="btn btn-primary">Voltar</button>
