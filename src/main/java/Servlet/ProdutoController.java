@@ -119,6 +119,7 @@ public class ProdutoController extends HttpServlet {
         String pChave = null;
         String img = null;
         int idProx = 0;
+        String caminho = System.getProperty("user.home");
         
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
@@ -152,10 +153,10 @@ public class ProdutoController extends HttpServlet {
                             idProx = ProdutoDAO.proxId();
                             /*converte o id em string*/
                             img = String.valueOf(idProx);
-                            item.write(new File(request.getServletContext().getRealPath("WEB-INF") + File.separator + img));
+                            item.write(new File(caminho.concat("\\Documents\\NetBeansProjects\\TabacariaWEB\\src\\main\\webapp\\imagens") + File.separator + img));
                             
                         } else if (id != null || !id.isEmpty()) {
-                            item.write(new File(request.getServletContext().getRealPath("WEB-INF") + File.separator + id));
+                            item.write(new File(caminho.concat("\\Documents\\NetBeansProjects\\TabacariaWEB\\src\\main\\webapp\\imagens") + File.separator + id));
                         }
                     }
                 }
@@ -189,9 +190,10 @@ public class ProdutoController extends HttpServlet {
             throws ServletException, IOException {
         
         String img = request.getParameter("img");
-
+        String caminho = System.getProperty("user.home");
+        
         /*Obtem o caminho relatorio da pasta img*/
-        String path = request.getServletContext().getRealPath("WEB-INF") + File.separator;
+        String path = caminho.concat("\\Documents\\NetBeansProjects\\TabacariaWEB\\src\\main\\webapp\\imagens") + File.separator;
         
         File files = new File(path);
         response.setContentType("image/jpeg");

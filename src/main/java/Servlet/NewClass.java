@@ -15,6 +15,8 @@ import java.util.ArrayList;
  */
 public class NewClass {
     public static void main(String[] args) {
-        ArrayList<Produto> p = ProdutoDAO.getProduto();
+        String caminho = System.getProperty("user.home");
+        
+        System.out.println(caminho);
     }
 }
