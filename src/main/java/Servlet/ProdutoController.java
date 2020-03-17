@@ -30,14 +30,14 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 @WebServlet(name = "ProdutoController", urlPatterns = {"/ProdutoController"})
 public class ProdutoController extends HttpServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String acao = request.getParameter("acao");
         String id = request.getParameter("id");
-        
+
         switch (acao) {
             case "alterar":
                 alterar(request, response);
@@ -51,20 +51,22 @@ public class ProdutoController extends HttpServlet {
             case "listar":
                 listar(request, response);
                 break;
+            case "listarWeb":
+                listarWeb(request, response);
+                break;
             case "visualizar":
                 visualizar(request, response);
                 break;
-            
+
         }
-        
+
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String acao = request.getParameter("acao");
-        
-        
+
         if ("alterar".equals(acao)) {
             alterar(request, response);
         } else if ("excluir".equals(acao)) {
@@ -73,45 +75,45 @@ public class ProdutoController extends HttpServlet {
             salvar(request, response);
         }
     }
-    
+
     protected void cadastrar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("title", "Cadastrar Produto");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroProduto.jsp");
         dispatcher.forward(request, response);
     }
-    
+
     protected void alterar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String id = request.getParameter("id");
         String nomeProduto = request.getParameter("nome");
         String valorCompra = request.getParameter("valor");
         String descricao = request.getParameter("descricao");
         String pChave = request.getParameter("pChave");
-        
+
         request.setAttribute("title", "Editar Produto");
         request.setAttribute("idProdutoAttr", id);
         request.setAttribute("nomeProdutoAttr", nomeProduto);
         request.setAttribute("valorAttr", valorCompra);
         request.setAttribute("descricaoAttr", descricao);
         request.setAttribute("pChaveAttr", pChave);
-        
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroProduto.jsp");
         dispatcher.forward(request, response);
     }
-    
+
     protected void excluir(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         int id = Integer.parseInt(request.getParameter("id"));
         ProdutoDAO.excluir(id);
         listar(request, response);
     }
-    
+
     protected void salvar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String id = null;
         String nomeProduto = null;
         String valorCompra = null;
@@ -120,7 +122,7 @@ public class ProdutoController extends HttpServlet {
         String img = null;
         int idProx = 0;
         String caminho = System.getProperty("user.home");
-        
+
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
                 /*Faz o parse do request*/
@@ -153,10 +155,10 @@ public class ProdutoController extends HttpServlet {
                             idProx = ProdutoDAO.proxId();
                             /*converte o id em string*/
                             img = String.valueOf(idProx);
-                            item.write(new File(caminho.concat("\\Documents\\NetBeansProjects\\TabacariaWEB\\src\\main\\webapp\\imagens") + File.separator + img));
-                            
+                            item.write(new File(caminho.concat("\\Documents\\NetBeansProjects\\TabacariaWEB\\src\\main\\webapp\\imagens") + File.separator + img.concat(".jpg")));
+
                         } else if (id != null || !id.isEmpty()) {
-                            item.write(new File(caminho.concat("\\Documents\\NetBeansProjects\\TabacariaWEB\\src\\main\\webapp\\imagens") + File.separator + id));
+                            item.write(new File(caminho.concat("\\Documents\\NetBeansProjects\\TabacariaWEB\\src\\main\\webapp\\imagens") + File.separator + id.concat(".jpg")));
                         }
                     }
                 }
@@ -165,7 +167,7 @@ public class ProdutoController extends HttpServlet {
                         request.setAttribute("title", "Cadastrar Produto");
                         request.setAttribute("message", "Produto salvo com sucesso");
                     }
-                    
+
                 } else if (id != null) {
                     if (ProdutoDAO.atualizar(Integer.parseInt(id), nomeProduto, Double.parseDouble(valorCompra), descricao, pChave)) {
                         request.setAttribute("title", "Editar Produto");
@@ -177,32 +179,32 @@ public class ProdutoController extends HttpServlet {
             } catch (Exception ex) {
                 request.setAttribute("message", "Upload de arquivo falhou devido a " + ex);
             }
-            
+
         } else {
             request.setAttribute("message", "Desculpe este Servlet lida apenas com pedido de upload de arquivos");
         }
-        
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroProduto.jsp");
         dispatcher.forward(request, response);
     }
-    
+
     private void visualizar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String img = request.getParameter("img");
         String caminho = System.getProperty("user.home");
-        
+
         /*Obtem o caminho relatorio da pasta img*/
         String path = caminho.concat("\\Documents\\NetBeansProjects\\TabacariaWEB\\src\\main\\webapp\\imagens") + File.separator;
-        
+
         File files = new File(path);
         response.setContentType("image/jpeg");
 
         /*Mostra o arquivo que está na pasta img onde foi realizado o upload*/
         for (String file : files.list()) {
-            
+
             File f = new File(path + file);
-            if (f.getName().equals(img)) {
+            if (f.getName().equals(img.concat(".jpg"))) {
                 BufferedImage bi = ImageIO.read(f);
                 OutputStream out = response.getOutputStream();
                 ImageIO.write(bi, "jpg", out);
@@ -210,14 +212,23 @@ public class ProdutoController extends HttpServlet {
             }
         }
     }
-    
+
     private void listar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         ArrayList<Produto> p = ProdutoDAO.getProduto();
         request.setAttribute("TodosProdutos", p);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/ListarProduto.jsp");
         dispatcher.forward(request, response);
     }
-    
+
+    private void listarWeb(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        ArrayList<Produto> p = ProdutoDAO.getProduto();
+        request.setAttribute("TodosProdutos", p);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WebDetalheProduto.jsp");
+        dispatcher.forward(request, response);
+    }
+
 }

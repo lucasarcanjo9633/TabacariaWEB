@@ -55,10 +55,10 @@
                 </form> 
             </div>
             <div class="jumbotron">
-                <h2>Usuário</h2>
-                <p class="lead"> Cadastrar, consultar, inativar ou editar usuários. </p>
-                <form action="${pageContext.request.contextPath}/" method="get">
-                    <input type="hidden" value="listar" name="acao">
+                <h2>Web Site - Listagem dos Produtos</h2>
+                <p class="lead"> Em desenvolvimento. </p>
+                <form action="${pageContext.request.contextPath}/ProdutoController" method="get">
+                    <input type="hidden" value="listarWeb" name="acao">
                     <button class="btn btn-primary" type="submit" class="btn btn-primary">Lista de Usuários &raquo</button>
                 </form> 
             </div>

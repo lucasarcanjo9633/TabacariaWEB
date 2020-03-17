@@ -4,6 +4,7 @@
     Author     : Ochaus
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,5 +14,12 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        
+    <c:forEach items="${TodosProdutos}" var="p">
+        <h2>${p.nome}</h2>
+        <img src="imagens/${p.img}.jpg" width="150px" height="150px">
+        <p>Valor: ${p.valor}</p>
+        <p>Descrição: ${p.desc}</p>
+    </c:forEach>
     </body>
 </html>
