@@ -62,6 +62,14 @@
                     <button class="btn btn-primary" type="submit" class="btn btn-primary">Lista de Usuários &raquo</button>
                 </form> 
             </div>
+            <div class="jumbotron">
+                <h2>Web Site - Detalhes dos Produtos</h2>
+                <p class="lead"> Em desenvolvimento. </p>
+                <form action="${pageContext.request.contextPath}/ProdutoController" method="get">
+                    <input type="hidden" value="listarWebDetalhe" name="acao">
+                    <button class="btn btn-primary" type="submit" class="btn btn-primary">Lista de Usuários &raquo</button>
+                </form> 
+            </div>
         </main>       
     </body>
 </html>

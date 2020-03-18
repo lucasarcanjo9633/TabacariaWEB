@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -53,6 +54,9 @@ public class ProdutoController extends HttpServlet {
                 break;
             case "listarWeb":
                 listarWeb(request, response);
+                break;
+            case "listarWebDetalhe":
+                listarWebDetalhe(request, response);
                 break;
             case "visualizar":
                 visualizar(request, response);
@@ -227,8 +231,26 @@ public class ProdutoController extends HttpServlet {
 
         ArrayList<Produto> p = ProdutoDAO.getProduto();
         request.setAttribute("TodosProdutos", p);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WebDetalheProduto.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
     }
 
+    private void listarWebDetalhe(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String id = request.getParameter("id");
+        request.setAttribute("valorAttr", id);
+        ArrayList<Produto> p1 = ProdutoDAO.getProduto(Integer.parseInt(id));
+
+        for (Produto produto : p1) {
+            request.setAttribute("nomeAttr", produto.getNome());
+            request.setAttribute("valorAttr", produto.getValor());
+            request.setAttribute("descAttr", produto.getDesc());
+            request.setAttribute("imgAttr", produto.getImg());
+        }
+        ArrayList<Produto> p = ProdutoDAO.getProduto();
+        request.setAttribute("TodosProdutos", p);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/DetalheProduto.jsp");
+        dispatcher.forward(request, response);
+    }
 }

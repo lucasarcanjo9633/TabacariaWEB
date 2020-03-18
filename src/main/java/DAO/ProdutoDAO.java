@@ -286,4 +286,39 @@ public class ProdutoDAO {
 
         return listaProdutos;
     }
+    
+    public static ArrayList<Produto> getProduto(int id) {
+
+        ArrayList<Produto> listaProdutos = new ArrayList<>();
+
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement("select produto.id, produto.nome, estoque.valor_venda, produto.descricao, produto.palavra_chave, estoque.qtde, produto.img from produto, estoque where produto.id = estoque.id_produto and produto.id = "+id+" and produto.status = 1");
+
+            ResultSet rs = comando.executeQuery();
+
+            while (rs.next()) {
+
+                Produto p = new Produto(rs.getInt("id"), rs.getString("nome"), rs.getDouble("valor_venda"), rs.getString("descricao"), rs.getString("palavra_chave"), rs.getInt("qtde"), rs.getString("img"));
+
+                listaProdutos.add(p);
+            }
+
+        } catch (ClassNotFoundException ex) {
+            listaProdutos = null;
+        } catch (SQLException ex) {
+            listaProdutos = null;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                listaProdutos = null;
+            }
+        }
+
+        return listaProdutos;
+    }
 }
