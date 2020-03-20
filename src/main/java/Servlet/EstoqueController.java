@@ -103,7 +103,7 @@ public class EstoqueController extends HttpServlet {
         String pChave = request.getParameter("pChave");
         String qtd = request.getParameter("qtd");
 
-        if (ProdutoDAO.atualizarEstoque(Integer.parseInt(qtd), Integer.parseInt(qtd), Double.parseDouble(valorCompra))) {
+        if (ProdutoDAO.atualizarEstoque(Integer.parseInt(id), Integer.parseInt(qtd), Double.parseDouble(valorCompra))) {
 
             listar(request, response);
         } else {

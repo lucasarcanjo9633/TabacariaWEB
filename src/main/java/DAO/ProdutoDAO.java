@@ -261,7 +261,7 @@ public class ProdutoDAO {
             Class.forName(DRIVER);
             conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
 
-            PreparedStatement comando = conexao.prepareStatement("select produto.id, produto.nome, estoque.valor_venda, produto.descricao, produto.palavra_chave, estoque.qtde, produto.img from produto, estoque where produto.id = estoque.id_produto and produto.status = 1");
+            PreparedStatement comando = conexao.prepareStatement("select produto.id, produto.nome, estoque.valor_venda, produto.descricao, produto.palavra_chave, estoque.qtde, produto.img from produto, estoque where produto.id = estoque.id_produto and produto.status = 1 group by produto.id;");
 
             ResultSet rs = comando.executeQuery();
 
