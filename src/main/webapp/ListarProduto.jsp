@@ -23,7 +23,7 @@
                 $('#example').DataTable();
             });
         </script>
-        
+
         <title>Lista Produtos</title>
     </head>
     <body>
@@ -52,18 +52,29 @@
                 <thead>
                     <tr>
                         <th>Cod.</th>
+                        <th>Status</th>
                         <th>Nome</th>
                         <th>Descrição</th>
                         <th>Palavra Chave</th>
                         <th>Imagem</th>
                         <th>Editar</th>
-                        <th>Excluir</th>
+                        <th>Ativar/Desativar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach items="${TodosProdutos}" var="p">
                         <tr>                       
-                            <td>${p.id}</td>              
+                            <td>${p.id}</td>
+                            <td> 
+                                <c:choose>
+                                    <c:when test="${p.status == true}">
+                                        <img src="icones/ativado.png" style="height: 20px; width: 20px; text-align: center;">
+                                    </c:when>
+                                    <c:when test="${p.status == false}">
+                                        <img src="icones/desativado.png" style="height: 20px; width: 20px; text-align: center;">
+                                    </c:when>
+                                </c:choose>
+                            </td>
                             <td>${p.nome}</td>               
                             <td>${p.desc}</td>
                             <td>${p.pChave}</td>
@@ -88,8 +99,9 @@
                             <td>
                                 <form action="${pageContext.request.contextPath}/ProdutoController" method="post">
                                     <input type="hidden" value="excluir" name="acao">
+                                    <input type="hidden" value="${p.status}" name="status">
                                     <input type="hidden" value="${p.id}" name="id">
-                                    <button class="btn btn-primary" type="submit">Excluir</button>                                    
+                                    <button class="btn btn-primary" type="submit">Ativ/Desa</button>                                    
                                 </form>
                             </td>                            
                         </tr>
@@ -100,13 +112,13 @@
         </div>
         <div>           
             <div style="text-align: center; display: inline;"> 
-                <div style="display: flex;">
+                <div>
                     <form action="${pageContext.request.contextPath}/ProdutoController" method="get">
                         <input type="hidden" value="cadastrar" name="acao">
                         <button class="btn btn-primary" type="submit">Cadastrar</button>
                     </form>
                 </div>
-                <div>
+                <div style="margin-top: 8px;">
                     <form action="${pageContext.request.contextPath}/PaginaInicial.jsp">
                         <button class="btn btn-primary" type="submit" class="btn btn-primary">Voltar</button>
                     </form>

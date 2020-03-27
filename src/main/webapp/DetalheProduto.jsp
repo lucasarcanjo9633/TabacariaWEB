@@ -16,7 +16,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>       
         <script src="https://getbootstrap.com.br/docs/4.1/dist/js/bootstrap.min.js"></script>
 
-       
+
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -88,17 +88,32 @@
                                 <div class="row">
                                     <div class="col-sm-5">
                                         <dl class="param param-inline">
-                                            <dt>Quantidade: </dt>
-                                            <dd>
-                                                <input type="number" min="1" value="1" class="form-control form-control-sm" style="width:70px;">                                                    
-                                            </dd>
+
+                                            <c:choose>
+                                                <c:when test="${qtdAttr <= 0}">
+                                                    <h5 style="color: red;">Produto Indisponível</h5>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <dt>Quantidade: </dt>
+                                                    <dd>
+                                                        <input type="number" min="1" max="${qtdAttr}" value="1" class="form-control form-control-sm" style="width:70px;">
+                                                    </dd>
+                                                </c:otherwise>
+                                            </c:choose>
+
                                         </dl>  <!-- item-property .// -->
                                     </div> <!-- col.// -->
                                     <!-- col.// -->
                                 </div> <!-- row.// -->
                                 <hr>
-                                <a href="#" class="btn btn-lg btn-primary text-uppercase"> COMPRAR </a>
-                                <a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i>ADD CARRINHO</a>
+                                
+                                <c:choose>
+                                    <c:when test="${qtdAttr > 0}">
+                                        <a href="#" class="btn btn-lg btn-primary text-uppercase"> COMPRAR </a>
+                                        <a href="#" class="btn btn-lg btn-outline-primary text-uppercase"> <i class="fas fa-shopping-cart"></i>ADD CARRINHO</a>
+                                    </c:when>
+                                </c:choose>
+
                             </article> <!-- card-body.// -->
                         </aside> <!-- col.// -->
                     </div> <!-- row.// -->
@@ -122,73 +137,73 @@
                             <div class="carousel-inner">
                                 <div class="item carousel-item active">
                                     <div class="row">
-                                        
+
                                         <c:forEach items="${TodosProdutos}" var="p" begin="0" end="3">
-                                        <div class="col-sm-3">
-                                            <div class="thumb-wrapper">
-                                                <div class="img-box">
-                                                    <img src="imagens/${p.img}.jpg" class="img-responsive img-fluid" alt="">
+                                            <div class="col-sm-3">
+                                                <div class="thumb-wrapper">
+                                                    <div class="img-box">
+                                                        <img src="imagens/${p.img}.jpg" class="img-responsive img-fluid" alt="">
+                                                    </div>
+                                                    <div class="thumb-content">
+                                                        <h4>${p.nome}</h4>
+                                                        <p class="item-price"><span>R$ ${p.valor}</span></p>                                                   
+                                                        <a href="#" class="btn btn-primary">Add Carrinho</a>
+                                                    </div>						
                                                 </div>
-                                                <div class="thumb-content">
-                                                    <h4>${p.nome}</h4>
-                                                    <p class="item-price"><span>R$ ${p.valor}</span></p>                                                   
-                                                    <a href="#" class="btn btn-primary">Add Carrinho</a>
-                                                </div>						
                                             </div>
-                                        </div>
                                         </c:forEach>		                                       								
-                                        
+
                                     </div>
                                 </div>
                                 <div class="item carousel-item">
                                     <div class="row">
-                                        
+
                                         <c:forEach items="${TodosProdutos}" var="p" begin="4" end="7">
-                                        <div class="col-sm-3">
-                                            <div class="thumb-wrapper">
-                                                <div class="img-box">
-                                                    <img src="imagens/${p.img}.jpg" class="img-responsive img-fluid" alt="">
+                                            <div class="col-sm-3">
+                                                <div class="thumb-wrapper">
+                                                    <div class="img-box">
+                                                        <img src="imagens/${p.img}.jpg" class="img-responsive img-fluid" alt="">
+                                                    </div>
+                                                    <div class="thumb-content">
+                                                        <h4>${p.nome}</h4>
+                                                        <p class="item-price"><span>R$ ${p.valor}</span></p>
+                                                        <a href="#" class="btn btn-primary">ADD CARRINHO</a>
+                                                    </div>						
                                                 </div>
-                                                <div class="thumb-content">
-                                                    <h4>${p.nome}</h4>
-                                                    <p class="item-price"><span>R$ ${p.valor}</span></p>
-                                                    <a href="#" class="btn btn-primary">ADD CARRINHO</a>
-                                                </div>						
                                             </div>
-                                        </div>
                                         </c:forEach>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="item carousel-item">
                                     <div class="row">
-                                        
+
                                         <c:forEach items="${TodosProdutos}" var="p" begin="8" end="11">
-                                        <div class="col-sm-3">
-                                            <div class="thumb-wrapper">
-                                                <div class="img-box">
-                                                    <img src="imagens/${p.img}.jpg" class="img-responsive img-fluid" alt="">
+                                            <div class="col-sm-3">
+                                                <div class="thumb-wrapper">
+                                                    <div class="img-box">
+                                                        <img src="imagens/${p.img}.jpg" class="img-responsive img-fluid" alt="">
+                                                    </div>
+                                                    <div class="thumb-content">
+                                                        <h4>${p.nome}</h4>
+                                                        <p class="item-price"><span>R$ ${p.valor}</span></p>
+                                                        <a href="#" class="btn btn-primary">ADD CARRINHO</a>
+                                                    </div>						
                                                 </div>
-                                                <div class="thumb-content">
-                                                    <h4>${p.nome}</h4>
-                                                    <p class="item-price"><span>R$ ${p.valor}</span></p>
-                                                    <a href="#" class="btn btn-primary">ADD CARRINHO</a>
-                                                </div>						
                                             </div>
-                                        </div>
                                         </c:forEach>
-                                        
+
                                     </div>
                                 </div>
                             </div>
                             <!-- Carousel controls -->
                             <a class="carousel-control left carousel-control-prev" href="#myCarousel" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Voltar</span>
+                                <span class="sr-only">Voltar</span>
                             </a>
                             <a class="carousel-control right carousel-control-next" href="#myCarousel" data-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Avançar</span>
+                                <span class="sr-only">Avançar</span>
                             </a>
                         </div>
                     </div>

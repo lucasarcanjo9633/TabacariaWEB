@@ -5,7 +5,7 @@
  */
 package Servlet;
 
-import DAO.ProdutoDAO;
+import DAO.EstoqueDAO;
 import Model.Produto;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class EstoqueController extends HttpServlet {
     protected void listar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ArrayList<Produto> p = ProdutoDAO.getProduto();
+        ArrayList<Produto> p = EstoqueDAO.getProduto();
         request.setAttribute("TodosProdutos", p);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/ListarEstoque.jsp");
         dispatcher.forward(request, response);
@@ -103,7 +103,7 @@ public class EstoqueController extends HttpServlet {
         String pChave = request.getParameter("pChave");
         String qtd = request.getParameter("qtd");
 
-        if (ProdutoDAO.atualizarEstoque(Integer.parseInt(id), Integer.parseInt(qtd), Double.parseDouble(valorCompra))) {
+        if (EstoqueDAO.atualizarEstoque(Integer.parseInt(id), Integer.parseInt(qtd), Double.parseDouble(valorCompra))) {
 
             listar(request, response);
         } else {

@@ -6,6 +6,7 @@
 package Servlet;
 
 import DAO.ProdutoDAO;
+import DAO.ProdutoWebDAO;
 import Model.Produto;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,7 +14,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
 import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -111,7 +111,14 @@ public class ProdutoController extends HttpServlet {
             throws ServletException, IOException {
 
         int id = Integer.parseInt(request.getParameter("id"));
-        ProdutoDAO.excluir(id);
+        boolean status = Boolean.valueOf(request.getParameter("status"));
+        
+        if(status == true){
+            ProdutoDAO.desativar(id);
+        }else{
+            ProdutoDAO.ativar(id);
+        }
+        
         listar(request, response);
     }
 
@@ -229,7 +236,7 @@ public class ProdutoController extends HttpServlet {
     private void listarWeb(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ArrayList<Produto> p = ProdutoDAO.getProduto();
+        ArrayList<Produto> p = ProdutoWebDAO.getProduto();
         request.setAttribute("TodosProdutos", p);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
         dispatcher.forward(request, response);
@@ -240,15 +247,16 @@ public class ProdutoController extends HttpServlet {
 
         String id = request.getParameter("id");
         request.setAttribute("valorAttr", id);
-        ArrayList<Produto> p1 = ProdutoDAO.getProduto(Integer.parseInt(id));
+        ArrayList<Produto> p1 = ProdutoWebDAO.getProduto(Integer.parseInt(id));
 
         for (Produto produto : p1) {
             request.setAttribute("nomeAttr", produto.getNome());
             request.setAttribute("valorAttr", produto.getValor());
             request.setAttribute("descAttr", produto.getDesc());
+            request.setAttribute("qtdAttr", produto.getQtd());
             request.setAttribute("imgAttr", produto.getImg());
         }
-        ArrayList<Produto> p = ProdutoDAO.getProduto();
+        ArrayList<Produto> p = ProdutoWebDAO.getProduto();
         request.setAttribute("TodosProdutos", p);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/DetalheProduto.jsp");
         dispatcher.forward(request, response);

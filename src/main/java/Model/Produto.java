@@ -21,6 +21,7 @@ public class Produto {
     private int qtd;
     private String img;
     private Date entrada;
+    private boolean status;
 
     public Produto() {
 
@@ -31,8 +32,8 @@ public class Produto {
         this.valor = valor;
         this.qtd = qtd;
         this.entrada = entrada;
-    }   
-    
+    }
+
     public Produto(String nome, double valor, String desc, String pChave, String img, Date entrada) {
         this.nome = nome;
         this.valor = valor;
@@ -42,8 +43,9 @@ public class Produto {
         this.entrada = entrada;
     }
 
-    public Produto(int id, String nome, double valor, String desc, String pChave, int qtd, String img) {
+    public Produto(int id, boolean status, String nome, double valor, String desc, String pChave, int qtd, String img) {
         this.id = id;
+        this.status = status;
         this.nome = nome;
         this.valor = valor;
         this.desc = desc;
@@ -59,13 +61,21 @@ public class Produto {
         this.desc = desc;
         this.pChave = pChave;
     }
-   
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getNome() {
