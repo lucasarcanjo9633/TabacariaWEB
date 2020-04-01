@@ -35,6 +35,11 @@ INSERT INTO usuario_modulo (idusuario,idmodulo) VALUES (1,1);
 INSERT INTO usuario_modulo (idusuario,idmodulo) VALUES (1,2);
 INSERT INTO usuario_modulo (idusuario,idmodulo) VALUES (1,3);
 
+INSERT INTO usuario (nome,cpf,login,senha,telefone) VALUES ('Carlos', '12345678911', 'produto@tabacafia.com', 'produto', '1199999911');
+
+INSERT INTO usuario_modulo (idusuario,idmodulo) VALUES (1,2);
+
+
 
 
 CREATE TABLE `produto` (
