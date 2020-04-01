@@ -5,6 +5,7 @@
  */
 package Servlet;
 
+import DAO.UsuarioDAO;
 import Model.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -35,9 +36,12 @@ public class LoginController extends HttpServlet {
 
         String username = request.getParameter("inputEmail");
         String senha = request.getParameter("inputPassword");
-
-        //Usuario usuario = UsuarioDAO.login(username, senha);
-        /*
+        
+        username = "admin@tabacaria.com";
+        senha = "admin";
+        
+        Usuario usuario = UsuarioDAO.login(username, senha);
+        
         if (usuario != null && usuario.getHashSenha().equals(senha)) {
             // Usuario válido - adiciona na sessão
             HttpSession sessao = request.getSession();
@@ -50,7 +54,7 @@ public class LoginController extends HttpServlet {
             request.setAttribute("msgErro", "Usuario inexistente ou senha inválida");
             request.getRequestDispatcher("/Login.jsp")
                     .forward(request, response);
-        }*/
+        }
 
     }
 }

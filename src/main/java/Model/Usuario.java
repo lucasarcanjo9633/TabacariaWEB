@@ -11,9 +11,9 @@ import java.util.List;
  *
  * @author igor
  */
-public class Usuario extends Pessoa{
-    
-       private static final long serialVersionUID = 1L;
+public class Usuario extends Pessoa {
+
+    private static final long serialVersionUID = 1L;
 
     private String username;
     private String hashSenha;
@@ -26,13 +26,19 @@ public class Usuario extends Pessoa{
         this.modulos = modulos;
     }
 
-    public Usuario(int idPessoa,String username, String hashSenha, List<Modulo> modulos, String nomeCompleto, String cpf, String telefone) {
+    public Usuario(int idPessoa, String username, String hashSenha, List<Modulo> modulos, String nomeCompleto, String cpf, String telefone) {
         super(idPessoa, nomeCompleto, cpf, telefone);
         this.username = username;
         this.hashSenha = hashSenha;
         this.modulos = modulos;
     }
-      
+
+    public Usuario(int idPessoa, String username, String hashSenha, String nomeCompleto, String cpf, String telefone) {
+        super(idPessoa, nomeCompleto, cpf, telefone);
+        this.username = username;
+        this.hashSenha = hashSenha;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -56,7 +62,7 @@ public class Usuario extends Pessoa{
     public void setModulos(List<Modulo> modulos) {
         this.modulos = modulos;
     }
-    
+
     public boolean verificarPapel(String nomePapel) {
         for (Modulo m : modulos) {
             if (m.getNomeModulo().equals(nomePapel)) {
