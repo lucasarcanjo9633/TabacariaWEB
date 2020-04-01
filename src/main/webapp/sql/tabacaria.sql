@@ -1,5 +1,42 @@
 create database tabacaria;
 use tabacaria;
+
+create table usuario(
+idusuario int(11) not null auto_increment primary key,
+nome varchar(40) not null,
+cpf varchar(20) not null unique,
+telefone varchar(15),
+login varchar(20) not null unique,
+senha varchar(10) not null,
+status boolean default true
+);
+
+CREATE table modulo(
+idmodulo int auto_increment not null primary key,
+nome varchar(20) not null unique);
+
+create table usuario_modulo(
+idusuario int(11) not null,
+idmodulo int(11) not null,
+foreign key(idusuario) references usuario (idusuario),
+foreign key(idmodulo) references modulo (idmodulo)
+);
+
+INSERT INTO modulo(nome)
+values ('USUARIO');
+INSERT INTO modulo(nome)
+values ('PRODUTO');
+INSERT INTO modulo(nome)
+values ('ESTOQUE');
+
+INSERT INTO usuario (nome,cpf,login,senha,telefone) VALUES ('administrador', '12345678910', 'admin@tabacafia.com', 'admin', '1199999999');
+
+INSERT INTO usuario_modulo (idusuario,idmodulo) VALUES (1,1);
+INSERT INTO usuario_modulo (idusuario,idmodulo) VALUES (1,2);
+INSERT INTO usuario_modulo (idusuario,idmodulo) VALUES (1,3);
+
+
+
 CREATE TABLE `produto` (
 `id` INT(11) NOT NULL AUTO_INCREMENT,
 `status` BOOLEAN NOT NULL DEFAULT true,
