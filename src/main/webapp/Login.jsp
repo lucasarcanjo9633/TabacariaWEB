@@ -16,7 +16,7 @@
     </head>
 
     <body class="text-center">
-        <form class="form-signin" action="${pageContext.request.contextPath}/PaginaInicial.jsp">
+        <form class="form-signin" action="${pageContext.request.contextPath}/LoginController.jsp" method="post">
             <img class="mb-4" src="https://i.pinimg.com/originals/e2/cb/4b/e2cb4bc56740dd0af40e3098f850e5fc.png" alt="" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Faça login</h1>
             <label for="inputEmail" class="sr-only">Endereço de email</label>
