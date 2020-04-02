@@ -1,12 +1,11 @@
 <%-- 
     Document   : ListarEstoque
     Created on : 13/03/2020, 10:03:58
-    Author     : Ochaus
+    Author     : Igor Lima
 --%>
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.Usuario"%>
-<%@page import="Model.Pessoa"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
