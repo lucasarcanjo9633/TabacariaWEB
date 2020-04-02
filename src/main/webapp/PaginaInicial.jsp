@@ -70,6 +70,14 @@
                     <button class="btn btn-primary" type="submit" class="btn btn-primary">Lista de Usuários &raquo</button>
                 </form> 
             </div>
+            <div class="jumbotron">
+                <h2>Usuários</h2>
+                <p class="lead"> Cadastrar, consultar, inativar ou editar usuarios. </p>
+                <form action="${pageContext.request.contextPath}/UsuarioController" method="get">
+                    <input type="hidden" value="listar" name="acao">
+                    <button class="btn btn-primary" type="submit" class="btn btn-primary">Lista de Produtos &raquo</button>
+                </form> 
+            </div>
         </main>       
     </body>
 </html>

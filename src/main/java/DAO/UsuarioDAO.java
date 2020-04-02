@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -35,7 +36,7 @@ public class UsuarioDAO {
             Class.forName(DRIVER);
             conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
 
-            PreparedStatement comando = conexao.prepareStatement(" SELECT idusuario, nome, cpf, login, senha, telefone "
+            PreparedStatement comando = conexao.prepareStatement(" SELECT idusuario, nome, cpf, login, senha, telefone, status "
                     + " FROM USUARIO "
                     + " WHERE "
                     + " status = '1' AND "
@@ -45,7 +46,7 @@ public class UsuarioDAO {
             ResultSet rs = comando.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt(1);
-                user = new Usuario(id, rs.getString("login"), rs.getString("senha"), rs.getString("nome"), rs.getString("cpf"), rs.getString("telefone"));
+                user = new Usuario(id, rs.getString("login"), rs.getString("senha"), rs.getString("nome"), rs.getString("cpf"), rs.getString("telefone"), rs.getBoolean("status"));
 
                 ArrayList<Modulo> modulos = new ArrayList<>();
 
@@ -77,6 +78,55 @@ public class UsuarioDAO {
 
         }
         return user;
+    }
+    
+     public static ArrayList<Usuario> getUsuarios() {
+         ArrayList<Usuario> usuarios = new ArrayList<>();
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement(" "
+                    + " SELECT idusuario, nome, cpf, login, senha, telefone, status "
+                    + " FROM USUARIO ");
+
+            ResultSet rs = comando.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                Usuario user = new Usuario(id, rs.getString("login"), rs.getString("senha"), rs.getString("nome"), rs.getString("cpf"), rs.getString("telefone"), rs.getBoolean("status"));
+
+                ArrayList<Modulo> modulos = new ArrayList<>();
+
+                PreparedStatement comando1 = conexao.prepareStatement(" SELECT M.idmodulo, M.nome FROM MODULO M "
+                        + " INNER JOIN USUARIO_MODULO UM "
+                        + " ON M.idmodulo = UM.idmodulo "
+                        + " WHERE "
+                        + " UM.idusuario = " + id + "; ");
+                ResultSet rs1 = comando1.executeQuery();
+
+                while (rs1.next()) {
+                    Modulo m = new Modulo(rs1.getInt(1), rs1.getString(2));
+                    modulos.add(m);
+                }
+
+                user.setModulos(modulos);
+                usuarios.add(user);
+            }
+
+        } catch (ClassNotFoundException ex) {
+            usuarios = null;
+        } catch (SQLException ex) {
+            usuarios = null;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                usuarios = null;
+            }
+
+        }
+        return usuarios;
     }
 
 }

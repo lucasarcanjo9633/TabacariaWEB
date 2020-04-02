@@ -19,22 +19,22 @@ public class Usuario extends Pessoa {
     private String hashSenha;
     private List<Modulo> modulos;
 
-    public Usuario(String username, String hashSenha, List<Modulo> modulos, String nomeCompleto, String cpf, String telefone) {
-        super(nomeCompleto, cpf, telefone);
+    public Usuario(String username, String hashSenha, List<Modulo> modulos, String nomeCompleto, String cpf, String telefone, boolean status) {
+        super(nomeCompleto, cpf, telefone, status);
         this.username = username;
         this.hashSenha = hashSenha;
         this.modulos = modulos;
     }
 
-    public Usuario(int idPessoa, String username, String hashSenha, List<Modulo> modulos, String nomeCompleto, String cpf, String telefone) {
-        super(idPessoa, nomeCompleto, cpf, telefone);
+    public Usuario(int idPessoa, String username, String hashSenha, List<Modulo> modulos, String nomeCompleto, String cpf, String telefone, boolean status) {
+        super(idPessoa, nomeCompleto, cpf, telefone, status);
         this.username = username;
         this.hashSenha = hashSenha;
         this.modulos = modulos;
     }
 
-    public Usuario(int idPessoa, String username, String hashSenha, String nomeCompleto, String cpf, String telefone) {
-        super(idPessoa, nomeCompleto, cpf, telefone);
+    public Usuario(int idPessoa, String username, String hashSenha, String nomeCompleto, String cpf, String telefone, boolean status) {
+        super(idPessoa, nomeCompleto, cpf, telefone, status);
         this.username = username;
         this.hashSenha = hashSenha;
     }

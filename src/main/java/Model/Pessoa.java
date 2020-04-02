@@ -15,21 +15,24 @@ public abstract class Pessoa {
     private String nomeCompleto;
     private String cpf;
     private String telefone;
-
+    private boolean status;
+    
     public Pessoa() {
     }
 
-    public Pessoa(int idPessoa, String nomeCompleto, String cpf, String telefone) {
+    public Pessoa(int idPessoa, String nomeCompleto, String cpf, String telefone, boolean status) {
         this.idPessoa = idPessoa;
         this.nomeCompleto = nomeCompleto;
         this.cpf = cpf;
         this.telefone = telefone;
+        this.status = status;
     }
 
-    public Pessoa(String nomeCompleto, String cpf, String telefone) {
+    public Pessoa(String nomeCompleto, String cpf, String telefone, boolean status ) {
         this.nomeCompleto = nomeCompleto;
         this.cpf = cpf;
         this.telefone = telefone;
+        this.status = status;
     }
 
     public String getNomeCompleto() {
@@ -56,4 +59,21 @@ public abstract class Pessoa {
         this.telefone = telefone;
     }
 
+    public int getIdPessoa() {
+        return idPessoa;
+    }
+
+    public void setIdPessoa(int idPessoa) {
+        this.idPessoa = idPessoa;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
+    
 }
