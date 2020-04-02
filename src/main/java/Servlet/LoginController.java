@@ -34,11 +34,9 @@ public class LoginController extends HttpServlet {
             HttpServletResponse response)
             throws ServletException, IOException {
 
-        String username = request.getParameter("inputEmail");
-        String senha = request.getParameter("inputPassword");
+        String username = request.getParameter("login");
+        String senha = request.getParameter("senha");
         
-        username = "admin@tabacaria.com";
-        senha = "admin";
         
         Usuario usuario = UsuarioDAO.login(username, senha);
         

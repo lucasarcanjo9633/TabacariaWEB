@@ -84,7 +84,7 @@
                             </td>                           
                             <td> 
                                 <form action="${pageContext.request.contextPath}/UsuarioController" method="post">
-                                    <input type="hidden" value="alterar" name="acao">
+                                    <input type="hidden" value="editar" name="acao">
                                     <input type="hidden" value="${user.idPessoa}" name="idPessoa">
                                     <input type="hidden" value="${user.nomeCompleto}" name="nomeCompleto">
                                     <input type="hidden" value="${user.modulos}" name="modulos">                                   

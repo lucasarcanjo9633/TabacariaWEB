@@ -79,9 +79,9 @@ public class UsuarioDAO {
         }
         return user;
     }
-    
-     public static ArrayList<Usuario> getUsuarios() {
-         ArrayList<Usuario> usuarios = new ArrayList<>();
+
+    public static ArrayList<Usuario> getUsuarios() {
+        ArrayList<Usuario> usuarios = new ArrayList<>();
         try {
 
             Class.forName(DRIVER);
@@ -127,6 +127,71 @@ public class UsuarioDAO {
 
         }
         return usuarios;
+    }
+
+    public static boolean salvar(Usuario user) {
+        boolean retorno = false;
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement(" INSERT INTO USUARIO (nome, cpf, login, senha, telefone)"
+                    + "values (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            comando.setString(1, user.getNomeCompleto());
+            comando.setString(2, user.getCpf());
+            comando.setString(3, user.getUsername());
+            comando.setString(4, user.getHashSenha());
+            comando.setString(5, user.getTelefone());
+
+            int linhasAfetadas = comando.executeUpdate();
+
+            ResultSet rs = comando.getGeneratedKeys();
+            int idUsuario = 0;
+
+            if (rs.next()) {
+
+                idUsuario = rs.getInt(1);
+            }
+
+            if (linhasAfetadas > 0) {
+
+                int linhasAfetadas2 = 0;
+
+                for (int i = 0; i < user.getModulos().size(); i++) {
+
+                    comando = conexao.prepareStatement("INSERT INTO USUARIO_MODULO(idusuario,idmodulo) VALUES(?, ?)");
+                    comando.setInt(1, idUsuario);
+                    comando.setInt(2, Integer.parseInt(user.getModulos().get(i).getNomeModulo()));
+                    linhasAfetadas2 = comando.executeUpdate();
+                }
+
+                if (linhasAfetadas2 > 0) {
+
+                    retorno = true;
+
+                } else {
+
+                    retorno = false;
+                }
+
+            }
+
+        } catch (ClassNotFoundException ex) {
+            retorno = false;
+        } catch (SQLException ex) {
+            retorno = false;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                retorno = false;
+            }
+
+        }
+
+        return retorno;
+
     }
 
 }

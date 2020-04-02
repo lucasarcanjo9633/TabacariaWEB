@@ -28,79 +28,132 @@
 
         <script>
             function validacao() {
-                var formulario = document.forms["formCadastroProduto"];
-                var nomeP = formulario.nomeProduto.value;
-                var valorCompraP = formulario.valor.value;
-                var descricaoP = formulario.descricao.value;
-                var pChaveP = formulario.pChave.value;
+                var formulario = document.forms["formCadastroUsuario"];
+                var nome = formulario.nomeCompleto.value;
+                var cpf = formulario.cpf.value;
+                var modulo = formulario.modulo.value;
+                var telefone = formulario.telefone.value;
+                var login = formulario.login.value;
+                var senha = formulario.senha.value;
+                var senha2 = formulario.senha2.value;
                 var erro = false;
 
-                if (nomeP.length < 1) {
-                    document.getElementById("nomeProduto").style.backgroundColor = "#ffcccc";
-                    document.getElementById("nomeProduto").focus();
+                if (nome.length < 1) {
+                    document.getElementById("nomeCompleto").style.backgroundColor = "#ffcccc";
+                    document.getElementById("nomeCompleto").focus();
                     erro = true;
                     $.notify({
                         // options
-                        message: 'Preencha o nome do produto'
+                        message: 'Preencha o nome do usuário'
                     }, {
                         // settings
                         type: 'danger'
                     });
                     return false;
                 } else {
-                    document.getElementById("nomeProduto").style.backgroundColor = "#ffffff";
+                    document.getElementById("nomeCompleto").style.backgroundColor = "#ffffff";
                     erro = false;
                 }
 
-                if (valorCompraP.length < 1) {
-                    document.getElementById("valor").style.backgroundColor = "#ffcccc";
-                    document.getElementById("valor").focus();
+                if (cpf.length < 1) {
+                    document.getElementById("cpf").style.backgroundColor = "#ffcccc";
+                    document.getElementById("cpf").focus();
                     erro = true;
                     $.notify({
                         // options
-                        message: 'Preencha o valor do produto'
+                        message: 'Preencha o cpf do usuário'
                     }, {
                         // settings
                         type: 'danger'
                     });
                     return false;
                 } else {
-                    document.getElementById("valor").style.backgroundColor = "#ffffff";
+                    document.getElementById("cpf").style.backgroundColor = "#ffffff";
                     erro = false;
                 }
 
 
-                if (descricaoP.length < 1) {
-                    document.getElementById("descricaoProduto").style.backgroundColor = "#ffcccc";
+                if (modulo.length < 1) {
+                    document.getElementById("modulo").style.backgroundColor = "#ffcccc";
                     $.notify({
                         // options
-                        message: 'Preencha a descrição do produto'
+                        message: 'Preencha um ou mais valores no modulo'
                     }, {
                         // settings
                         type: 'danger'
                     });
-                    document.getElementById("descricaoProduto").focus();
+                    document.getElementById("modulo").focus();
                     erro = true;
                     return false;
                 } else {
-                    document.getElementById("descricaoProduto").style.backgroundColor = "#ffffff";
+                    document.getElementById("modulo").style.backgroundColor = "#ffffff";
                     erro = false;
                 }
 
-                if (pChaveP.length < 1) {
-                    document.getElementById("pChave").style.backgroundColor = "#ffcccc";
+                if (login.length < 1) {
+                    document.getElementById("login").style.backgroundColor = "#ffcccc";
                     $.notify({
                         // options
-                        message: 'Preencha a palavra chave'
+                        message: 'Preencha o login'
                     }, {
                         // settings
                         type: 'danger'
                     });
-                    document.getElementById("pChave").focus();
+                    document.getElementById("login").focus();
                     erro = true;
                     return false;
                 } else {
-                    document.getElementById("pChave").style.backgroundColor = "#ffffff";
+                    document.getElementById("login").style.backgroundColor = "#ffffff";
+                    erro = false;
+                }
+                if (senha.length < 1) {
+                    document.getElementById("senha").style.backgroundColor = "#ffcccc";
+                    $.notify({
+                        // options
+                        message: 'Preencha a senha'
+                    }, {
+                        // settings
+                        type: 'danger'
+                    });
+                    document.getElementById("senha").focus();
+                    erro = true;
+                    return false;
+                } else {
+                    document.getElementById("senha").style.backgroundColor = "#ffffff";
+                    erro = false;
+                }
+
+                if (senha2.length < 1) {
+                    document.getElementById("senha2").style.backgroundColor = "#ffcccc";
+                    $.notify({
+                        // options
+                        message: 'Preencha o campo confirmação de senha'
+                    }, {
+                        // settings
+                        type: 'danger'
+                    });
+                    document.getElementById("senha2").focus();
+                    erro = true;
+                    return false;
+                } else {
+                    document.getElementById("senha2").style.backgroundColor = "#ffffff";
+                    erro = false;
+                }
+
+                if (senha1.equals(senha2)) {
+                    document.getElementById("senha2").style.backgroundColor = "#ffcccc";
+                    $.notify({
+                        // options
+                        message: 'Senhas diferentes'
+                    }, {
+                        // settings
+                        type: 'danger'
+                    });
+                    document.getElementById("senha2").focus();
+                    erro = true;
+                    return false;
+                } else {
+                    document.getElementById("senha2").style.backgroundColor = "#ffffff";
                     erro = false;
                 }
 
@@ -137,7 +190,7 @@
                         <h2>${title}</h2>
                         <label>${message}</label>
                     </div>
-                    <form action="${pageContext.request.contextPath}/UsuarioController" method="post" onsubmit="return validacao()" >                        
+                    <form action="${pageContext.request.contextPath}/UsuarioController" method="post" name="formCadastroUsuario" onsubmit="return validacao()">                        
 
                         <div class="form-group">
                             <label>ID: </label>
@@ -191,10 +244,11 @@
                             </div>
                             <div>
                                 <br>
-                                <input type="password" id="senha" name="senha" value="${senhaAttr}" placeholder="Confirme a senha" class="form-control">
+                                <input type="password" id="senha2" name="senha2" value="${senhaAttr}" placeholder="Confirme a senha" class="form-control">
                             </div>
                         </div>
                         <div class="posicaoButtons">
+                            <input type="hidden" value="salvar" name="acao">
                             <button class="btn btn-primary" type="submit">Cadastrar
                                 <span class = "glyphicon glyphicon-send"></span>
                             </button> 
