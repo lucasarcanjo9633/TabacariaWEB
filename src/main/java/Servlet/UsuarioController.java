@@ -5,6 +5,7 @@
  */
 package Servlet;
 
+import DAO.ModuloDAO;
 import DAO.UsuarioDAO;
 import Model.Modulo;
 import Model.Usuario;
@@ -37,10 +38,10 @@ public class UsuarioController extends HttpServlet {
             throws ServletException, IOException {
 
         String acao = request.getParameter("acao");
-/*
+
         switch (acao) {
             case "salvar":
-                salvar(request, response);
+            /*    salvar(request, response);
                 break;
             case "editar":
                 editar(request, response);
@@ -50,15 +51,14 @@ public class UsuarioController extends HttpServlet {
                 break;
             case "listar":
                 listar(request, response);
-                break;
+                break;*/
             case "cadastrar":
-                retornaFilial(request, response);
+                retornaModulos(request, response);
                 break;
-            case "atualizar":
+            /*case "atualizar":
                 atualizar(request, response);
-                break;
+                break;*/
         }
-*/
     }
 
     /*
@@ -193,19 +193,16 @@ public class UsuarioController extends HttpServlet {
 
     }
 
-    /*
-    protected void retornaFilial(HttpServletRequest request, HttpServletResponse response)
+    
+    protected void retornaModulos(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Filial> filiais = UsuarioDAO.getFilial();
-        request.setAttribute("todasFilial", filiais);
-        ArrayList<Modulo> modulo = ModuloDAO.getModulo();
-        request.setAttribute("todosModulos", modulo);
-
+        ArrayList<Modulo> modulos = ModuloDAO.getModulos();
+        request.setAttribute("TodosModulos", modulos);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroUsuario.jsp");
         dispatcher.forward(request, response);
 
     }
-     */
+     
     /*
     protected void excluir(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

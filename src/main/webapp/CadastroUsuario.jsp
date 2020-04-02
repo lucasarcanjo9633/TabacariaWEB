@@ -4,12 +4,9 @@
     Author     : igor
 --%>
 
-<%-- 
-    Document   : CadastroProduto
-    Created on : 11/03/2020, 03:22:54
-    Author     : Ochaus
---%>
-
+<%@page import="java.util.ArrayList"%>
+<%@page import="Model.Modulo"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,7 +17,7 @@
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
         <script> src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js";</script>              
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap-notify.min.js"></script>
-        
+
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">      
         <link href="https://getbootstrap.com.br/docs/4.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://getbootstrap.com.br/docs/4.1/examples/navbar-fixed/navbar-top-fixed.css" rel="stylesheet">
@@ -28,7 +25,7 @@
         <script src="https://getbootstrap.com.br/docs/4.1/assets/js/vendor/popper.min.js"></script>
         <script src="https://getbootstrap.com.br/docs/4.1/dist/js/bootstrap.min.js"></script>
         <title>Cadastro Produto</title>
-       
+
         <script>
             function validacao() {
                 var formulario = document.forms["formCadastroProduto"];
@@ -140,49 +137,63 @@
                         <h2>${title}</h2>
                         <label>${message}</label>
                     </div>
-                    <form action="${pageContext.request.contextPath}/ProdutoController" method="post" name="formCadastroProduto" enctype="multipart/form-data" onsubmit="return validacao()" >                        
+                    <form action="${pageContext.request.contextPath}/UsuarioController" method="post" onsubmit="return validacao()" >                        
 
                         <div class="form-group">
                             <label>ID: </label>
                             <div>
-                                <input type="text" id="idProduto" name="idProduto" value="${idProdutoAttr}" readonly placeholder="ID do Produto" class="form-control">
+                                <input type="text" id="idProduto" name="idPessoa" value="${idPessoaAttr}" readonly placeholder="ID do usuário" class="form-control">
                             </div>				
                         </div>
 
                         <div class="form-group">
-                            <label>Nome: </label>
+                            <label>NomeCompleto: </label>
                             <div>
-                                <input type="text" id="nomeProduto" name="nomeProduto" value="${nomeProdutoAttr}" placeholder="Nome do Produto" class="form-control">
+                                <input type="text" id="nomeProduto" name="nomeCompleto" value="${nomeCompletoAttr}" placeholder="Nome Completo" class="form-control">
+                            </div>				
+                        </div>                      
+
+                        <div class="form-group">
+                            <label>CPF: </label>
+                            <div>
+                                <input type="text" id="cpf" name="cpf" value="${cpfAttr}" placeholder="000.000.000-00" class="form-control" onkeypress="$(this).mask('000.000.000-00')">
                             </div>				
                         </div>
-                        <div class="form-group">
-                            <label>Valor de Compra: </label>
+
+                        <div>
+                            <label>Modulo: </label>
                             <div>
-                                <input type="number" id="valor" name="valor" value="${valorAttr}" placeholder="Valor do Produto" class="form-control">
+                                <select name="modulo" multiple style="height: 100px">
+                                    <c:forEach items="${TodosModulos}" var="modulos">
+                                        <option value="${modulos.id}">
+                                            ${modulos.nomeModulo}
+                                        </option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
-
                         <div class="form-group">
-                            <label>Descrição: </label>
+                            <label>Telefone: </label>
                             <div>
-                                <input type="text" id="descricaoProduto" name="descricao" value="${descricaoAttr}" placeholder="Descrição do Produto" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Palavra Chave: </label>
-                            <div>
-                                <input type="text" id="pChave" name="pChave" value="${pChaveAttr}" placeholder="Palavra Chave" class="form-control">
+                                <input type="text" id="telefone" name="telefone" value="${telefoneAttr}" placeholder="(00) 00000-0000" class="form-control" onkeypress="$(this).mask('(00) 00000-0009')">
                             </div>
                         </div>   
-
                         <div class="form-group">
-                            <label>Arquivo de Imagem: </label>
+                            <label>Login: </label>
                             <div>
-                                <input type="file" id="imagemProduto" name="file" value="${imagemAttr}" required class="form-control">
+                                <input type="email" id="login" name="login" value="${loginAttr}" placeholder="Login" class="form-control">
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <label>Senha: </label>
+                            <div>
+                                <input type="password" id="senha" name="senha" value="${senhaAttr}" placeholder="Senha" class="form-control">
+                            </div>
+                            <div>
+                                <br>
+                                <input type="password" id="senha" name="senha" value="${senhaAttr}" placeholder="Confirme a senha" class="form-control">
+                            </div>
+                        </div>
                         <div class="posicaoButtons">
                             <button class="btn btn-primary" type="submit">Cadastrar
                                 <span class = "glyphicon glyphicon-send"></span>
@@ -195,7 +206,7 @@
                     <div class="campoVoltarPosicao">
                         <br><br>
                         <div>
-                            <form action="${pageContext.request.contextPath}/ProdutoController" method="get">
+                            <form action="${pageContext.request.contextPath}/UsuarioController" method="get">
                                 <input type="hidden" value="listar" name="acao">
                                 <button class="btn btn-primary" type="submit" class="btn btn-primary">Voltar
                                     <span class = "glyphicon glyphicon-arrow-left"></span>

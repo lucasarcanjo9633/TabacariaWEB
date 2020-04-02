@@ -109,7 +109,8 @@
         <div>           
             <div style="text-align: center; display: inline;"> 
                 <div>
-                    <form action="${pageContext.request.contextPath}/CadastroUsuario.jsp" >
+                    <form action="${pageContext.request.contextPath}/UsuarioController" method="post">
+                        <input type="hidden" value="cadastrar" name="acao">
                         <button class="btn btn-primary" type="submit">Cadastrar</button>
                     </form>
                 </div>
