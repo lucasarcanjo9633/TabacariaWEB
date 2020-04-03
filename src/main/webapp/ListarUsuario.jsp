@@ -26,17 +26,13 @@
                 $('#example').DataTable();
             });
 
-            function mensagem() {
-                var name = confirm("Pressione o botão OK para exclusão.")
-                if (name == true)
-                {
-                    alert("operação realizada")
-                } else
-                {
-                    alert("operação cancelada")
-                    return false;
-                }
+            function pergunta() {
+                // retorna true se confirmado, ou false se cancelado
+                return confirm('Realmente deseja continuar ?');
             }
+
+
+
         </script>
 
         <title>Lista Usuários</title>
@@ -115,7 +111,7 @@
                                     <input type="hidden" value="excluir" name="acao">
                                     <input type="hidden" value="${user.status}" name="status">
                                     <input type="hidden" value="${user.idPessoa}" name="id">
-                                    <button class="btn btn-primary" type="submit">
+                                    <button class="btn btn-primary" type="submit" onclick="return pergunta();">
                                         <c:choose>
                                             <c:when test="${user.status == true}">
                                                 Desativar

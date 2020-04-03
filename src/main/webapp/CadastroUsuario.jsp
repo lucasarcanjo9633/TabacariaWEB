@@ -40,14 +40,12 @@
                 var formulario = document.forms["formCadastroUsuario"];
                 var nome = formulario.nomeCompleto.value;
                 var cpf = formulario.cpf.value;
-                var modulo = formulario.modulo.value;
-                var telefone = formulario.telefone.value;
                 var login = formulario.login.value;
                 var senha = formulario.senha.value;
                 var senha2 = formulario.senha2.value;
                 var erro = false;
 
-                if (nome.length < 1) {
+                if (nome.length < 5) {
                     document.getElementById("nomeCompleto").style.backgroundColor = "#ffcccc";
                     document.getElementById("nomeCompleto").focus();
                     erro = true;
@@ -79,25 +77,7 @@
                 } else {
                     document.getElementById("cpf").style.backgroundColor = "#ffffff";
                     erro = false;
-                }
-
-
-                if (modulo.length < 1) {
-                    document.getElementById("modulo").style.backgroundColor = "#ffcccc";
-                    $.notify({
-                        // options
-                        message: 'Preencha um ou mais valores no modulo'
-                    }, {
-                        // settings
-                        type: 'danger'
-                    });
-                    document.getElementById("modulo").focus();
-                    erro = true;
-                    return false;
-                } else {
-                    document.getElementById("modulo").style.backgroundColor = "#ffffff";
-                    erro = false;
-                }
+                }             
 
                 if (login.length < 1) {
                     document.getElementById("login").style.backgroundColor = "#ffcccc";
@@ -211,7 +191,7 @@
                         <div class="form-group">
                             <label>NomeCompleto: </label>
                             <div>
-                                <input type="text" id="nomeProduto" name="nomeCompleto" value="${user.nomeCompleto}" placeholder="Nome Completo" class="form-control">
+                                <input type="text" id="nomeCompleto" name="nomeCompleto" value="${user.nomeCompleto}" placeholder="Nome Completo" class="form-control">
                             </div>				
                         </div>                      
 
