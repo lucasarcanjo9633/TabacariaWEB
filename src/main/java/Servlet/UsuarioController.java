@@ -55,9 +55,9 @@ public class UsuarioController extends HttpServlet {
             case "cadastrar":
                 retornaModulos(request, response);
                 break;
-            /*case "atualizar":
+            case "atualizar":
                 atualizar(request, response);
-                break;*/
+                break;
         }
     }
 
@@ -82,65 +82,22 @@ public class UsuarioController extends HttpServlet {
         }
         Usuario user = new Usuario(login, senha, modulos, nome, cpf, telefone, true);
         ArrayList<Modulo> m = ModuloDAO.getModulos();
-        request.setAttribute("TodosModulos", m);/*
+        request.setAttribute("TodosModulos", m);
         if (UsuarioDAO.salvar(user)) {
 
             request.setAttribute("message", "Cadastro realizado com sucesso!");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroUsuario.jsp");
             dispatcher.forward(request, response);
-        } else {*/
+        } else {
             request.setAttribute("message", "Falha ao cadastrar!");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroUsuario.jsp");
             dispatcher.forward(request, response);
 
-        //}
+        }
     }
 
-    /*
     protected void atualizar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String nome = request.getParameter("nome");
-        String login = request.getParameter("login");
-        String senha = request.getParameter("senha");
-        String cpf = request.getParameter("cpf");
-        int idEmp = Integer.parseInt(request.getParameter("codEmp"));
-        String idModulo[] = request.getParameterValues("modulo");
-        String contato = request.getParameter("contato");
-
-        List<Modulo> modulos = new ArrayList<>();
-
-        if (idModulo != null) {
-            for (int i = 0; i < idModulo.length; i++) {
-
-                Modulo m = new Modulo(i, idModulo[i]);
-                modulos.add(m);
-            }
-        }
-        Usuario user = new Usuario(id, login, senha, modulos, idEmp, nome, cpf, contato);
-
-        if (UsuarioDAO.editar(user)) {
-            request.setAttribute("f", user);
-            request.setAttribute("mensagemSucesso", "Edição realizada com sucesso");
-            ArrayList<Filial> filiais = UsuarioDAO.getFilial();
-            request.setAttribute("todasFilial", filiais);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/EditarUsuario.jsp");
-            dispatcher.forward(request, response);
-        } else {
-            request.setAttribute("f", user);
-            request.setAttribute("mensagemFalha", "Erro ao editar");
-            ArrayList<Filial> filiais = UsuarioDAO.getFilial();
-            request.setAttribute("todasFilial", filiais);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/EditarUsuario.jsp");
-            dispatcher.forward(request, response);
-
-        }
-    }
-     */
- 
-    protected void editar(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
         int id = Integer.parseInt(request.getParameter("idPessoa"));
         String nome = request.getParameter("nomeCompleto");
         String login = request.getParameter("login");
@@ -154,24 +111,57 @@ public class UsuarioController extends HttpServlet {
         if (idModulo != null) {
             for (int i = 0; i < idModulo.length; i++) {
 
-                Modulo mo = new Modulo(i, idModulo[i]);
-                modulos.add(mo);
+                Modulo m = new Modulo(i, idModulo[i]);
+                modulos.add(m);
             }
         }
-/*        Usuario f = new Usuario(id, login, senha, modulos, idEmp, nome, cpf, contato);
+        Usuario user = new Usuario(id, login, senha, modulos, nome, cpf, telefone, true);
 
-        request.setAttribute("f", f);
+        if (UsuarioDAO.editar(user)) {
+            request.setAttribute("title", "Editar Usuário");
+            request.setAttribute("message", "Edição realizada com sucesso");
+            request.setAttribute("user", user);
+            int x = 1;
+            request.setAttribute("x", x);
+            ArrayList<Modulo> m = ModuloDAO.getModulos();
+            request.setAttribute("TodosModulos", m);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroUsuario.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            request.setAttribute("title", "Editar Usuário");
+            request.setAttribute("user", user);
+            request.setAttribute("message", "Erro ao editar");
+            ArrayList<Modulo> m = ModuloDAO.getModulos();
+            request.setAttribute("TodosModulos", m);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroUsuario.jsp");
+            dispatcher.forward(request, response);
 
-        ArrayList<Filial> filiais = UsuarioDAO.getFilial();
-        request.setAttribute("todasFilial", filiais);
-        ArrayList<Modulo> modulo = ModuloDAO.getModulo();
-        request.setAttribute("todosModulos", modulo);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/EditarUsuario.jsp");
+        }
+    }
+
+    protected void editar(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+//        int id = Integer.parseInt(request.getParameter("idPessoa"));
+//        String nome = request.getParameter("nomeCompleto");
+//        String login = request.getParameter("login");
+//        String senha = request.getParameter("senha");
+//        String cpf = request.getParameter("cpf");
+//        String idModulo[] = request.getParameterValues("modulo");
+//        String telefone = request.getParameter("telefone");
+        int id = Integer.parseInt(request.getParameter("idPessoa"));
+        Usuario user = UsuarioDAO.getUsuario(id);
+
+        request.setAttribute("user", user);
+        int x = 1;
+        request.setAttribute("x", x);
+        ArrayList<Modulo> modulos = ModuloDAO.getModulos();
+        request.setAttribute("TodosModulos", modulos);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroUsuario.jsp");
         dispatcher.forward(request, response);
 
-    }*/}
-     
-     
+    }
+
     protected void listar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

@@ -194,4 +194,146 @@ public class UsuarioDAO {
 
     }
 
+    public static Usuario getUsuario(int idUser) {
+        Usuario user = null;
+
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement(" SELECT idusuario, nome, cpf, login, senha, telefone, status "
+                    + " FROM USUARIO "
+                    + " WHERE "
+                    + " status = '1' AND "
+                    + " idusuario = " + idUser + " ; ");
+
+            ResultSet rs = comando.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                user = new Usuario(id, rs.getString("login"), rs.getString("senha"), rs.getString("nome"), rs.getString("cpf"), rs.getString("telefone"), rs.getBoolean("status"));
+
+                ArrayList<Modulo> modulos = new ArrayList<>();
+
+                PreparedStatement comando1 = conexao.prepareStatement(" SELECT M.idmodulo, M.nome FROM MODULO M "
+                        + " INNER JOIN USUARIO_MODULO UM "
+                        + " ON M.idmodulo = UM.idmodulo "
+                        + " WHERE "
+                        + " UM.idusuario = " + id + "; ");
+                ResultSet rs1 = comando1.executeQuery();
+
+                while (rs1.next()) {
+                    Modulo m = new Modulo(rs1.getInt(1), rs1.getString(2));
+                    modulos.add(m);
+                }
+
+                user.setModulos(modulos);
+            }
+
+        } catch (ClassNotFoundException ex) {
+            user = null;
+        } catch (SQLException ex) {
+            user = null;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                user = null;
+            }
+
+        }
+        return user;
+    }
+
+    public static boolean editar(Usuario user) {
+        boolean retorno = false;
+        try {
+
+            if (removerModulos(user.getIdPessoa())) {
+
+                Class.forName(DRIVER);
+                conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+                PreparedStatement comando = conexao.prepareStatement("update usuario set nome=?, cpf=?, login=?, senha=?, telefone=? "
+                        + " where idusuario= ?");
+
+                comando.setString(1, user.getNomeCompleto());
+                comando.setString(2, user.getCpf());
+                comando.setString(3, user.getUsername());
+                comando.setString(4, user.getHashSenha());
+                comando.setString(5, user.getTelefone());
+                comando.setInt(6, user.getIdPessoa());
+
+                int linhasAfetadas = comando.executeUpdate();
+
+                int idUsuario = user.getIdPessoa();
+
+                if (linhasAfetadas > 0) {
+
+                    int linhasAfetadas2 = 0;
+
+                    for (int i = 0; i < user.getModulos().size(); i++) {
+
+                        comando = conexao.prepareStatement("INSERT INTO USUARIO_MODULO (idusuario, idmodulo) "
+                                + " VALUES (?,?) ");
+                        comando.setInt(1, idUsuario);
+                        comando.setInt(2, Integer.parseInt(user.getModulos().get(i).getNomeModulo()));
+                        linhasAfetadas2 = comando.executeUpdate();
+                    }
+
+                    if (linhasAfetadas2 > 0) {
+
+                        retorno = true;
+
+                    }
+                }
+            }
+
+        } catch (ClassNotFoundException ex) {
+            retorno = false;
+        } catch (SQLException ex) {
+            retorno = false;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                retorno = false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean removerModulos(int id) {
+        boolean retorno = false;
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement("DELETE FROM usuario_modulo WHERE idusuario =?");
+            comando.setInt(1, id);
+
+            int linhasAfetadas = comando.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                retorno = true;
+            } else {
+                retorno = true;
+            }
+
+        } catch (ClassNotFoundException ex) {
+            retorno = false;
+        } catch (SQLException ex) {
+            retorno = false;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                retorno = false;
+            }
+
+        }
+        return retorno;
+    }
+
 }

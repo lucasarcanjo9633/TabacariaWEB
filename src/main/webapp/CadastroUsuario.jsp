@@ -6,6 +6,7 @@
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="Model.Modulo"%>
+<%@page import="Model.Usuario"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -195,21 +196,21 @@
                         <div class="form-group">
                             <label>ID: </label>
                             <div>
-                                <input type="text" id="idProduto" name="idPessoa" value="${idPessoaAttr}" readonly placeholder="ID do usuário" class="form-control">
+                                <input type="text" id="idProduto" name="idPessoa" value="${user.idPessoa}" readonly placeholder="ID do usuário" class="form-control">
                             </div>				
                         </div>
 
                         <div class="form-group">
                             <label>NomeCompleto: </label>
                             <div>
-                                <input type="text" id="nomeProduto" name="nomeCompleto" value="${nomeCompletoAttr}" placeholder="Nome Completo" class="form-control">
+                                <input type="text" id="nomeProduto" name="nomeCompleto" value="${user.nomeCompleto}" placeholder="Nome Completo" class="form-control">
                             </div>				
                         </div>                      
 
                         <div class="form-group">
                             <label>CPF: </label>
                             <div>
-                                <input type="text" id="cpf" name="cpf" value="${cpfAttr}" placeholder="000.000.000-00" class="form-control" onkeypress="$(this).mask('000.000.000-00')">
+                                <input type="text" id="cpf" name="cpf" value="${user.cpf}" placeholder="000.000.000-00" class="form-control" onkeypress="$(this).mask('000.000.000-00')">
                             </div>				
                         </div>
 
@@ -221,37 +222,51 @@
                                         <option value="${modulos.id}">
                                             ${modulos.nomeModulo}
                                         </option>
-                                    </c:forEach>
+                                    </c:forEach>                                    
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Telefone: </label>
                             <div>
-                                <input type="text" id="telefone" name="telefone" value="${telefoneAttr}" placeholder="(00) 00000-0000" class="form-control" onkeypress="$(this).mask('(00) 00000-0009')">
+                                <input type="text" id="telefone" name="telefone" value="${user.telefone}" placeholder="(00) 00000-0000" class="form-control" onkeypress="$(this).mask('(00) 00000-0009')">
                             </div>
                         </div>   
                         <div class="form-group">
                             <label>Login: </label>
                             <div>
-                                <input type="email" id="login" name="login" value="${loginAttr}" placeholder="Login" class="form-control">
+                                <input type="email" id="login" name="login" value="${user.username}" placeholder="Login" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Senha: </label>
                             <div>
-                                <input type="password" id="senha" name="senha" value="${senhaAttr}" placeholder="Senha" class="form-control">
+                                <input type="password" id="senha" name="senha" value="${user.hashSenha}" placeholder="Senha" class="form-control">
                             </div>
                             <div>
                                 <br>
-                                <input type="password" id="senha2" name="senha2" value="${senhaAttr}" placeholder="Confirme a senha" class="form-control">
+                                <input type="password" id="senha2" name="senha2" value="${user.hashSenha}" placeholder="Confirme a senha" class="form-control">
                             </div>
                         </div>
                         <div class="posicaoButtons">
-                            <input type="hidden" value="salvar" name="acao">
-                            <button class="btn btn-primary" type="submit">Cadastrar
-                                <span class = "glyphicon glyphicon-send"></span>
-                            </button> 
+
+                            <c:choose>
+
+                                <c:when test="${x == 1}">
+                                    <input type="hidden" value="atualizar" name="acao">
+                                    <button class="btn btn-primary" type="submit">Atualizar
+                                        <span class = "glyphicon glyphicon-send"></span>
+                                    </button> 
+                                </c:when>    
+                                <c:otherwise>
+                                    <input type="hidden" value="salvar" name="acao">
+                                    <button class="btn btn-primary" type="submit">Cadastrar
+                                        <span class = "glyphicon glyphicon-send"></span>
+                                    </button> 
+                                </c:otherwise>                                           
+                            </c:choose> 
+
+
                             <button class="btn btn-primary" type="reset">Resetar
                                 <span class = "glyphicon glyphicon-refresh"></span>
                             </button>                      
