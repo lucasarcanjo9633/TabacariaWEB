@@ -233,10 +233,19 @@
                             </div>
                         </div>   
                         <div class="form-group">
-                            <label>Login: </label>
-                            <div>
-                                <input type="email" id="login" name="login" value="${user.username}" placeholder="Login" class="form-control">
-                            </div>
+                             <label>Login: </label>
+                            <c:choose>
+                                <c:when test="${x == 1}">
+                                    <div>
+                                        <input type="email" id="login" name="login" value="${user.username}" readonly placeholder="Login" class="form-control">
+                                    </div>
+                                </c:when>    
+                                <c:otherwise>
+                                    <div>
+                                        <input type="email" id="login" name="login" value="${user.username}" placeholder="Login" class="form-control">
+                                    </div>
+                                </c:otherwise>                                           
+                            </c:choose>
                         </div>
                         <div class="form-group">
                             <label>Senha: </label>

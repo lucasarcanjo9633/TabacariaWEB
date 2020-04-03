@@ -89,7 +89,8 @@ public class UsuarioDAO {
 
             PreparedStatement comando = conexao.prepareStatement(" "
                     + " SELECT idusuario, nome, cpf, login, senha, telefone, status "
-                    + " FROM USUARIO ");
+                    + " FROM USUARIO "
+                    + " WHERE status = 1");
 
             ResultSet rs = comando.executeQuery();
             while (rs.next()) {
@@ -334,6 +335,39 @@ public class UsuarioDAO {
 
         }
         return retorno;
+    }
+
+    public static boolean removerUsuario(int idUser) {
+        boolean retorno = false;
+        try {
+
+            if (removerModulos(idUser)) {
+
+                Class.forName(DRIVER);
+                conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+                PreparedStatement comando = conexao.prepareStatement("update usuario set status=? "
+                        + " where idusuario= ?");
+
+                comando.setBoolean(1, false);
+                comando.setInt(2, idUser);
+
+                int linhasAfetadas = comando.executeUpdate();
+
+            }
+
+        } catch (ClassNotFoundException ex) {
+            retorno = false;
+        } catch (SQLException ex) {
+            retorno = false;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                retorno = false;
+            }
+        }
+        return true;
     }
 
 }

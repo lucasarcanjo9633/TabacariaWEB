@@ -46,12 +46,12 @@ public class UsuarioController extends HttpServlet {
             case "editar":
                 editar(request, response);
                 break;
-            /*case "excluir":
+            case "excluir":
                 excluir(request, response);
                 break;
             case "listar":
                 listar(request, response);
-                break;*/
+                break;
             case "cadastrar":
                 retornaModulos(request, response);
                 break;
@@ -84,11 +84,12 @@ public class UsuarioController extends HttpServlet {
         ArrayList<Modulo> m = ModuloDAO.getModulos();
         request.setAttribute("TodosModulos", m);
         if (UsuarioDAO.salvar(user)) {
-
+            request.setAttribute("title", "Cadastro de usuário!");
             request.setAttribute("message", "Cadastro realizado com sucesso!");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroUsuario.jsp");
             dispatcher.forward(request, response);
         } else {
+            request.setAttribute("title", "Cadastro de usuário!");
             request.setAttribute("message", "Falha ao cadastrar!");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroUsuario.jsp");
             dispatcher.forward(request, response);
@@ -181,21 +182,16 @@ public class UsuarioController extends HttpServlet {
 
     }
 
-    /*
+    
     protected void excluir(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         int id = Integer.parseInt(request.getParameter("id"));
 
-        if (UsuarioDAO.remover(id)) {
+        if (UsuarioDAO.removerUsuario(id)) {
 
             listar(request, response);
 
-        } else {
-            request.setAttribute("mensagemFalha", "Falha ao excluir!");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/ListarUsuario.jsp");
-            dispatcher.forward(request, response);
-
         }
-    }*/
+    }
 }

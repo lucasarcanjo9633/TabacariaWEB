@@ -22,6 +22,18 @@
             $(document).ready(function () {
                 $('#example').DataTable();
             });
+            
+            function mensagem() {
+                var name = confirm("Pressione o botão OK para exclusão.")
+                if (name == true)
+                {
+                    alert("operação realizada")
+                } else
+                {
+                    alert("operação cancelada")
+                    return false;
+                }
+            }
         </script>
 
         <title>Lista Produtos</title>
@@ -97,7 +109,7 @@
                                 </form>                            
                             </td>
                             <td>
-                                <form action="${pageContext.request.contextPath}/ProdutoController" method="post">
+                                <form action="${pageContext.request.contextPath}/ProdutoController" method="post" onsubmit="return mensagem()">
                                     <input type="hidden" value="excluir" name="acao">
                                     <input type="hidden" value="${p.status}" name="status">
                                     <input type="hidden" value="${p.id}" name="id">

@@ -8,6 +8,7 @@
 <%@page import="Model.Usuario"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,6 +24,18 @@
             $(document).ready(function () {
                 $('#example').DataTable();
             });
+
+            function mensagem() {
+                var name = confirm("Pressione o botão OK para exclusão.")
+                if (name == true)
+                {
+                    alert("operação realizada")
+                } else
+                {
+                    alert("operação cancelada")
+                    return false;
+                }
+            }
         </script>
 
         <title>Lista Usuários</title>
@@ -94,7 +107,7 @@
                                 </form>                            
                             </td>
                             <td>
-                                <form action="${pageContext.request.contextPath}/UsuarioController" method="post">
+                                <form action="${pageContext.request.contextPath}/UsuarioController" method="post" onsubmit="return mensagem()">
                                     <input type="hidden" value="excluir" name="acao">
                                     <input type="hidden" value="${user.status}" name="status">
                                     <input type="hidden" value="${user.idPessoa}" name="id">
