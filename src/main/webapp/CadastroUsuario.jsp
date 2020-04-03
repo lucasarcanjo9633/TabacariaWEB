@@ -79,11 +79,11 @@
                     erro = false;
                 }             
 
-                if (login.length < 1) {
+                if (login.length < 5) {
                     document.getElementById("login").style.backgroundColor = "#ffcccc";
                     $.notify({
                         // options
-                        message: 'Preencha o login'
+                        message: 'Login deve conter no minimo 5 caracteres.'
                     }, {
                         // settings
                         type: 'danger'
@@ -129,7 +129,7 @@
                     erro = false;
                 }
 
-                if (senha1.equals(senha2)) {
+                if (senha2 == senha1) {
                     document.getElementById("senha2").style.backgroundColor = "#ffcccc";
                     $.notify({
                         // options

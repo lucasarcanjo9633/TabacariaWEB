@@ -155,6 +155,8 @@ public class UsuarioDAO {
 
             if (linhasAfetadas > 0) {
 
+                retorno = true;
+                
                 int linhasAfetadas2 = 0;
 
                 for (int i = 0; i < user.getModulos().size(); i++) {
@@ -164,16 +166,11 @@ public class UsuarioDAO {
                     comando.setInt(2, Integer.parseInt(user.getModulos().get(i).getNomeModulo()));
                     linhasAfetadas2 = comando.executeUpdate();
                 }
-
-                if (linhasAfetadas2 > 0) {
-
-                    retorno = true;
-
-                } else {
-
-                    retorno = false;
-                }
-
+            }
+            
+            if(linhasAfetadas > 0){
+                
+                retorno = true;
             }
 
         } catch (ClassNotFoundException ex) {
@@ -366,23 +363,21 @@ public class UsuarioDAO {
         }
         return true;
     }
-    
+
     public static boolean ativarUsuario(int idUser) {
         boolean retorno = false;
         try {
-            
-                Class.forName(DRIVER);
-                conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
 
-                PreparedStatement comando = conexao.prepareStatement("update usuario set status=? "
-                        + " where idusuario= ?");
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
 
-                comando.setBoolean(1, true);
-                comando.setInt(2, idUser);
+            PreparedStatement comando = conexao.prepareStatement("update usuario set status=? "
+                    + " where idusuario= ?");
 
-                int linhasAfetadas = comando.executeUpdate();
+            comando.setBoolean(1, true);
+            comando.setInt(2, idUser);
 
-            
+            int linhasAfetadas = comando.executeUpdate();
 
         } catch (ClassNotFoundException ex) {
             retorno = false;
