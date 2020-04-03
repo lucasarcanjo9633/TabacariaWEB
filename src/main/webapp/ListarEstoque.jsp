@@ -12,6 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AlinhamentoButton.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"/>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
         <link href="https://getbootstrap.com.br/docs/4.1/examples/navbar-fixed/navbar-top-fixed.css" rel="stylesheet">
@@ -84,8 +85,8 @@
             </table>       
         </div>
         <div>           
-            <div style="text-align: center; display: inline;">                 
-                <div>
+            <div class="posicao">                 
+                <div class="buttonBack">
                     <form action="${pageContext.request.contextPath}/PaginaInicial.jsp">
                         <button class="btn btn-primary" type="submit" class="btn btn-primary">Voltar</button>
                     </form>

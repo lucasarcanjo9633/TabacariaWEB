@@ -10,7 +10,6 @@ import DAO.UsuarioDAO;
 import Model.Modulo;
 import Model.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -150,7 +149,7 @@ public class UsuarioController extends HttpServlet {
 //        String cpf = request.getParameter("cpf");
 //        String idModulo[] = request.getParameterValues("modulo");
 //        String telefone = request.getParameter("telefone");
-        int id = Integer.parseInt(request.getParameter("idPessoa"));
+        int id = Integer.parseInt(request.getParameter("id"));
         Usuario user = UsuarioDAO.getUsuario(id);
 
         request.setAttribute("user", user);
@@ -182,16 +181,21 @@ public class UsuarioController extends HttpServlet {
 
     }
 
-    
     protected void excluir(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         int id = Integer.parseInt(request.getParameter("id"));
+        boolean status = Boolean.valueOf(request.getParameter("status"));
 
-        if (UsuarioDAO.removerUsuario(id)) {
+        if (status == true) {
 
-            listar(request, response);
+            UsuarioDAO.desativarUsuario(id);
 
+        } else {
+            UsuarioDAO.ativarUsuario(id);
         }
+
+        listar(request, response);
+
     }
 }

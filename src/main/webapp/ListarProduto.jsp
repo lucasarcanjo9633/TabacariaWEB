@@ -11,6 +11,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AlinhamentoButton.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"/>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
         <link href="https://getbootstrap.com.br/docs/4.1/examples/navbar-fixed/navbar-top-fixed.css" rel="stylesheet">
@@ -22,7 +23,7 @@
             $(document).ready(function () {
                 $('#example').DataTable();
             });
-            
+
             function mensagem() {
                 var name = confirm("Pressione o botão OK para exclusão.")
                 if (name == true)
@@ -113,7 +114,16 @@
                                     <input type="hidden" value="excluir" name="acao">
                                     <input type="hidden" value="${p.status}" name="status">
                                     <input type="hidden" value="${p.id}" name="id">
-                                    <button class="btn btn-primary" type="submit">Ativ/Desa</button>                                    
+                                    <button class="btn btn-primary" type="submit">
+                                        <c:choose>
+                                            <c:when test="${p.status == true}">
+                                                Desativar
+                                            </c:when>
+                                            <c:when test="${p.status == false}">
+                                                Ativar
+                                            </c:when>
+                                        </c:choose>
+                                    </button>                                    
                                 </form>
                             </td>                            
                         </tr>
@@ -123,14 +133,14 @@
 
         </div>
         <div>           
-            <div style="text-align: center; display: inline;"> 
-                <div>
+            <div class="posicao"> 
+                <div class="buttonCad">
                     <form action="${pageContext.request.contextPath}/ProdutoController" method="get">
                         <input type="hidden" value="cadastrar" name="acao">
                         <button class="btn btn-primary" type="submit">Cadastrar</button>
                     </form>
                 </div>
-                <div style="margin-top: 8px;">
+                <div class="buttonBack">
                     <form action="${pageContext.request.contextPath}/PaginaInicial.jsp">
                         <button class="btn btn-primary" type="submit" class="btn btn-primary">Voltar</button>
                     </form>

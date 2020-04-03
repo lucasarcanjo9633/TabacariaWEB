@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -89,8 +88,7 @@ public class UsuarioDAO {
 
             PreparedStatement comando = conexao.prepareStatement(" "
                     + " SELECT idusuario, nome, cpf, login, senha, telefone, status "
-                    + " FROM USUARIO "
-                    + " WHERE status = 1");
+                    + " FROM USUARIO");
 
             ResultSet rs = comando.executeQuery();
             while (rs.next()) {
@@ -206,7 +204,6 @@ public class UsuarioDAO {
             PreparedStatement comando = conexao.prepareStatement(" SELECT idusuario, nome, cpf, login, senha, telefone, status "
                     + " FROM USUARIO "
                     + " WHERE "
-                    + " status = '1' AND "
                     + " idusuario = " + idUser + " ; ");
 
             ResultSet rs = comando.executeQuery();
@@ -337,7 +334,7 @@ public class UsuarioDAO {
         return retorno;
     }
 
-    public static boolean removerUsuario(int idUser) {
+    public static boolean desativarUsuario(int idUser) {
         boolean retorno = false;
         try {
 
@@ -355,6 +352,37 @@ public class UsuarioDAO {
                 int linhasAfetadas = comando.executeUpdate();
 
             }
+
+        } catch (ClassNotFoundException ex) {
+            retorno = false;
+        } catch (SQLException ex) {
+            retorno = false;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                retorno = false;
+            }
+        }
+        return true;
+    }
+    
+    public static boolean ativarUsuario(int idUser) {
+        boolean retorno = false;
+        try {
+            
+                Class.forName(DRIVER);
+                conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+                PreparedStatement comando = conexao.prepareStatement("update usuario set status=? "
+                        + " where idusuario= ?");
+
+                comando.setBoolean(1, true);
+                comando.setInt(2, idUser);
+
+                int linhasAfetadas = comando.executeUpdate();
+
+            
 
         } catch (ClassNotFoundException ex) {
             retorno = false;

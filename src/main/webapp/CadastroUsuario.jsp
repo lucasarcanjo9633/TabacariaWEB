@@ -12,7 +12,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html" charset=UTF-8">       
+        <meta http-equiv="Content-Type" content="text/html" charset=UTF-8">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AlinhamentoButton.css" />
         <script> src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js";</script>
         <script src="https://code.jquery.com/jquery-2.2.4.js" integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
@@ -25,9 +26,16 @@
         <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>');</script>
         <script src="https://getbootstrap.com.br/docs/4.1/assets/js/vendor/popper.min.js"></script>
         <script src="https://getbootstrap.com.br/docs/4.1/dist/js/bootstrap.min.js"></script>
+       
+        <%--Script e Css referente ao select --%>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap-select.css" />
+        <script src="${pageContext.request.contextPath}/js/bootstrap-select.min.js"></script>
+        
         <title>Cadastro Produto</title>
 
         <script>
+            $('select').selectpicker();
+            
             function validacao() {
                 var formulario = document.forms["formCadastroUsuario"];
                 var nome = formulario.nomeCompleto.value;
@@ -217,7 +225,7 @@
                         <div>
                             <label>Modulo: </label>
                             <div>
-                                <select name="modulo" multiple style="height: 100px">
+                                <select class="selectpicker" data-live-search="true" name="modulo" multiple style="height: 100px;">                                   
                                     <c:forEach items="${TodosModulos}" var="modulos">
                                         <option value="${modulos.id}">
                                             ${modulos.nomeModulo}
@@ -233,7 +241,7 @@
                             </div>
                         </div>   
                         <div class="form-group">
-                             <label>Login: </label>
+                            <label>Login: </label>
                             <c:choose>
                                 <c:when test="${x == 1}">
                                     <div>

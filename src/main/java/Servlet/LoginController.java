@@ -8,7 +8,6 @@ package Servlet;
 import DAO.UsuarioDAO;
 import Model.Usuario;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,6 +26,14 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        HttpSession sessao = request.getSession();
+        
+        if (sessao.getAttribute("usuario") != null) {
+            response.sendRedirect(request.getContextPath() + "/PaginaInicial.jsp");
+            return;
+        }
+        request.getRequestDispatcher("/Login.jsp")
+                .forward(request, response);
     }
 
     @Override
@@ -36,10 +43,9 @@ public class LoginController extends HttpServlet {
 
         String username = request.getParameter("login");
         String senha = request.getParameter("senha");
-        
-        
+
         Usuario usuario = UsuarioDAO.login(username, senha);
-        
+
         if (usuario != null && usuario.getHashSenha().equals(senha)) {
             // Usuario válido - adiciona na sessão
             HttpSession sessao = request.getSession();

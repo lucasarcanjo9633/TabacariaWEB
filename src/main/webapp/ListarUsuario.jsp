@@ -13,6 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/AlinhamentoButton.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css"/>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
         <link href="https://getbootstrap.com.br/docs/4.1/examples/navbar-fixed/navbar-top-fixed.css" rel="stylesheet">
@@ -58,28 +59,26 @@
             </div>
         </nav>
         <div>
-            <h2 style="text-align: center;">Lista de Produtos</h2>
+            <h2 style="text-align: center;">Lista de Usuarios</h2>
         </div>               
 
         <div>
             <table id="example" class="table table-striped table-bordered" style="width:100%;">
                 <thead>
                     <tr>
-                        <th>Cod.</th>
-                        <th>Login</th>
-                        <th>Nome</th>
+                        <th>Id</th>
                         <th>Status</th>
-                        <th>Modulo</th>
+                        <th>Nome</th>
+                        <th>Usuario</th>
+                        <th>Modulos</th>
                         <th>Editar</th>
-                        <th>Ativar / Desativar</th>
+                        <th>Ativar/Desativar</th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach items="${TodosUsuarios}" var="user">
                         <tr>                       
-                            <td>${user.idPessoa}</td>              
-                            <td>${user.username}</td>
-                            <td>${user.nomeCompleto}</td>
+                            <td>${user.idPessoa}</td>
                             <td> 
                                 <c:choose>
                                     <c:when test="${user.status == true}">
@@ -90,46 +89,60 @@
                                     </c:when>
                                 </c:choose>
                             </td>
-                            <td> 
+                            <td>${user.nomeCompleto}</td>              
+                            <td>${user.username}</td>                       
+                            <td>
                                 <c:forEach items="${user.modulos}" var="modulo" > 
-                                    <c:out value="${modulo.nomeModulo}"></c:out><br>
-                                </c:forEach></td> 
-                            </td>                           
+                                    <c:out value="${modulo.nomeModulo}"></c:out>
+                                </c:forEach></td>                                              
                             <td> 
                                 <form action="${pageContext.request.contextPath}/UsuarioController" method="post">
+                                    <c:forEach items="${user.modulos}" var="modulo" > 
+                                        <input type="hidden" value="${modulo.id}" name="modulo">
+                                    </c:forEach>
                                     <input type="hidden" value="editar" name="acao">
-                                    <input type="hidden" value="${user.idPessoa}" name="idPessoa">
-                                    <input type="hidden" value="${user.nomeCompleto}" name="nomeCompleto">
-                                    <input type="hidden" value="${user.modulos}" name="modulos">                                   
+                                    <input type="hidden" value="${user.idPessoa}" name="id">
+                                    <input type="hidden" value="${user.nomeCompleto}" name="nome">
                                     <input type="hidden" value="${user.cpf}" name="cpf">
                                     <input type="hidden" value="${user.telefone}" name="telefone">
-                                    <button class="btn btn-primary" type="submit">Editar</button>
-                                </form>                            
+                                    <input type="hidden" value="${user.username}" name="login">                                    
+                                    <input type="hidden" value="${user.hashSenha}" name="senha">
+                                    <button type="submit" class="btn btn-primary">Editar</button>
+                                </form>                           
                             </td>
                             <td>
-                                <form action="${pageContext.request.contextPath}/UsuarioController" method="post" onsubmit="return mensagem()">
+                                <form action="${pageContext.request.contextPath}/UsuarioController" method="post">
                                     <input type="hidden" value="excluir" name="acao">
                                     <input type="hidden" value="${user.status}" name="status">
                                     <input type="hidden" value="${user.idPessoa}" name="id">
-                                    <button class="btn btn-primary" type="submit">Ativ/Desa</button>                                    
-                                </form>                                
-                            </td>                                
+                                    <button class="btn btn-primary" type="submit">
+                                        <c:choose>
+                                            <c:when test="${user.status == true}">
+                                                Desativar
+                                            </c:when>
+                                            <c:when test="${user.status == false}">
+                                                Ativar
+                                            </c:when>
+                                        </c:choose>
+                                    </button>                                    
+                                </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>                
             </table>       
         </div>
         <div>           
-            <div style="text-align: center; display: inline;"> 
-                <div>
+            <div class="posicao"> 
+                <div class="buttonCad">
                     <form action="${pageContext.request.contextPath}/UsuarioController" method="post">
                         <input type="hidden" value="cadastrar" name="acao">
-                        <button class="btn btn-primary" type="submit">Cadastrar</button>
+                        <button style="width: 100px;" class="btn btn-primary" type="submit">Cadastrar</button>
                     </form>
                 </div>
-                <div style="margin-top: 8px;">
-                    <form action="${pageContext.request.contextPath}/PaginaInicial.jsp">
-                        <button class="btn btn-primary" type="submit" class="btn btn-primary">Voltar</button>
+                <div class="buttonBack">
+                    <form action="${pageContext.request.contextPath}/PaginaInicial.jsp">                        
+                        <button style="width: 100px;" class="btn btn-primary" type="submit" class="btn btn-primary">Voltar</button>
                     </form>
                 </div>
             </div>
