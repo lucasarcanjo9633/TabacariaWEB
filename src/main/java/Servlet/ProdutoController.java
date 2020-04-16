@@ -247,15 +247,10 @@ public class ProdutoController extends HttpServlet {
 
         String id = request.getParameter("id");
         request.setAttribute("valorAttr", id);
+        
         ArrayList<Produto> p1 = ProdutoWebDAO.getProduto(Integer.parseInt(id));
-
-        for (Produto produto : p1) {
-            request.setAttribute("nomeAttr", produto.getNome());
-            request.setAttribute("valorAttr", produto.getValor());
-            request.setAttribute("descAttr", produto.getDesc());
-            request.setAttribute("qtdAttr", produto.getQtd());
-            request.setAttribute("imgAttr", produto.getImg());
-        }
+        request.setAttribute("ProdutoDetalhe", p1);
+       
         ArrayList<Produto> p = ProdutoWebDAO.getProduto();
         request.setAttribute("TodosProdutos", p);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/DetalheProduto.jsp");

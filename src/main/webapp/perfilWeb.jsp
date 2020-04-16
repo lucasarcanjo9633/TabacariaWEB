@@ -1,9 +1,9 @@
 <%-- 
-    Document   : DetalheProduto
-    Created on : 18/03/2020, 07:20:11
+    Document   : perfilWeb
+    Created on : 16/04/2020, 10:51:11
     Author     : Ochaus
 --%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -49,8 +49,175 @@
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="css/responsive.css">
 
-        <script>
-            $('.carousel').carousel();
+        <script type="text/javascript" >
+
+            function onlynumber(evt) {
+                var theEvent = evt || window.event;
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+                //var regex = /^[0-9.,]+$/;
+                var regex = /^[0-9]+$/;
+                if (!regex.test(key)) {
+                    theEvent.returnValue = false;
+                    if (theEvent.preventDefault)
+                        theEvent.preventDefault();
+                }
+            }
+
+            function validacao() {
+                var formulario = document.forms["form"];
+                var nome = formulario.nome.value;
+                var sobrenome = formulario.sobrenome.value;
+                var rua = formulario.rua.value;
+                var bairro = formulario.bairro.value;
+                var cidade = formulario.cidade.value;
+                var uf = formulario.uf.value;
+                var email = formulario.email.value;
+                var cpf = formulario.cpf.value;
+                var cep = formulario.cep.value;
+                var senha = formulario.senha.value;
+                var confSenha = formulario.confSenha.value;
+
+                if (nome.toString().trim().length < 3) {
+
+                    alert("Nome inválido, preencha o campo corretamente.");
+                    document.getElementById("nome").focus();
+                    return false;
+                }
+
+                if (sobrenome.toString().trim().length < 3) {
+
+                    alert("Sobrenome inválido, preencha o campo corretamente.");
+                    document.getElementById("sobrenome").focus();
+                    return false;
+                }
+
+                if (!validaCPF(cpf)) {
+
+                    alert("CPF inválido, preencha o campo corretamente.");
+                    document.getElementById("cpf").focus();
+                    return false;
+                }
+
+                if (senha.toString().trim() == "" || senha.toString().trim() == null || senha.toString().trim().length < 8) {
+
+                    alert("Senha inválido, preencha o campo corretamente.");
+                    document.getElementById("senha").focus();
+                    return false;
+                }
+
+                if (confSenha.toString().trim() == "" || confSenha.toString().trim() == null || confSenha.toString().trim().length < 8) {
+
+                    alert("Confirmação de senha inválido, preencha o campo corretamente.");
+                    document.getElementById("senha").focus();
+                    return false;
+                }
+
+                if (senha.toString().trim() != confSenha.toString().trim()) {
+
+                    alert("Senhas não correspondem, preencha os campos corretamente.");
+                    document.getElementById("senha").focus();
+                    return false;
+                }
+
+                if (rua.toString().trim() == "" || rua.toString().trim() == null || rua.toString().trim().length < 1) {
+
+                    alert("Endereço inválido, preencha o campo corretamente.");
+                    document.getElementById("rua").focus();
+                    return false;
+                }
+
+                if (bairro.toString().trim() == "" || bairro.toString().trim() == null || bairro.toString().trim().length < 1) {
+
+                    alert("Bairro inválido, preencha o campo corretamente.");
+                    document.getElementById("bairro").focus();
+                    return false;
+                }
+
+                if (cidade.toString().trim() == "" || cidade.toString().trim() == null || cidade.toString().trim().length < 1) {
+
+                    alert("Cidade inválido, preencha o campo corretamente.");
+                    document.getElementById("cidade").focus();
+                    return false;
+                }
+
+                if (uf.toString().trim() == "" || uf.toString().trim() == null || uf.toString().trim().length < 1) {
+
+                    alert("Estado inválido, preencha o campo corretamente.");
+                    document.getElementById("uf").focus();
+                    return false;
+                }
+
+
+            }
+
+
+            function limpa_formulário_cep() {
+                //Limpa valores do formulário de cep.
+                document.getElementById('rua').value = ("");
+                document.getElementById('bairro').value = ("");
+                document.getElementById('cidade').value = ("");
+                document.getElementById('uf').value = ("");
+            }
+
+            function meu_callback(conteudo) {
+                if (!("erro" in conteudo)) {
+                    //Atualiza os campos com os valores.
+                    document.getElementById('rua').value = (conteudo.logradouro);
+                    document.getElementById('bairro').value = (conteudo.bairro);
+                    document.getElementById('cidade').value = (conteudo.localidade);
+                    document.getElementById('uf').value = (conteudo.uf);
+                } //end if.
+                else {
+                    //CEP não Encontrado.
+                    limpa_formulário_cep();
+                    alert("CEP não encontrado.");
+                }
+            }
+
+            function pesquisacep(valor) {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = valor.replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if (validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        document.getElementById('rua').value = "...";
+                        document.getElementById('bairro').value = "...";
+                        document.getElementById('cidade').value = "...";
+                        document.getElementById('uf').value = "...";
+
+                        //Cria um elemento javascript.
+                        var script = document.createElement('script');
+
+                        //Sincroniza com o callback.
+                        script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+                        //Insere script no documento e carrega o conteúdo.
+                        document.body.appendChild(script);
+
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            }
+            
+
         </script>
 
     </head>
@@ -88,7 +255,7 @@
                             <div class="right-content">
                                 <ul class="list-main">
                                     <li><i class="ti-user"></i> <a href="#">Minha Conta</a></li>
-                                    <li><i class="ti-power-off"></i><a href="login.html#">Login</a></li>
+                                    <li><i class="ti-power-off"></i><a href="${pageContext.request.contextPath}/loginWeb.jsp">Login</a></li>
                                 </ul>
                             </div>
                             <!-- End Top Right -->
@@ -103,7 +270,7 @@
                         <div class="col-lg-2 col-md-2 col-12">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="index.html"><img src="images/logo.png" alt="logo"></a>
+                                <a href="${pageContext.request.contextPath}/ProdutoController?acao=listarWeb"><img src="images/logo.png" alt="logo"></a>
                             </div>
                             <!--/ End Logo -->
                             <!-- Search Form -->
@@ -218,258 +385,101 @@
         </header>
         <!--/ End Header -->
 
-        <!-- Start Product Detail -->
-
-        <div class="container">
-            <div class="row">
-                <c:forEach items="${ProdutoDetalhe}" var="p" end="0">
-                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                        <!-- Product Slider -->
-                        <div class="product-gallery">
-                            <div class="quickview-slider-active">
-                                <div class="single-slider">
-                                    <img src="imagens/${p.img}.jpg" alt="#" height="569px;" width="528px;">
-                                </div>
-                                <div class="single-slider">
-                                    <img src="imagens/${p.img}.jpg" alt="#">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Product slider -->
-                    </div>
-                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                        <div class="quickview-content">
-                            <h2>${p.nome}</h2>
-                            <div class="quickview-ratting-review">
-                                <div class="quickview-ratting-wrap">
-                                    <div class="quickview-ratting">
-                                        <i class="yellow fa fa-star"></i>
-                                        <i class="yellow fa fa-star"></i>
-                                        <i class="yellow fa fa-star"></i>
-                                        <i class="yellow fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                    </div>
-                                    <a href="#"> (1 customer review)</a>
-                                </div>
-                                <div class="quickview-stock">
-                                    <c:choose>
-                                        <c:when test="${p.qtd > 0}">
-                                            <span><i class="fa fa-check-circle-o"></i>${p.qtd} produto em estoque</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span><i class="fa fa-times-circle-o"></i> sem estoque</span>
-                                        </c:otherwise>
-                                    </c:choose>
-
-                                </div>
-                            </div>
-                            <h3>Valor: R$ ${p.valor}</h3>
-                            <div class="quickview-peragraph">
-                                <p>Descrição do produto: </p>
-                                <p>${p.desc}</p>
-                                <br>
-                            </div> 
-                            <c:choose>
-                                <c:when test="${p.qtd > 0}">
-                                    <div class="quantity">
-                                        <!-- Input Order -->
-                                        <div class="input-group">
-                                            <div class="button minus">
-                                                <button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-                                                    <i class="ti-minus"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="1000" value="1">
-                                            <div class="button plus">
-                                                <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
-                                                    <i class="ti-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <!--/ End Input Order -->
-                                    </div>
-
-                                    <div class="add-to-cart">
-                                        <a href="#" class="btn">Add Carrinho</a>                                                    
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div>
-                                        <br>
-                                        <p style="color: red;">Produto indisponível</p>
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>
-
-                            <div class="default-social">
-                                <h4 class="share-now">Compartilhe:</h4>
-                                <ul>
-                                    <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                    <li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </div>
-
-        <!-- End Product Detail -->
-
-        <!-- Start Most Popular -->
-        <div class="product-area most-popular section">
+        <!-- Start Perfil -->
+        <section id="contact-us" class="contact-us section">
             <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="section-title">
-                            <h2>Produtos em Destaque</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="owl-carousel popular-slider">
-                            <!-- Start Single Product -->
-                            <c:forEach items="${TodosProdutos}" var="p" end="15">
-                                <div class="single-product">
-                                    <div class="product-img">
-                                        <a href="product-details.html">
-                                            <img class="default-img" src="imagens/${p.img}.jpg" alt="#">
-                                            <img class="hover-img" src="imagens/${p.img}.jpg" alt="#">
-                                        </a>
-                                        <div class="button-head">
-                                            <div class="product-action">
-                                                <a data-toggle="modal" data-target="#${p.id}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Compra Rápida</span></a>
-                                            </div>
-                                            <div class="product-action-2">
-                                                <a title="Add to cart" href="#">Add carrinho</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content">
-                                        <h3><a href="product-details.html">${p.nome}</a></h3>
-                                        <div class="product-price">
-                                            <span>R$ ${p.valor}</span>
-                                        </div>
-                                    </div>
+                <div class="contact-head" >
+                    <div class="row">
+                        <div class="col-lg-12 col-12" style="margin-left: auto; margin-right: auto;">
+                            <div class="form-main">
+                                <div class="title">
+                                    <h3>Perfil</h3>
                                 </div>
-                            </c:forEach>
-                            <!-- End Single Product -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Most Popular Area -->
 
-        <!-- Modal -->
-        <c:forEach items="${TodosProdutos}" var="p" end="15">
-            <div class="modal fade" id="${p.id}" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row no-gutters">
-                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                    <!-- Product Slider -->
-                                    <div class="product-gallery">
-                                        <div class="quickview-slider-active">
-                                            <div class="single-slider">
-                                                <img src="imagens/${p.img}.jpg" alt="#" height="569px;" width="528px;">
-                                            </div>
-                                            <div class="single-slider">
-                                                <img src="imagens/${p.img}.jpg" alt="#">
+                                <form class="form" name="form" method="post" action="mail/mail.php" onsubmit=" return validacao();"  >
+                                    <div class="row">
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>Nome<span>*</span></label>
+                                                <input name="nome" id="nome" type="text" value="${nomeAttr}" placeholder="Ex: João ">
                                             </div>
                                         </div>
+
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>Sobrenome<span>*</span></label>
+                                                <input name="sobrenome" id="sobrenome" type="text" value="${sobreNomeAttr}" placeholder="Ex: Silva ">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>Email<span>*</span></label>
+                                                <input name="email" id="email" type="email" value="${emailAttr}" disabled >
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>CPF<span>*</span></label>
+                                                <input name="cpf" id="cpf" type="text" value="${cpfAttr}" disabled>
+                                            </div>	
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>Senha<span>*</span></label>
+                                                <input name="senha" id="senha" type="text" value="${senhaAttr}" placeholder="Senha deve conter no mínimo 8 caracteres" minlength="8">
+                                            </div>	
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>Confirmar senha<span>*</span></label>
+                                                <input name="confSenha" id="confSenha" type="text" value="${confSenhaAttr}">
+                                            </div>	
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>CEP<span>*</span></label>
+                                                <input name="cep" id="cep" type="text" value="${cepAttr}" onblur="pesquisacep(this.value)" size="10" maxlength="9" placeholder="Ex: 01234567" onkeypress="return onlynumber()">
+                                            </div>	
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>Endereço<span>*</span></label>
+                                                <input name="rua" id="rua" type="text" value="${ruaAttr}" placeholder="Ex: Av. Eng. Eusébio Stevaux, 823">
+                                            </div>	
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>Bairro<span>*</span></label>
+                                                <input name="bairro" id="bairro" type="text" value="${bairroAttr}" placeholder="Ex: Jurubatuba">
+                                            </div>	
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>Cidade:<span>*</span></label>
+                                                <input name="cidade" id="cidade" type="text" value="${cidadeAttr}" placeholder="Ex: São Paulo">
+                                            </div>	
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>Estado:<span>*</span></label>
+                                                <input name="uf" id="uf" type="text" value="${estadoAttr}" placeholder="Ex: SP">
+                                            </div>	
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group button">
+                                                <button type="submit" class="btn ">Salvar</button>
+                                            </div>
+                                        </div>                                       
                                     </div>
-                                    <!-- End Product slider -->
-                                </div>
-                                <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
-                                    <div class="quickview-content">
-                                        <h2>${p.nome}</h2>
-                                        <div class="quickview-ratting-review">
-                                            <div class="quickview-ratting-wrap">
-                                                <div class="quickview-ratting">
-                                                    <i class="yellow fa fa-star"></i>
-                                                    <i class="yellow fa fa-star"></i>
-                                                    <i class="yellow fa fa-star"></i>
-                                                    <i class="yellow fa fa-star"></i>
-                                                    <i class="fa fa-star"></i>
-                                                </div>
-                                                <a href="#"> (1 customer review)</a>
-                                            </div>
-                                            <div class="quickview-stock">
-                                                <c:choose>
-                                                    <c:when test="${p.qtd > 0}">
-                                                        <span><i class="fa fa-check-circle-o"></i>${p.qtd} produto em estoque</span>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <span><i class="fa fa-times-circle-o"></i> sem estoque</span>
-                                                    </c:otherwise>
-                                                </c:choose>
-
-                                            </div>
-                                        </div>
-                                        <h3>Valor: R$ ${p.valor}</h3>
-                                        <div class="quickview-peragraph">
-                                            <p>Descrição do produto: </p>
-                                            <p>${p.desc}</p>
-                                            <br>
-                                        </div> 
-                                        <c:choose>
-                                            <c:when test="${p.qtd > 0}">
-                                                <div class="quantity">
-                                                    <!-- Input Order -->
-                                                    <div class="input-group">
-                                                        <div class="button minus">
-                                                            <button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-                                                                <i class="ti-minus"></i>
-                                                            </button>
-                                                        </div>
-                                                        <input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="1000" value="1">
-                                                        <div class="button plus">
-                                                            <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
-                                                                <i class="ti-plus"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <!--/ End Input Order -->
-                                                </div>
-
-                                                <div class="add-to-cart">
-                                                    <a href="#" class="btn">Add Carrinho</a>                                                    
-                                                </div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <div>
-                                                    <br>
-                                                    <p style="color: red;">Produto indisponível</p>
-                                                </div>
-                                            </c:otherwise>
-                                        </c:choose>
-
-                                        <div class="default-social">
-                                            <h4 class="share-now">Compartilhe:</h4>
-                                            <ul>
-                                                <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                                <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                                <li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
-                                                <li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
-                        </div>
+                        </div>                    
                     </div>
                 </div>
             </div>
-        </c:forEach>
-        <!-- Modal end -->
+        </section>
+        <!--/ End Perfil -->
 
         <!-- Start Footer Area -->
         <footer class="footer">
