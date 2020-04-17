@@ -92,12 +92,18 @@
                                 <c:choose>
                                     <c:when test="${sessionScope.cliente != null}">
                                         <ul class="nav" >
-                                            <li><i class="ti-user" style="color:#F7941D;"></i> ${sessionScope.cliente.nome}<span>Cliente</span> <i class="ti-angle-down"></i>
+                                            <li><i class="ti-user" style="color:#F7941D;"></i> ${sessionScope.cliente.nome}<i class="ti-angle-down"></i>
                                                 <ul class="dropdown">
-                                                    <li><a href="perfilWeb.jsp">Perfil</a></li>
+                                                    <li>
+                                                        <form name="perfil" id="perfil" action="${pageContext.request.contextPath}/ClienteController" method="post">
+                                                            <input type="hidden" name="acao" value="perfil">
+                                                            <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">
+                                                            <a href="javascript:perfil.submit()">Perfil</a>
+                                                        </form>
+                                                    </li>
                                                     <li><a href="#">Checkout</a></li>
                                                     <li><a href="#">Carrinho</a></li>
-                                                    <li><a href="#">Sair</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/LogoutController">Sair</a></li>
                                                 </ul>
                                             </li>
                                         </ul>

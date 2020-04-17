@@ -45,6 +45,20 @@ public class Cliente {
         this.status = status;
     }
 
+    public Cliente(int idCliente, String nome, String sobrenome, Date dtaNasc, String senha, String CEP, String endereco, String bairro, String cidade, String UF, String telefone) {
+        this.idCliente = idCliente;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.dtaNasc = dtaNasc;
+        this.senha = senha;
+        this.CEP = CEP;
+        this.endereco = endereco;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.UF = UF;
+        this.telefone = telefone;
+    }
+    
     public Cliente(String nome, String sobrenome, String email, String CPF, Date dtaNasc, String senha, String CEP, String endereco, String bairro, String cidade, String UF, String telefone) {
         this.nome = nome;
         this.sobrenome = sobrenome;

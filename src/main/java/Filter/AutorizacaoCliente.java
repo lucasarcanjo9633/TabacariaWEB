@@ -6,7 +6,6 @@
 package Filter;
 
 import Model.Cliente;
-import Model.Usuario;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -47,7 +46,7 @@ public class AutorizacaoCliente implements Filter {
         if (urlAcessada.endsWith("/PaginaInicial.jsp")) {
             return true;
         }else if (urlAcessada.endsWith("/LogoutController")) {
-            return true;                
+            return true;
         }
         return false;
     }
@@ -60,4 +59,4 @@ public class AutorizacaoCliente implements Filter {
     public void init(FilterConfig filterConfig) {
 
     }
-    }
+}

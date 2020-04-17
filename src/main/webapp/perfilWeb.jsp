@@ -216,7 +216,7 @@
                     limpa_formulário_cep();
                 }
             }
-            
+
 
         </script>
 
@@ -396,7 +396,9 @@
                                     <h3>Perfil</h3>
                                 </div>
 
-                                <form class="form" name="form" method="post" action="mail/mail.php" onsubmit=" return validacao();"  >
+                                <form class="form" name="form" method="post" action="${pageContext.request.contextPath}/ClienteController" onsubmit=" return validacao();">
+                                    <input type="hidden" name="acao" value="editar">
+                                    <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">
                                     <div class="row">
                                         <div class="col-lg-6 col-12">
                                             <div class="form-group">
@@ -414,26 +416,42 @@
 
                                         <div class="col-lg-6 col-12">
                                             <div class="form-group">
-                                                <label>Email<span>*</span></label>
-                                                <input name="email" id="email" type="email" value="${emailAttr}" disabled >
+                                                <label>Data de Nascimento: <span>*</span></label>
+                                                <input name="data" id="data" type="date" value="${dateNascAttr}">
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6 col-12">
                                             <div class="form-group">
                                                 <label>CPF<span>*</span></label>
                                                 <input name="cpf" id="cpf" type="text" value="${cpfAttr}" disabled>
                                             </div>	
                                         </div>
+
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>Email<span>*</span></label>
+                                                <input name="email" id="email" type="email" value="${emailAttr}" disabled >
+                                            </div>
+                                        </div>
+                                            
+                                        <div class="col-lg-6 col-12">
+                                            <div class="form-group">
+                                                <label>Telefone<span>*</span></label>
+                                                <input name="telefone" id="telefone" type="telefone" value="${telefoneAttr}" placeholder="(11) 99999-9999">
+                                            </div>
+                                        </div>
+
                                         <div class="col-lg-6 col-12">
                                             <div class="form-group">
                                                 <label>Senha<span>*</span></label>
-                                                <input name="senha" id="senha" type="text" value="${senhaAttr}" placeholder="Senha deve conter no mínimo 8 caracteres" minlength="8">
+                                                <input name="senha" id="senha" type="password" value="${senhaAttr}" placeholder="Senha deve conter no mínimo 8 caracteres" minlength="8">
                                             </div>	
                                         </div>
                                         <div class="col-lg-6 col-12">
                                             <div class="form-group">
                                                 <label>Confirmar senha<span>*</span></label>
-                                                <input name="confSenha" id="confSenha" type="text" value="${confSenhaAttr}">
+                                                <input name="confSenha" id="confSenha" type="password" value="${confSenhaAttr}">
                                             </div>	
                                         </div>
                                         <div class="col-lg-6 col-12">
