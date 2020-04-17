@@ -88,7 +88,6 @@ public class UsuarioController extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroUsuario.jsp");
             dispatcher.forward(request, response);
         } else {
-            request.setAttribute("title", "Cadastro de usuário!");
             request.setAttribute("message", "Falha ao cadastrar!");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/CadastroUsuario.jsp");
             dispatcher.forward(request, response);

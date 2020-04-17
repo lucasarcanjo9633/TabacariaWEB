@@ -92,36 +92,36 @@
                 return false;
             }
 
-            if (email.toString().indexOf("@") == -1 || email.toString().indexOf(".") == -1 || email.toString().trim() == "" || email.toString().trim() == null) {
+            /*if (email.toString().indexOf("@") == -1 || email.toString().indexOf(".") == -1 || email.toString().trim() == "" || email.toString().trim() == null) {
 
                 alert("Email inválido, preencha o campo corretamente.");
                 document.getElementById("email").focus();
                 return false;
-            }
-            
+            }*/
+
             if (!validaCPF(cpf)) {
 
                 alert("CPF inválido, preencha o campo corretamente.");
                 document.getElementById("cpf").focus();
                 return false;
             }
-            
-            if(senha.toString().trim() == "" || senha.toString().trim() == null || senha.toString().trim().length < 8){
-                
+
+            if (senha.toString().trim() == "" || senha.toString().trim() == null || senha.toString().trim().length < 8) {
+
                 alert("Senha inválido, preencha o campo corretamente.");
                 document.getElementById("senha").focus();
                 return false;
             }
-            
-            if(confSenha.toString().trim() == "" || confSenha.toString().trim() == null || confSenha.toString().trim().length < 8){
-                
+
+            if (confSenha.toString().trim() == "" || confSenha.toString().trim() == null || confSenha.toString().trim().length < 8) {
+
                 alert("Confirmação de senha inválido, preencha o campo corretamente.");
                 document.getElementById("senha").focus();
                 return false;
             }
-            
-            if(senha.toString().trim() != confSenha.toString().trim()){
-                
+
+            if (senha.toString().trim() != confSenha.toString().trim()) {
+
                 alert("Senhas não correspondem, preencha os campos corretamente.");
                 document.getElementById("senha").focus();
                 return false;
@@ -155,7 +155,7 @@
                 return false;
             }
 
-            
+
         }
 
         function validaCPF(cpf)
@@ -257,7 +257,7 @@
                 limpa_formulário_cep();
             }
         }
-        
+
     </script>
 
 
@@ -308,9 +308,11 @@
                         <div class="form-main">
                             <div class="title">
                                 <h3>Cadastre-se</h3>
+                                <br>
+                                <label>${message}</label>
                             </div>
-
-                            <form class="form" name="form" method="post" action="mail/mail.php" onsubmit=" return validacao();"  >
+                            <form class="form"  action="${pageContext.request.contextPath}/ClienteController" name="form" method="post" onsubmit=" return validacao();"  >
+                                <input name="acao"  type="hidden" value="salvar">
                                 <div class="row">
                                     <div class="col-lg-6 col-12">
                                         <div class="form-group">
@@ -328,28 +330,18 @@
 
                                     <div class="col-lg-6 col-12">
                                         <div class="form-group">
-                                            <label>Email<span>*</span></label>
-                                            <input name="email" id="email" type="email" placeholder="Ex: joaodasilva@gmail.com">
+                                            <label>Data de Nascimento: <span>*</span></label>
+                                            <input name="data" id="data" type="date">
                                         </div>
                                     </div>
+
                                     <div class="col-lg-6 col-12">
                                         <div class="form-group">
                                             <label>CPF<span>*</span></label>
                                             <input name="cpf" id="cpf" type="text" onfocus="validaCPF(this.value)" placeholder="Ex: 12345678900" maxlength="11" onkeypress="return onlynumber()">
                                         </div>	
                                     </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="form-group">
-                                            <label>Senha<span>*</span></label>
-                                            <input name="senha" id="senha" type="text" placeholder="Senha deve conter no mínimo 8 caracteres" minlength="8">
-                                        </div>	
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="form-group">
-                                            <label>Confirmar senha<span>*</span></label>
-                                            <input name="confSenha" id="confSenha" type="text">
-                                        </div>	
-                                    </div>
+
                                     <div class="col-lg-6 col-12">
                                         <div class="form-group">
                                             <label>CEP<span>*</span></label>
@@ -380,8 +372,45 @@
                                             <input name="uf" id="uf" type="text" placeholder="Ex: SP">
                                         </div>	
                                     </div>
+                                    <div class="col-lg-6 col-12">
+                                        <div class="form-group">
+                                            <label>Telefone<span>*</span></label>
+                                            <input name="telefone" id="email" type="telefone" placeholder="(11) 99999-9999">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-12">
+                                        <br><br>
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+                                        <div class="form-group">
+                                            <label>Email<span>*</span></label>
+                                            <input name="email" id="email" type="email" placeholder="Ex: joaodasilva@gmail.com">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-12">
+
+                                    </div>
+
+                                    <div class="col-lg-6 col-12">
+                                        <div class="form-group">
+                                            <label>Senha<span>*</span></label>
+                                            <input name="senha" id="senha" type="text" placeholder="Senha deve conter no mínimo 8 caracteres" minlength="8">
+                                        </div>	
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+                                        <div class="form-group">
+                                            <label>Confirmar senha<span>*</span></label>
+                                            <input name="confSenha" id="confSenha" type="text">
+                                        </div>	
+                                    </div>
                                     <div class="col-12">
                                         <div class="form-group button">
+                                            
                                             <button type="submit" class="btn ">Cadastrar</button>
                                         </div>
                                     </div>
