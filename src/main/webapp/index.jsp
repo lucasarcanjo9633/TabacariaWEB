@@ -88,8 +88,21 @@
                             <!-- Top Right -->
                             <div class="right-content">
                                 <ul class="list-main">
-                                    <li><i class="ti-user"></i> <a href="${pageContext.request.contextPath}/perfilWeb.jsp">Minha Conta</a></li>
-                                    <li><i class="ti-power-off"></i><a href="${pageContext.request.contextPath}/loginWeb.jsp">Login</a></li>
+                                    
+                                    <li>  
+                                        <c:choose>
+                                            <c:when test="${sessionScope.cliente != null}">
+                                                <li><i class="ti-user"></i> <a href="${pageContext.request.contextPath}/perfilWeb.jsp">Minha Conta</a></li>
+                                                <label>Igor Lima</label>
+                                                <i class=""></i>  
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="${pageContext.request.contextPath}/loginWeb.jsp">Login</a>
+                                                <i class="ti-power-off"></i>  
+                                            </c:otherwise>    
+
+                                        </c:choose>
+                                    </li>
                                 </ul>
                             </div>
                             <!-- End Top Right -->
@@ -273,12 +286,12 @@
                                                 <div class="col-xl-3 col-lg-4 col-md-4 col-12">
                                                     <div class="single-product">
                                                         <div class="product-img">
-                                                            
-                                                                <a href="${pageContext.request.contextPath}/ProdutoController?acao=listarWebDetalhe&id=${p.id}">
-                                                                    <img class="default-img" src="imagens/${p.img}.jpg" alt="#">
-                                                                    <img class="hover-img" src="imagens/${p.img}.jpg" alt="#">
-                                                                </a>
-                                                            
+
+                                                            <a href="${pageContext.request.contextPath}/ProdutoController?acao=listarWebDetalhe&id=${p.id}">
+                                                                <img class="default-img" src="imagens/${p.img}.jpg" alt="#">
+                                                                <img class="hover-img" src="imagens/${p.img}.jpg" alt="#">
+                                                            </a>
+
                                                             <div class="button-head">
                                                                 <div class="product-action">
                                                                     <a data-toggle="modal" data-target="#${p.id}" title="Quick View" href="#"><i class=" ti-eye"></i><span>Compra Rápida</span></a>                                                                    

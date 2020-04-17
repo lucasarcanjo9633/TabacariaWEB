@@ -71,5 +71,42 @@ public class ClienteDAO {
         }
         return retorno;
     }
+    
+     public static Cliente login(String login, String senha) {
+        Cliente cliente = null;
+
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement(" SELECT email, senha "
+                    + " FROM CLIENTE "
+                    + " WHERE "
+                    + " status = '1' AND "
+                    + " email = '" + login + "' AND "
+                    + " senha = '" + senha + "'; ");
+
+            ResultSet rs = comando.executeQuery();
+            while (rs.next()) {
+                cliente = new Cliente();
+                cliente.setEmail(rs.getString("email"));
+                cliente.setSenha(rs.getString("senha"));
+            }
+
+        } catch (ClassNotFoundException ex) {
+            cliente = null;
+        } catch (SQLException ex) {
+            cliente = null;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                cliente = null;
+            }
+
+        }
+        return cliente;
+    }
 
 }

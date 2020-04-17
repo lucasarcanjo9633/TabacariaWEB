@@ -67,7 +67,7 @@ public class ClienteController extends HttpServlet {
         Cliente cliente = new Cliente(nome, sobrenome, email, cpf, data, senha, cep, endereco, bairro, cidade, uf, telefone);
 
         if (DAO.ClienteDAO.salvar(cliente)) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp?acao=listarWeb");
             dispatcher.forward(request, response);
         } else {
             request.setAttribute("message", "Falha ao cadastrar!");

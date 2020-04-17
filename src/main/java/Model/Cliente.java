@@ -60,6 +60,10 @@ public class Cliente {
         this.UF = UF;
     }
 
+    public Cliente() {
+        
+    }
+
     public String getTelefone() {
         return telefone;
     }
