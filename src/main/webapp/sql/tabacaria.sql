@@ -11,6 +11,22 @@ senha varchar(30) not null,
 status boolean default true
 );
 
+CREATE TABLE `tabacaria`.`cliente` (
+  `idcliente` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NOT NULL,
+  `sobrenome` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `cpf` VARCHAR(15) NOT NULL,
+  `senha` VARCHAR(30) NOT NULL,
+  `cep` VARCHAR(10) NOT NULL,
+  `endereco` VARCHAR(100) NOT NULL,
+  `bairro` VARCHAR(100) NOT NULL,
+  `cidade` VARCHAR(50) NOT NULL,
+  `uf` VARCHAR(50) NOT NULL,
+  `telefone` VARCHAR(15) NULL,
+  `dateNasc` VARCHAR(45) NULL,
+  PRIMARY KEY (`idcliente`);
+
 CREATE table modulo(
 idmodulo int auto_increment not null primary key,
 nome varchar(30) not null unique);

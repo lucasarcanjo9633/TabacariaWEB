@@ -18,7 +18,7 @@ public class Cliente {
     private String sobrenome;
     private String email;
     private String CPF;
-    private Date dtaNasc;
+    private Date dtaNasc; 
     private String senha;
     private String CEP;
     private String endereco;

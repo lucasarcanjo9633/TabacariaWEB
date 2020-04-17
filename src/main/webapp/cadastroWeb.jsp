@@ -93,11 +93,11 @@
             }
 
             /*if (email.toString().indexOf("@") == -1 || email.toString().indexOf(".") == -1 || email.toString().trim() == "" || email.toString().trim() == null) {
-
-                alert("Email inválido, preencha o campo corretamente.");
-                document.getElementById("email").focus();
-                return false;
-            }*/
+             
+             alert("Email inválido, preencha o campo corretamente.");
+             document.getElementById("email").focus();
+             return false;
+             }*/
 
             if (!validaCPF(cpf)) {
 
@@ -342,6 +342,33 @@
                                         </div>	
                                     </div>
 
+
+                                    <div class="col-lg-6 col-12">
+                                        <div class="form-group">
+                                            <label>Email<span>*</span></label>
+                                            <input name="email" id="email" type="email" placeholder="Ex: joaodasilva@gmail.com">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+                                        <div class="form-group">
+                                            <label>Telefone<span>*</span></label>
+                                            <input name="telefone" id="telefone" type="telefone" placeholder="(11) 99999-9999">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-12">
+                                        <div class="form-group">
+                                            <label>Senha<span>*</span></label>
+                                            <input name="senha" id="senha" type="password" placeholder="Senha deve conter no mínimo 8 caracteres" minlength="8">
+                                        </div>	
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+                                        <div class="form-group">
+                                            <label>Confirmar senha<span>*</span></label>
+                                            <input name="confSenha" id="confSenha" type="password">
+                                        </div>	
+                                    </div>
+
                                     <div class="col-lg-6 col-12">
                                         <div class="form-group">
                                             <label>CEP<span>*</span></label>
@@ -371,46 +398,11 @@
                                             <label>Estado:<span>*</span></label>
                                             <input name="uf" id="uf" type="text" placeholder="Ex: SP">
                                         </div>	
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="form-group">
-                                            <label>Telefone<span>*</span></label>
-                                            <input name="telefone" id="email" type="telefone" placeholder="(11) 99999-9999">
-                                        </div>
-                                    </div>
+                                    </div>                                   
 
-                                    <div class="col-lg-6 col-12">
-                                        <br><br>
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="form-group">
-                                            <label>Email<span>*</span></label>
-                                            <input name="email" id="email" type="email" placeholder="Ex: joaodasilva@gmail.com">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-6 col-12">
-
-                                    </div>
-
-                                    <div class="col-lg-6 col-12">
-                                        <div class="form-group">
-                                            <label>Senha<span>*</span></label>
-                                            <input name="senha" id="senha" type="text" placeholder="Senha deve conter no mínimo 8 caracteres" minlength="8">
-                                        </div>	
-                                    </div>
-                                    <div class="col-lg-6 col-12">
-                                        <div class="form-group">
-                                            <label>Confirmar senha<span>*</span></label>
-                                            <input name="confSenha" id="confSenha" type="text">
-                                        </div>	
-                                    </div>
                                     <div class="col-12">
                                         <div class="form-group button">
-                                            
+
                                             <button type="submit" class="btn ">Cadastrar</button>
                                         </div>
                                     </div>
