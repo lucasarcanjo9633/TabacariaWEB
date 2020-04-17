@@ -86,25 +86,34 @@
                         </div>
                         <div class="col-lg-8 col-md-12 col-12">
                             <!-- Top Right -->
-                            <div class="right-content">
-                                <ul class="list-main">
-                                    
-                                    <li>  
-                                        <c:choose>
-                                            <c:when test="${sessionScope.cliente != null}">
-                                                <li><i class="ti-user"></i> <a href="${pageContext.request.contextPath}/perfilWeb.jsp">Minha Conta</a></li>
-                                                <label>Igor Lima</label>
-                                                <i class=""></i>  
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a href="${pageContext.request.contextPath}/loginWeb.jsp">Login</a>
-                                                <i class="ti-power-off"></i>  
-                                            </c:otherwise>    
 
-                                        </c:choose>
-                                    </li>
-                                </ul>
-                            </div>
+                            <div class="right-content" style=" margin-right: 50px; margin-left: auto;">
+
+                                <c:choose>
+                                    <c:when test="${sessionScope.cliente != null}">
+                                        <ul class="nav" >
+                                            <li><i class="ti-user" style="color:#F7941D;"></i> ${sessionScope.cliente.nome}<span>Cliente</span> <i class="ti-angle-down"></i>
+                                                <ul class="dropdown">
+                                                    <li><a href="perfilWeb.jsp">Perfil</a></li>
+                                                    <li><a href="#">Checkout</a></li>
+                                                    <li><a href="#">Carrinho</a></li>
+                                                    <li><a href="#">Sair</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <ul class="nav">
+                                            <li><i class="ti-user" style="color:#F7941D;"></i> Login <i class="ti-angle-down"></i>
+                                                <ul class="dropdown">
+                                                    <li><a href="loginWeb.jsp">Login</a></li>
+                                                    <li><a href="cadastroWeb.jsp">Cadastre-se</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>                                
                             <!-- End Top Right -->
                         </div>
                     </div>
