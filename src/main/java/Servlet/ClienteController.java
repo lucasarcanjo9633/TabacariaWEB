@@ -110,7 +110,7 @@ public class ClienteController extends HttpServlet {
             request.setAttribute("nomeAttr", c.getNome());
             request.setAttribute("sobreNomeAttr", c.getSobrenome());
             request.setAttribute("emailAttr", c.getEmail());
-            request.setAttribute("cpfAttr", c.getEmail());
+            request.setAttribute("cpfAttr", c.getCPF());
             request.setAttribute("cepAttr", c.getCEP());
             request.setAttribute("ruaAttr", c.getEndereco());
             request.setAttribute("bairroAttr", c.getBairro());
