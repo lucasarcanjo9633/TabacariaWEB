@@ -4,6 +4,7 @@
     Author     : Ochaus
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -213,6 +214,14 @@
         </div>
         <!-- End Preloader -->
 
+        <!-- Start Notificação -->
+
+        <c:if test="${message != null}">
+            <script>
+        alert("${message}");
+            </script>
+        </c:if>
+        <!-- End Notificação -->
 
         <!-- Header -->
         <header class="header shop">
@@ -231,12 +240,45 @@
                         </div>
                         <div class="col-lg-8 col-md-12 col-12">
                             <!-- Top Right -->
-                            <div class="right-content">
-                                <ul class="list-main">
-                                    <li><i class="ti-user"></i> <a href="#">Minha Conta</a></li>
-                                    <li><i class="ti-power-off"></i><a href="${pageContext.request.contextPath}/loginWeb.jsp">Login</a></li>
-                                </ul>
-                            </div>
+                            <div class="right-content" style=" margin-right: 50px; margin-left: auto;">                               
+                                <c:choose>
+                                    <c:when test="${sessionScope.cliente != null}">
+                                        <ul class="nav" >
+                                            <li><i class="ti-user" style="color:#F7941D;"></i> ${sessionScope.cliente.nome}<i class="ti-angle-down"></i>
+                                                <ul class="dropdown">
+                                                    <li>
+                                                        <form name="perfil" id="perfil" action="${pageContext.request.contextPath}/ClienteController" method="post">
+                                                            <input type="hidden" name="acao" value="perfil">
+                                                            <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">
+                                                            <a href="javascript:perfil.submit()">Perfil</a>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form name="perfilSenha" id="perfilSenha" action="${pageContext.request.contextPath}/ClienteController" method="post">
+                                                            <input type="hidden" name="acao" value="perfilSenha">
+                                                            <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">
+                                                            <a href="javascript:perfilSenha.submit()">Alterar Senha</a>
+                                                        </form>
+                                                    </li>
+                                                    <li><a href="#">Checkout</a></li>
+                                                    <li><a href="#">Carrinho</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/LogoutClienteController">Sair</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <ul class="nav">
+                                            <li><i class="ti-user" style="color:#F7941D;"></i> Login <i class="ti-angle-down"></i>
+                                                <ul class="dropdown">
+                                                    <li><a href="loginWeb.jsp">Login</a></li>
+                                                    <li><a href="cadastroWeb.jsp">Cadastre-se</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>     
                             <!-- End Top Right -->
                         </div>
                     </div>
@@ -377,7 +419,7 @@
 
                                 <form class="form" name="form" method="post" action="${pageContext.request.contextPath}/ClienteController" onsubmit=" return validacao();">
                                     <input type="hidden" name="acao" value="editar">
-                                    <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">
+                                    <input type="hidden" name="idCliente" value="${idClienteAttr}">
                                     <div class="row">
                                         <div class="col-lg-6 col-12">
                                             <div class="form-group">
@@ -413,7 +455,7 @@
                                                 <input name="email" id="email" type="email" value="${emailAttr}" disabled >
                                             </div>
                                         </div>
-                                            
+
                                         <div class="col-lg-6 col-12">
                                             <div class="form-group">
                                                 <label>Telefone<span>*</span></label>

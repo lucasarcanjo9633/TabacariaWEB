@@ -68,6 +68,14 @@
         </div>
         <!-- End Preloader -->
 
+        <!-- Start Notificação -->
+
+        <c:if test="${message != null}">
+            <script>
+        alert("${message}");
+            </script>
+        </c:if>
+        <!-- End Notificação -->
 
         <!-- Header -->
         <header class="header shop">
@@ -102,15 +110,15 @@
                                                         </form>
                                                     </li>
                                                     <li>
-                                                        <form name="perfil" id="perfil" action="${pageContext.request.contextPath}/ClienteController" method="post">
+                                                        <form name="perfilSenha" id="perfilSenha" action="${pageContext.request.contextPath}/ClienteController" method="post">
                                                             <input type="hidden" name="acao" value="perfilSenha">
                                                             <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">
-                                                            <a href="javascript:perfil.submit()">Alterar Senha</a>
+                                                            <a href="javascript:perfilSenha.submit()">Alterar Senha</a>
                                                         </form>
                                                     </li>
                                                     <li><a href="#">Checkout</a></li>
                                                     <li><a href="#">Carrinho</a></li>
-                                                    <li><a href="${pageContext.request.contextPath}/LogoutController">Sair</a></li>
+                                                    <li><a href="${pageContext.request.contextPath}/LogoutClienteController">Sair</a></li>
                                                 </ul>
                                             </li>
                                         </ul>

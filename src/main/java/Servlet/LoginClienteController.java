@@ -9,7 +9,6 @@ import DAO.ClienteDAO;
 import Model.Cliente;
 import Model.Criptografar;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -51,10 +50,10 @@ public class LoginClienteController extends HttpServlet {
             sessao.setAttribute("cliente", cliente);
 
             // Apresenta tela home para usuario.
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
+            response.sendRedirect(request.getContextPath() + "/ProdutoController?acao=listarWeb");
         } else {
             // Usuario não está cadastrado, deve mostrar erro
-            request.setAttribute("msgErro", "Usuario inexistente ou senha inválida");
+            request.setAttribute("message", "Usuário ou senha inválidos");
             request.getRequestDispatcher("/loginWeb.jsp")
                     .forward(request, response);
         }

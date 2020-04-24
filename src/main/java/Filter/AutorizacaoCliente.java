@@ -37,21 +37,40 @@ public class AutorizacaoCliente implements Filter {
         Cliente cliente = (Cliente) sessao.getAttribute("cliente");
         if (verificarPermissaoAcesso(httpRequest, cliente)) {
             chain.doFilter(request, response);
+        } else {
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.jsp");
         }
     }
+    
 
     private boolean verificarPermissaoAcesso(
             HttpServletRequest httpRequest, Cliente cliente) {
         String urlAcessada = httpRequest.getRequestURI();
-        if (urlAcessada.endsWith("/PaginaInicial.jsp")) {
+        if (urlAcessada.endsWith("/index.jsp")) {
             return true;
-        }else if (urlAcessada.endsWith("/LogoutController")) {
+        } else if (urlAcessada.endsWith("/ProdutoController?acao=listarWeb")) {
             return true;
-        }else if(urlAcessada.endsWith("/perfilWeb.jsp")){
+        } else if (urlAcessada.endsWith("/cadastroWeb.jsp")) {
             return true;
-        }else if(urlAcessada.endsWith("/alterarSenhaWeb.jsp")){
+        } else if (urlAcessada.endsWith("/LogoutController")) {
             return true;
-        }else if(urlAcessada.endsWith("/ClienteController.jsp")){
+        } else if (urlAcessada.endsWith("/perfilWeb.jsp")) {
+            return true;
+        } else if (urlAcessada.endsWith("/alterarSenhaWeb.jsp")) {
+            return true;
+        } else if (urlAcessada.endsWith("/loginWeb.jsp")) {
+            return true;
+        } else if (urlAcessada.endsWith("/cadastroWeb.jsp")) {
+            return true;
+        } else if (urlAcessada.endsWith("/DetalheProduto.jsp")) {
+            return true;
+        } else if (urlAcessada.endsWith("/ProdutoController")) {
+            return true;
+        } else if (urlAcessada.endsWith("/EstoqueController")) {
+            return true;
+        } else if (urlAcessada.endsWith("/LoginClienteController")) {
+            return true;
+        } else if (urlAcessada.endsWith("/ClienteController")) {
             return true;
         }
         return false;

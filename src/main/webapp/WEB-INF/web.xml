@@ -20,9 +20,32 @@
         <servlet-name>LogoutController</servlet-name>
         <servlet-name>UsuarioController</servlet-name>
         <servlet-name>EstoqueController</servlet-name>
-        <servlet-name>ProdutoController</servlet-name>
 
     </filter-mapping>
+    
+    <filter>
+        <filter-name>AutorizacaoCliente</filter-name>
+        <filter-class>Filter.AutorizacaoCliente</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AutorizacaoCliente</filter-name>
+        
+        <url-pattern>/index.jsp</url-pattern>
+        
+        <url-pattern>/loginWeb.jsp</url-pattern>
+        <url-pattern>/perfilWeb.jsp</url-pattern>
+        <url-pattern>/cadastroWeb.jsp</url-pattern>
+        
+        <url-pattern>/DetalheProduto.jsp</url-pattern>
+        <url-pattern>/alterarSenhaWeb.jsp</url-pattern>
+        
+        <servlet-name>LoginClienteController</servlet-name>
+        <servlet-name>LogoutController</servlet-name>
+        <servlet-name>ClienteController</servlet-name>
+        <servlet-name>EstoqueController</servlet-name>
+        <servlet-name>ProdutoController</servlet-name>        
+    </filter-mapping>
+    
     <session-config>
         <session-timeout>
             60

@@ -4,6 +4,7 @@
     Author     : Ochaus
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -275,7 +276,14 @@
     </div>
     <!-- End Preloader -->
 
+    <!-- Start Notificação -->
 
+    <c:if test="${message != null}">
+        <script>        
+        alert("${message}");
+        </script>
+    </c:if>
+    <!-- End Notificação -->
 
     <!-- Header -->
     <header class="header shop">        

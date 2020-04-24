@@ -61,9 +61,7 @@ public class ProdutoController extends HttpServlet {
             case "visualizar":
                 visualizar(request, response);
                 break;
-
         }
-
     }
 
     @Override
@@ -112,13 +110,13 @@ public class ProdutoController extends HttpServlet {
 
         int id = Integer.parseInt(request.getParameter("id"));
         boolean status = Boolean.valueOf(request.getParameter("status"));
-        
-        if(status == true){
+
+        if (status == true) {
             ProdutoDAO.desativar(id);
-        }else{
+        } else {
             ProdutoDAO.ativar(id);
         }
-        
+
         listar(request, response);
     }
 
@@ -247,10 +245,10 @@ public class ProdutoController extends HttpServlet {
 
         String id = request.getParameter("id");
         request.setAttribute("valorAttr", id);
-        
+
         ArrayList<Produto> p1 = ProdutoWebDAO.getProduto(Integer.parseInt(id));
         request.setAttribute("ProdutoDetalhe", p1);
-       
+
         ArrayList<Produto> p = ProdutoWebDAO.getProduto();
         request.setAttribute("TodosProdutos", p);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/DetalheProduto.jsp");

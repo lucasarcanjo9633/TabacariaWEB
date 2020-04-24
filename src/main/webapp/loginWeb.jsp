@@ -4,6 +4,7 @@
     Author     : Ochaus
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -262,7 +263,7 @@
 
 
 </head>
-<body class="js">
+<body class="js" >
 
     <!-- Preloader -->
     <div class="preloader">
@@ -275,6 +276,14 @@
     </div>
     <!-- End Preloader -->
 
+    <!-- Start Notificação -->
+
+    <c:if test="${message != null}">
+        <script>
+        alert("${message}");
+        </script>
+    </c:if>
+    <!-- End Notificação -->
 
 
     <!-- Header -->
@@ -293,25 +302,22 @@
                 </div>
             </div>
         </div>
-        <!-- Header Inner -->
-
-        <!--/ End Header Inner -->
     </header>
 
 
     <!-- Start Contact -->
     <section id="contact-us" class="contact-us section">
         <div class="container">
-            <div class="contact-head" style="pa" >
+            <div class="contact-head">
                 <div class="row ">
                     <div class="col-lg-6 col-12" style="margin-left: auto; margin-right: auto;">
                         <div class="form-main">
-                            
-                                <div class="title">
-                                    <h3>Login</h3>
-                                </div>
-                            
-                            
+
+                            <div class="title">
+                                <h3>Login</h3>
+                            </div>
+
+
                             <form class="form" action="${pageContext.request.contextPath}/LoginClienteController" method="post">
                                 <div class="row">
                                     <div class="col-lg-12 col-md-6 col-12">

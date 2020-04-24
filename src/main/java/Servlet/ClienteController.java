@@ -12,10 +12,7 @@ import Model.Criptografar;
 import Model.Produto;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -83,17 +80,18 @@ public class ClienteController extends HttpServlet {
         String telefone = request.getParameter("telefone");
 
         Cliente cliente = new Cliente(nome, sobrenome, email, cpf, data, senha, cep, endereco, bairro, cidade, uf, telefone);
-        //cliente.setSenha(Criptografar.criptografar(senha));
+        cliente.setSenha(Criptografar.criptografar(senha));
 
         if (DAO.ClienteDAO.salvar(cliente)) {
 
             ArrayList<Produto> p = ProdutoWebDAO.getProduto();
             request.setAttribute("TodosProdutos", p);
+            request.setAttribute("message", "Cadastro realizado com sucesso!");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
             dispatcher.forward(request, response);
 
         } else {
-            request.setAttribute("message", "Falha ao cadastrar!");
+            request.setAttribute("message", "Cadastro não realizado!");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroWeb.jsp");
             dispatcher.forward(request, response);
 
@@ -144,7 +142,10 @@ public class ClienteController extends HttpServlet {
         Cliente cliente = new Cliente(idCliente, nome, sobrenome, data, cep, endereco, bairro, cidade, uf, telefone);
 
         if (ClienteDAO.editar(cliente)) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp?acao=listarWeb");
+            ArrayList<Produto> p = ProdutoWebDAO.getProduto();
+            request.setAttribute("TodosProdutos", p);
+            request.setAttribute("message", "Dados atualizado com sucesso!");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
             dispatcher.forward(request, response);
         } else {
             request.setAttribute("message", "Falha ao atualizar dados!");
@@ -172,25 +173,27 @@ public class ClienteController extends HttpServlet {
     protected void alterarSenha(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
         String senhaAtual = request.getParameter("senhaAtual");
         String novaSenha = request.getParameter("senha");
-        int idCliente = 3;
+
         senhaAtual = Criptografar.criptografar(senhaAtual);
-        
+
         if (ClienteDAO.validarSenha(idCliente, senhaAtual)) {
-            
+
             novaSenha = Criptografar.criptografar(novaSenha);
             if (ClienteDAO.editarSenha(idCliente, novaSenha)) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp?acao=listarWeb");
+                ArrayList<Produto> p = ProdutoWebDAO.getProduto();
+                request.setAttribute("TodosProdutos", p);
+                request.setAttribute("message", "Senha alterada com sucesso");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
             }
         } else {
             request.setAttribute("idClienteAttr", idCliente);
-            request.setAttribute("mensagemAttr", "Senha atual errada");
+            request.setAttribute("message", "Senha atual errada");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/alterarSenhaWeb.jsp");
             dispatcher.forward(request, response);
         }
     }
-
 }
