@@ -8,6 +8,7 @@ package Servlet;
 import DAO.ClienteDAO;
 import DAO.ProdutoWebDAO;
 import Model.Cliente;
+import Model.Criptografar;
 import Model.Produto;
 import java.io.IOException;
 import java.sql.Date;
@@ -56,6 +57,12 @@ public class ClienteController extends HttpServlet {
                 editar(request, response);
                 break;
             }
+            case "perfilSenha": {
+                perfilSenha(request, response);
+            }
+            case "alterarSenha": {
+                alterarSenha(request, response);
+            }
         }
     }
 
@@ -76,14 +83,15 @@ public class ClienteController extends HttpServlet {
         String telefone = request.getParameter("telefone");
 
         Cliente cliente = new Cliente(nome, sobrenome, email, cpf, data, senha, cep, endereco, bairro, cidade, uf, telefone);
+        //cliente.setSenha(Criptografar.criptografar(senha));
 
         if (DAO.ClienteDAO.salvar(cliente)) {
-            
+
             ArrayList<Produto> p = ProdutoWebDAO.getProduto();
             request.setAttribute("TodosProdutos", p);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
             dispatcher.forward(request, response);
-            
+
         } else {
             request.setAttribute("message", "Falha ao cadastrar!");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/cadastroWeb.jsp");
@@ -105,8 +113,6 @@ public class ClienteController extends HttpServlet {
             request.setAttribute("sobreNomeAttr", c.getSobrenome());
             request.setAttribute("emailAttr", c.getEmail());
             request.setAttribute("cpfAttr", c.getEmail());
-            request.setAttribute("senhaAttr", c.getSenha());
-            request.setAttribute("confSenhaAttr", c.getSenha());
             request.setAttribute("cepAttr", c.getCEP());
             request.setAttribute("ruaAttr", c.getEndereco());
             request.setAttribute("bairroAttr", c.getBairro());
@@ -128,7 +134,6 @@ public class ClienteController extends HttpServlet {
         String nome = request.getParameter("nome");
         String sobrenome = request.getParameter("sobrenome");
         Date data = Date.valueOf(request.getParameter("data"));
-        String senha = request.getParameter("senha");
         String cep = request.getParameter("cep");
         String endereco = request.getParameter("rua");
         String cidade = request.getParameter("cidade");
@@ -136,7 +141,7 @@ public class ClienteController extends HttpServlet {
         String uf = request.getParameter("uf");
         String telefone = request.getParameter("telefone");
 
-        Cliente cliente = new Cliente(idCliente, nome, sobrenome, data, senha, cep, endereco, bairro, cidade, uf, telefone);
+        Cliente cliente = new Cliente(idCliente, nome, sobrenome, data, cep, endereco, bairro, cidade, uf, telefone);
 
         if (ClienteDAO.editar(cliente)) {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp?acao=listarWeb");
@@ -147,6 +152,45 @@ public class ClienteController extends HttpServlet {
             dispatcher.forward(request, response);
         }
 
+    }
+
+    protected void perfilSenha(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+
+        Cliente c = ClienteDAO.buscaCliente(idCliente);
+        if (c != null) {
+            request.setAttribute("idClienteAttr", c.getIdCliente());
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/alterarSenhaWeb.jsp");
+            dispatcher.forward(request, response);
+        } else {
+
+        }
+    }
+
+    protected void alterarSenha(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        //int idCliente = Integer.parseInt(request.getParameter("idCliente"));
+        String senhaAtual = request.getParameter("senhaAtual");
+        String novaSenha = request.getParameter("senha");
+        int idCliente = 3;
+        senhaAtual = Criptografar.criptografar(senhaAtual);
+        
+        if (ClienteDAO.validarSenha(idCliente, senhaAtual)) {
+            
+            novaSenha = Criptografar.criptografar(novaSenha);
+            if (ClienteDAO.editarSenha(idCliente, novaSenha)) {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp?acao=listarWeb");
+                dispatcher.forward(request, response);
+            }
+        } else {
+            request.setAttribute("idClienteAttr", idCliente);
+            request.setAttribute("mensagemAttr", "Senha atual errada");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/alterarSenhaWeb.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
 }

@@ -24,7 +24,7 @@ public class ClienteDAO {
     private static final String URL = "jdbc:mysql://localhost:3306/tabacaria?useUnicode=yes&characterEncoding=UTF-8&useTimezone=true&serverTimezone=UTC";  //URL do banco de dados
     private static Connection conexao;
 
-     public static boolean salvar(Cliente cliente) {
+    public static boolean salvar(Cliente cliente) {
         boolean retorno = false;
 
         try {
@@ -48,7 +48,6 @@ public class ClienteDAO {
             comando.setString(10, cliente.getUF());
             comando.setString(11, cliente.getTelefone());
             comando.setDate(12, (java.sql.Date) cliente.getDtaNasc());
-
 
             int linhasAfetadas = comando.executeUpdate();
 
@@ -169,27 +168,26 @@ public class ClienteDAO {
 
             PreparedStatement comando = conexao.prepareStatement("UPDATE CLIENTE SET"
                     + " nome=?, sobrenome=?,"
-                    + " senha=?, cep=?, endereco=?, "
+                    + " cep=?, endereco=?, "
                     + " bairro=?, cidade=?, uf=?, telefone=?, "
-                    + " dateNasc=? ");
+                    + " dateNasc=? "
+                    + " WHERE idCliente=? ");
 
             comando.setString(1, cliente.getNome());
             comando.setString(2, cliente.getSobrenome());
-            comando.setString(3, cliente.getSenha());
-            comando.setString(4, cliente.getCEP());
-            comando.setString(5, cliente.getEndereco());
-            comando.setString(6, cliente.getBairro());
-            comando.setString(7, cliente.getCidade());
-            comando.setString(8, cliente.getUF());
-            comando.setString(9, cliente.getTelefone());
-            comando.setDate(10, (java.sql.Date) cliente.getDtaNasc());
+            comando.setString(3, cliente.getCEP());
+            comando.setString(4, cliente.getEndereco());
+            comando.setString(5, cliente.getBairro());
+            comando.setString(6, cliente.getCidade());
+            comando.setString(7, cliente.getUF());
+            comando.setString(8, cliente.getTelefone());
+            comando.setDate(9, (java.sql.Date) cliente.getDtaNasc());
+            comando.setInt(10, cliente.getIdCliente());
 
             int linhasAfetadas = comando.executeUpdate();
 
-
             if (linhasAfetadas > 0) {
-                    retorno = true;
-                
+                retorno = true;
             }
 
         } catch (ClassNotFoundException ex) {
@@ -203,9 +201,75 @@ public class ClienteDAO {
                 retorno = false;
             }
         }
-        return true;
+        return retorno;
     }
 
+    public static boolean editarSenha(int id, String senha) {
+        boolean retorno = false;
+        try {
 
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement("UPDATE CLIENTE SET"
+                    + " senha=? "
+                    + " WHERE idCliente=? ");
+
+            comando.setString(1, senha);
+            comando.setInt(2, id);
+
+            int linhasAfetadas = comando.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                retorno = true;
+
+            }
+
+        } catch (ClassNotFoundException ex) {
+            retorno = false;
+        } catch (SQLException ex) {
+            retorno = false;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                retorno = false;
+            }
+        }
+        return retorno;
+    }
+
+    public static boolean validarSenha(int id, String senhaAtual) {
+        boolean retorno = false;
+        try {
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement(" SELECT idcliente, senha "
+                    + " FROM CLIENTE "
+                    + " WHERE "
+                    + " status = 1 AND "
+                    + " idCliente = "+id+"  AND "
+                    + " senha = '"+senhaAtual+"' ");
+            
+            ResultSet rs = comando.executeQuery();
+            while (rs.next()) {
+                retorno = true;
+
+            }
+
+        } catch (ClassNotFoundException ex) {
+            retorno = false;
+        } catch (SQLException ex) {
+            retorno = false;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                retorno = false;
+            }
+        }
+        return retorno;
+    }
 
 }

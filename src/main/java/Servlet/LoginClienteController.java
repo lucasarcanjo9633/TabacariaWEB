@@ -7,6 +7,7 @@ package Servlet;
 
 import DAO.ClienteDAO;
 import Model.Cliente;
+import Model.Criptografar;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -40,8 +41,9 @@ public class LoginClienteController extends HttpServlet {
 
         String username = request.getParameter("email");
         String senha = request.getParameter("senha");
-
+        senha = Criptografar.criptografar(senha);
         Cliente cliente = ClienteDAO.login(username, senha);
+        
 
         if (cliente != null && cliente.getSenha().equals(senha)) {
             // Usuario válido - adiciona na sessão

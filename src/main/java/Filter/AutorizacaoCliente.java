@@ -47,6 +47,12 @@ public class AutorizacaoCliente implements Filter {
             return true;
         }else if (urlAcessada.endsWith("/LogoutController")) {
             return true;
+        }else if(urlAcessada.endsWith("/perfilWeb.jsp")){
+            return true;
+        }else if(urlAcessada.endsWith("/alterarSenhaWeb.jsp")){
+            return true;
+        }else if(urlAcessada.endsWith("/ClienteController.jsp")){
+            return true;
         }
         return false;
     }

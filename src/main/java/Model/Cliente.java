@@ -5,7 +5,13 @@
  */
 package Model;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,7 +24,7 @@ public class Cliente {
     private String sobrenome;
     private String email;
     private String CPF;
-    private Date dtaNasc; 
+    private Date dtaNasc;
     private String senha;
     private String CEP;
     private String endereco;
@@ -58,7 +64,7 @@ public class Cliente {
         this.UF = UF;
         this.telefone = telefone;
     }
-    
+
     public Cliente(String nome, String sobrenome, String email, String CPF, Date dtaNasc, String senha, String CEP, String endereco, String bairro, String cidade, String UF, String telefone) {
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -73,9 +79,22 @@ public class Cliente {
         this.telefone = telefone;
         this.UF = UF;
     }
+    
+     public Cliente(int idCliente, String nome, String sobrenome, Date dtaNasc, String CEP, String endereco, String bairro, String cidade, String UF, String telefone) {
+        this.idCliente = idCliente;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.dtaNasc = dtaNasc;
+        this.CEP = CEP;
+        this.endereco = endereco;
+        this.bairro = bairro;
+        this.cidade = cidade;
+        this.telefone = telefone;
+        this.UF = UF;
+    }
 
     public Cliente() {
-        
+
     }
 
     public String getTelefone() {
@@ -86,7 +105,6 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    
     public Date getDtaNasc() {
         return dtaNasc;
     }
@@ -94,8 +112,6 @@ public class Cliente {
     public void setDtaNasc(Date dtaNasc) {
         this.dtaNasc = dtaNasc;
     }
-
-    
 
     public int getIdCliente() {
         return idCliente;
