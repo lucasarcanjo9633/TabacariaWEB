@@ -72,7 +72,7 @@
 
         <c:if test="${message != null}">
             <script>
-        alert("${message}");
+                alert("${message}");
             </script>
         </c:if>
         <!-- End Notificação -->
@@ -190,7 +190,9 @@
                                     <div class="shopping-item">
                                         <div class="dropdown-cart-header">
                                             <span>3 Items</span>
-                                            <a href="#">View Cart</a>
+                                            <form name="carrinho" id="carrinho" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+                                                <a href="javascript:carrinho.submit()">View Cart</a>
+                                            </form>
                                         </div>
                                         <ul class="shopping-list">
                                             <li>
