@@ -71,7 +71,7 @@
 
         <c:if test="${message != null}">
             <script>
-        alert("${message}");
+                alert("${message}");
             </script>
         </c:if>
         <!-- End Notificação -->
@@ -313,27 +313,36 @@
                             </div> 
                             <c:choose>
                                 <c:when test="${p.qtd > 0}">
-                                    <div class="quantity">
-                                        <!-- Input Order -->
-                                        <div class="input-group">
-                                            <div class="button minus">
-                                                <button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
-                                                    <i class="ti-minus"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="1000" value="1">
-                                            <div class="button plus">
-                                                <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
-                                                    <i class="ti-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <!--/ End Input Order -->
-                                    </div>
+                                    <form name="carrinho" id="carrinho" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+                                        <input type="hidden" name="acao" value="adicionarProduto">
+                                        <input type="hidden" name="idProduto" value="${p.id}">
+                                        <input type="hidden" name="nome" value="${p.nome}">
+                                        <input type="hidden" name="valor" value="${p.valor}">
+                                        
 
-                                    <div class="add-to-cart">
-                                        <a href="#" class="btn">Add Carrinho</a>                                                    
-                                    </div>
+                                        <div class="quantity">
+                                            <!-- Input Order -->
+                                            <div class="input-group">
+                                                <div class="button minus">
+                                                    <button type="button" class="btn btn-primary btn-number" disabled="disabled" data-type="minus" data-field="quant[1]">
+                                                        <i class="ti-minus"></i>
+                                                    </button>
+                                                </div>
+                                                <input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="1000" value="1">
+                                                <div class="button plus">
+                                                    <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
+                                                        <i class="ti-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!--/ End Input Order -->
+                                        </div>
+
+                                        <div class="add-to-cart">
+                                            <!-- Adiciona o carrinho-->
+                                            <a href="javascript:carrinho.submit()" class="btn">Add Carrinho</a>                                                    
+                                        </div>
+                                    </form>
                                 </c:when>
                                 <c:otherwise>
                                     <div>
