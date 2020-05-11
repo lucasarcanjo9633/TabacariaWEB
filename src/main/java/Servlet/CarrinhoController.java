@@ -34,8 +34,7 @@ public class CarrinhoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
+
         HttpSession sessao = request.getSession();
 
         // Verifica se já existe atributo itensSelecionados na sessao
@@ -97,6 +96,7 @@ public class CarrinhoController extends HttpServlet {
 
     protected void adicionarProduto(HttpServletRequest request, HttpServletResponse response, Venda venda)
             throws ServletException, IOException {
+        String pagina = request.getParameter("pagina");
         Produto p = new Produto();
         p.setId(Integer.parseInt(request.getParameter("idProduto")));
         p.setNome(request.getParameter("nome"));
@@ -115,8 +115,16 @@ public class CarrinhoController extends HttpServlet {
         venda.precoFinal();
         request.setAttribute("itens", venda.getItens());
         request.setAttribute("precoFinal", venda.getPrecoFinal());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/carrinho.jsp");
-        dispatcher.forward(request, response);
+        RequestDispatcher dispatcher;
+        switch (pagina) {
+            case "index":
+                 response.sendRedirect(request.getContextPath() + "/ProdutoController?acao=listarWeb");
+                break;
+            default:
+                dispatcher = request.getRequestDispatcher("/carrinho.jsp");
+                dispatcher.forward(request, response);
+        }
+
     }
 
     protected void alterarQtd(HttpServletRequest request, HttpServletResponse response, Venda venda)
@@ -184,7 +192,7 @@ public class CarrinhoController extends HttpServlet {
         request.setAttribute("itens", venda.getItens());
         request.setAttribute("precoFinal", venda.getPrecoFinal());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/carrinho.jsp");
-                dispatcher.forward(request, response);
+        dispatcher.forward(request, response);
 
     }
 }

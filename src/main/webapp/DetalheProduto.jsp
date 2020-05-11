@@ -335,6 +335,7 @@
                             <c:when test="${p.qtd > 0}">
                                 <form name="carrinho" id="carrinho" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
                                     <input type="hidden" name="acao" value="adicionarProduto">
+                                    <input type="hidden" name="pagina" value=detalhe>
                                     <input type="hidden" name="idProduto" value="${p.id}">
                                     <input type="hidden" name="nome" value="${p.nome}">
                                     <input type="hidden" name="valor" value="${p.valor}">

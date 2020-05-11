@@ -212,7 +212,7 @@
                                                 <div class="bottom">
                                                     <div class="total">
                                                         <span>Total:</span>
-                                                        <span class="total-amount">RS ${sessionScope.itensSelecionados.getPrecoFinal()}</span>
+                                                        <span class="total-amount">RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span>
                                                     </div>
                                                     <a href="checkout.html" class="btn animate">Checkout</a>
                                                 </div>
@@ -364,10 +364,10 @@
                             <div class="right">
                                 <ul>
 
-                                    <li>Subtotal: <span>R$ ${precoFinal}</span></li>
+                                    <li>Subtotal: <span>R$ ${sessionScope.itensSelecionados.mostrarValorFinal()}</span></li>
 
                                     <li>Frete<span>Gratis</span></li>                                        
-                                    <li class="last">Total a pagar: <span>R$ ${precoFinal}</span></li>
+                                    <li class="last">Total a pagar: <span>R$ ${sessionScope.itensSelecionados.mostrarValorFinal()}</span></li>
 
                                 </ul>
                                 <div class="button5">
