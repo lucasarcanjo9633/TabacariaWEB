@@ -108,6 +108,15 @@ public class Venda {
         return false;
     }
     
+    public int itemQtd(Produto p) {
+        for (Item item : itens) {
+            if (p.getId() == item.getP().getId()) {
+                return item.getQtd()-1;
+            }
+        }
+        return 0;
+    }
+    
     public void precoFinal() {
         this.precoFinal = 0;
         for (Item item : itens) {
@@ -135,6 +144,11 @@ public class Venda {
         this.itens = new ArrayList<>();
         this.idCliente = 0;
         this.precoFinal = 0;
+    }
+    
+    public int quantidadeItem(){
+        int qtdItem;
+        return qtdItem = this.itens.size();
     }
     
 }

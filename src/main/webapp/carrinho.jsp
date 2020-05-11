@@ -54,16 +54,16 @@
             $('.carousel').carousel();
         </script>
 
-         
+
     </head>
     <body class="js">
- 
+
         <c:if test="${message != null}">
             <script>
                 alert("${message}");
             </script>
         </c:if>
-        
+
         <!-- Header -->
         <header class="header shop">
             <!-- Topbar -->
@@ -161,6 +161,9 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- CARRINHO-->
+
+
                         <div class="col-lg-2 col-md-3 col-12">
                             <div class="right-bar">
                                 <!-- Search Form -->
@@ -171,274 +174,336 @@
                                     <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                                 </div>
                                 <div class="sinlge-bar shopping">
-                                    <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">3</span></a>
-                                    <!-- Shopping Item -->
-                                    <div class="shopping-item">
-                                        <div class="dropdown-cart-header">
-                                            <span>3 Items</span>
-                                            <a href="#">View Cart</a>
-                                        </div>
-                                        <ul class="shopping-list">
-                                            <li>
-                                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                                <h4><a href="#">Woman Ring</a></h4>
-                                                <p class="quantity">1x - <span class="amount">$99.00</span></p>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                                <h4><a href="#">Woman Necklace</a></h4>
-                                                <p class="quantity">1x - <span class="amount">$35.00</span></p>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                                <h4><a href="#">Woman Necklace</a></h4>
-                                                <p class="quantity">1x - <span class="amount">$35.00</span></p>
-                                            </li>
-                                        </ul>
-                                        <div class="bottom">
-                                            <div class="total">
-                                                <span>Total</span>
-                                                <span class="total-amount">$134.00</span>
+
+                                    <c:choose>
+                                        <c:when test="${sessionScope.itensSelecionados != null}">
+
+                                            <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">${sessionScope.itensSelecionados.quantidadeItem()}</span></a>
+                                            <!-- Shopping Item -->
+                                            <div class="shopping-item">
+                                                <div class="dropdown-cart-header">
+                                                    <span>${sessionScope.itensSelecionados.quantidadeItem()} Item</span>
+                                                    <form name="carrinho" id="carrinho" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+                                                        <a href="javascript:carrinho.submit()">View Cart</a>
+                                                    </form>
+                                                </div>
+                                                <ul class="shopping-list">
+                                                    <c:forEach items="${sessionScope.itensSelecionados.itens}" var="p">
+                                                        <li>
+                                                            <form name="remover" id="remover" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+                                                                <button class="remove" title="Remover item"><i class="fa fa-remove"></i></button>
+                                                                <!--<a href="javascript:remover.submit()" class="remove" title="Remover item"><i class="fa fa-remove"></i></a>-->
+                                                                <input type="hidden" name="acao" value="retirarProduto">
+                                                                <input type="hidden" name="pagina" value="carrinho">
+                                                                <input type="hidden" name="idProduto" value="${p.p.id}">
+                                                                <a href="${pageContext.request.contextPath}/ProdutoController?acao=listarWebDetalhe&id=${p.p.id}" class="cart-img">
+                                                                    <img src="imagens/${p.p.id}.jpg" alt="${p.p.nome}">
+                                                                </a>
+                                                                <!--<a class="cart-img" href="#"><img src="imagens/${p.p.id}.jpg" alt="${p.p.nome}"></a>-->
+                                                                <h4><a href="#">${p.p.getNome()}</a></h4>
+                                                                <p class="quantity">${p.qtd}x - <span class="amount">${p.p.valor}</span></p>
+                                                            </form>
+
+                                                        </li>
+
+
+                                                    </c:forEach>
+                                                </ul>
+                                                <div class="bottom">
+                                                    <div class="total">
+                                                        <span>Total:</span>
+                                                        <span class="total-amount">RS ${sessionScope.itensSelecionados.getPrecoFinal()}</span>
+                                                    </div>
+                                                    <a href="checkout.html" class="btn animate">Checkout</a>
+                                                </div>
                                             </div>
-                                            <a href="checkout.html" class="btn animate">Checkout</a>
-                                        </div>
-                                    </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">0</span></a>
+                                        </c:otherwise>
+
+                                    </c:choose>
+
+
                                     <!--/ End Shopping Item -->
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Header Inner -->
-            <div class="header-inner">
-                <div class="container">
-                    <div class="cat-nav-head">
-                        <div class="row">                            
-                            <div class="col-lg-9 col-12">
-                                <div class="menu-area">
-                                    <!-- Main Menu -->
-                                    <nav class="navbar navbar-expand-lg">
-                                        <div class="navbar-collapse">	
-                                            <div class="nav-inner">	
-                                                <ul class="nav main-menu menu navbar-nav">
-                                                    <li class="active"><a href="#">Home</a></li>
-                                                    <li><a href="#">Narguiles</a></li>												
-                                                    <li><a href="#">Queimadores</a></li>                                                   
-                                                    <li><a href="#">Pratos</a></li>
-                                                    <li><a href="#">Mangueiras</a></li>
-                                                    <li><a href="#">Bases</a></li>
-                                                    <li><a href="#">Carvões</a></li>
-                                                    <li><a href="#">Acessórios</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </nav>
-                                    <!--/ End Main Menu -->	
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--/ End Header Inner -->
-        </header>
-        <!--/ End Header -->
-
-        <!-- Shopping Cart -->
-        <div class="shopping-cart section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Shopping Summery -->
-                        <table class="table shopping-summery">
-                            <thead>
-                                <tr class="main-hading">
-                                    <th>PRODUTO</th>
-                                    <th>NOME</th>
-                                    <th class="text-center">PREÇO UNIT</th>
-                                    <th class="text-center">QUANTIDADE</th>
-                                    <th class="text-center">TOTAL</th> 
-                                    <th class="text-center"><i class="ti-trash remove-icon"></i></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${sessionScope.itensSelecionados.itens}" var="p">
-                                    <tr>                       
-                                        <td><img src="imagens/1.jpg" alt="#"></td>
-                                        <td>${p.p.nome}</td>               
-                                        <td>${p.p.valor}</td>
-                                        <td>${p.qtd}</td>                      
-                                        <td>${p.preco}</td>                      
-                                        <td>
-                                            <form name="#${p.p.id}" id="teste" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
-                                                <input type="hidden" name="acao" value="retirarProduto">
-                                                <input type="hidden" name="idProduto" value="${p.p.id}">
-                                                <button><i class="ti-trash remove-icon"></i></button>
-                                                <!--<a href="javascript:teste.submit()" class="btn">Remover</a>-->
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                            </tbody>
-                        </table>
-                        <!--/ End Shopping Summery -->
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Total Amount -->
-                        <div class="total-amount">
-                            <div class="row">
-                                <div class="col-lg-8 col-md-5 col-12">
-                                    <div class="left">
-                                        <div class="coupon">
-                                            <form action="#" target="_blank">
-                                                <input name="Coupon" placeholder="Calcule o Frete">
-                                                <button class="btn">Apply</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-7 col-12">
-                                    <div class="right">
-                                        <ul>
-                                            
-                                            <li>Subtotal: ${precoFinal} </li>
-                                      
-                                            <li>Frete<span>Gratis</span></li>                                        
-                                            <li class="last">Total a pagar: <span><label>${precoFinal}</label> </span></li>
-                                            <input type="text" value="${total}">
-                                        </ul>
-                                        <div class="button5">
-                                            <a href="#" class="btn">Checkout</a>
-                                            <a href="#" class="btn">Continue Comprando</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ End Total Amount -->
+                        <!-- TERMINO CARRINHO-->
                     </div>
                 </div>
             </div>
         </div>
-        <!--/ End Shopping Cart -->
+    </div>
+    <!-- Header Inner -->
+    <div class="header-inner">
+        <div class="container">
+            <div class="cat-nav-head">
+                <div class="row">                            
+                    <div class="col-lg-9 col-12">
+                        <div class="menu-area">
+                            <!-- Main Menu -->
+                            <nav class="navbar navbar-expand-lg">
+                                <div class="navbar-collapse">	
+                                    <div class="nav-inner">	
+                                        <ul class="nav main-menu menu navbar-nav">
+                                            <li class="active"><a href="#">Home</a></li>
+                                            <li><a href="#">Narguiles</a></li>												
+                                            <li><a href="#">Queimadores</a></li>                                                   
+                                            <li><a href="#">Pratos</a></li>
+                                            <li><a href="#">Mangueiras</a></li>
+                                            <li><a href="#">Bases</a></li>
+                                            <li><a href="#">Carvões</a></li>
+                                            <li><a href="#">Acessórios</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </nav>
+                            <!--/ End Main Menu -->	
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ End Header Inner -->
+</header>
+<!--/ End Header -->
 
-        <!-- Start Footer Area -->
-        <footer class="footer">
-            <!-- Footer Top -->
-            <div class="footer-top section">
-                <div class="container">
+<!-- Shopping Cart -->
+<div class="shopping-cart section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Shopping Summery -->
+                <table class="table shopping-summery">
+                    <thead>
+                        <tr class="main-hading">
+                            <th>PRODUTO</th>
+                            <th>NOME</th>
+                            <th class="text-center">PREÇO UNIT</th>
+                            <th class="text-center">QUANTIDADE</th>
+                            <th class="text-center">TOTAL</th> 
+                            <th class="text-center"><i class="ti-trash remove-icon"></i></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${sessionScope.itensSelecionados.itens}" var="p">
+                            <tr>                       
+                                <td class="image">
+                                    <a href="${pageContext.request.contextPath}/ProdutoController?acao=listarWebDetalhe&id=${p.p.id}">
+                                        <img src="imagens/${p.p.id}.jpg" width="100px" height="100px" alt="${p.p.nome}">
+                                    </a>
+                                </td>
+                                <td>${p.p.nome}</td>               
+                                <td>${p.p.valor}</td>
+                                <td class="qty" data-title="Qty"><!-- Input Order -->
+
+                                    <div class="input-group">
+                                        <div class="button minus">
+                                            <form name="adicionarItem" id="adicionar" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+                                                <input type="hidden" name="acao" value="alterarQtd">
+                                                <input type="hidden" name="idProduto" value="${p.p.id}">
+                                                <input type="hidden" name="nome" value="${p.p.nome}">
+                                                <input type="hidden" name="quant[1]" value="-1">
+                                                <input type="hidden" name="valor" value="${p.p.valor}">
+                                                <button >
+                                                    <i class="ti-minus"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                        <input type="text" name="quant[1]" value="${p.qtd}"class="input-number"  data-min="1" data-max="100" value="1">
+                                        <div class="button plus">
+                                            <form name="adicionarItem" id="adicionar" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+                                                <input type="hidden" name="acao" value="alterarQtd">
+                                                <input type="hidden" name="idProduto" value="${p.p.id}">
+                                                <input type="hidden" name="nome" value="${p.p.nome}">
+                                                <input type="hidden" name="quant[1]" value="1">
+                                                <input type="hidden" name="valor" value="${p.p.valor}">
+                                                <button >
+                                                    <i class="ti-plus"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <!--/ End Input Order -->
+                                </td>                   
+                                <td>${p.preco}</td>                      
+                                <td>
+                                    <form name="#${p.p.id}" id="teste" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+                                        <input type="hidden" name="acao" value="retirarProduto">
+                                        <input type="hidden" name="idProduto" value="${p.p.id}">
+                                        <button><i class="ti-trash remove-icon"></i></button>
+                                        <!--<a href="javascript:teste.submit()" class="btn">Remover</a>-->
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+                <!--/ End Shopping Summery -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <!-- Total Amount -->
+                <div class="total-amount">
                     <div class="row">
-                        <div class="col-lg-5 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer about">
-                                <div class="logo">
-                                    <a href="index.html"><img src="images/logo2.png" alt="#"></a>
+                        <div class="col-lg-8 col-md-5 col-12">
+                            <div class="left">
+                                <div class="coupon">
+                                    <form action="#" target="_blank">
+                                        <input name="Coupon" placeholder="Calcule o Frete">
+                                        <button class="btn">Apply</button>
+                                    </form>
                                 </div>
-                                <p class="text">Projeto desenvolvido para a disciplina "PROJETO INTEGRADOR IV: DESENVOLVIMENTO DE SISTEMAS ORIENTADO A WEB E DISPOSITIVOS MÓVEIS" do curso de TADS - 4º Semestre.</p>
-                                <p class="call">Tem Perguntas ? Ligue.<span><a href="tel:123456789">4002-8922</a></span></p>
                             </div>
-                            <!-- End Single Widget -->
                         </div>
-                        <div class="col-lg-2 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer links">
-                                <h4>Informação</h4>
+                        <div class="col-lg-4 col-md-7 col-12">
+                            <div class="right">
                                 <ul>
-                                    <li><a href="#">Sobre</a></li>
-                                    <li><a href="#">Perguntas Frequentes</a></li>
-                                    <li><a href="#">Termos e Condições</a></li>
-                                    <li><a href="#">Contato</a></li>
-                                    <li><a href="#">Ajuda</a></li>
-                                </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
 
-                        <div class="col-lg-3 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer social">
-                                <h4>Fale conosco</h4>
-                                <!-- Single Widget -->
-                                <div class="contact">
-                                    <ul>
-                                        <li>Centro Universitário Senac</li>
-                                        <li> Av. Eng. Eusébio Stevaux, 823 - Santo Amaro, São Paulo - SP</li>
-                                        <li>ochaus-lounge@tabacaria.com</li>
-                                        <li>+55 (11) 4002-8922</li>
-                                    </ul>
-                                </div>
-                                <!-- End Single Widget -->
-                                <ul>
-                                    <li><a href="#"><i class="ti-facebook"></i></a></li>
-                                    <li><a href="#"><i class="ti-twitter"></i></a></li>
-                                    <li><a href="#"><i class="ti-flickr"></i></a></li>
-                                    <li><a href="#"><i class="ti-instagram"></i></a></li>
+                                    <li>Subtotal: <span>R$ ${precoFinal}</span></li>
+
+                                    <li>Frete<span>Gratis</span></li>                                        
+                                    <li class="last">Total a pagar: <span>R$ ${precoFinal}</span></li>
+
                                 </ul>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- End Footer Top -->
-            <div class="copyright">
-                <div class="container">
-                    <div class="inner">
-                        <div class="row">
-                            <div class="col-lg-6 col-12">
-                                <div class="left">
-                                    <p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-12">
-                                <div class="right">
-                                    <img src="images/payments.png" alt="#">
+                                <div class="button5">
+                                    <c:choose>
+                                        <c:when test="${sessionScope.cliente == null}">                                          
+                                            <a href="${pageContext.request.contextPath}/loginWeb.jsp" class="btn"> Checkout</a> 
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="#" class="btn"> Checkout</a>
+                                        </c:otherwise>
+                                    </c:choose>
+
+                                    <a href="${pageContext.request.contextPath}/ProdutoController?acao=listarWeb" class="btn">Continue Comprando</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!--/ End Total Amount -->
             </div>
-        </footer>
-        <!-- /End Footer Area -->
+        </div>
+    </div>
+</div>
+<!--/ End Shopping Cart -->
 
-        <!-- Jquery -->
-        <script src="js/jquery.min.js"></script>
-        <script src="js/jquery-migrate-3.0.0.js"></script>
-        <script src="js/jquery-ui.min.js"></script>
-        <!-- Popper JS -->
-        <script src="js/popper.min.js"></script>
-        <!-- Bootstrap JS -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Color JS -->
-        <script src="js/colors.js"></script>
-        <!-- Slicknav JS -->
-        <script src="js/slicknav.min.js"></script>
-        <!-- Owl Carousel JS -->
-        <script src="js/owl-carousel.js"></script>
-        <!-- Magnific Popup JS -->
-        <script src="js/magnific-popup.js"></script>
-        <!-- Waypoints JS -->
-        <script src="js/waypoints.min.js"></script>
-        <!-- Countdown JS -->
-        <script src="js/finalcountdown.min.js"></script>
-        <!-- Nice Select JS -->
-        <script src="js/nicesellect.js"></script>
-        <!-- Flex Slider JS -->
-        <script src="js/flex-slider.js"></script>
-        <!-- ScrollUp JS -->
-        <script src="js/scrollup.js"></script>
-        <!-- Onepage Nav JS -->
-        <script src="js/onepage-nav.min.js"></script>
-        <!-- Easing JS -->
-        <script src="js/easing.js"></script>
-        <!-- Active JS -->
-        <script src="js/active.js"></script>
-    </body>
+<!-- Start Footer Area -->
+<footer class="footer">
+    <!-- Footer Top -->
+    <div class="footer-top section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-md-6 col-12">
+                    <!-- Single Widget -->
+                    <div class="single-footer about">
+                        <div class="logo">
+                            <a href="index.html"><img src="images/logo2.png" alt="#"></a>
+                        </div>
+                        <p class="text">Projeto desenvolvido para a disciplina "PROJETO INTEGRADOR IV: DESENVOLVIMENTO DE SISTEMAS ORIENTADO A WEB E DISPOSITIVOS MÓVEIS" do curso de TADS - 4º Semestre.</p>
+                        <p class="call">Tem Perguntas ? Ligue.<span><a href="tel:123456789">4002-8922</a></span></p>
+                    </div>
+                    <!-- End Single Widget -->
+                </div>
+                <div class="col-lg-2 col-md-6 col-12">
+                    <!-- Single Widget -->
+                    <div class="single-footer links">
+                        <h4>Informação</h4>
+                        <ul>
+                            <li><a href="#">Sobre</a></li>
+                            <li><a href="#">Perguntas Frequentes</a></li>
+                            <li><a href="#">Termos e Condições</a></li>
+                            <li><a href="#">Contato</a></li>
+                            <li><a href="#">Ajuda</a></li>
+                        </ul>
+                    </div>
+                    <!-- End Single Widget -->
+                </div>
+
+                <div class="col-lg-3 col-md-6 col-12">
+                    <!-- Single Widget -->
+                    <div class="single-footer social">
+                        <h4>Fale conosco</h4>
+                        <!-- Single Widget -->
+                        <div class="contact">
+                            <ul>
+                                <li>Centro Universitário Senac</li>
+                                <li> Av. Eng. Eusébio Stevaux, 823 - Santo Amaro, São Paulo - SP</li>
+                                <li>ochaus-lounge@tabacaria.com</li>
+                                <li>+55 (11) 4002-8922</li>
+                            </ul>
+                        </div>
+                        <!-- End Single Widget -->
+                        <ul>
+                            <li><a href="#"><i class="ti-facebook"></i></a></li>
+                            <li><a href="#"><i class="ti-twitter"></i></a></li>
+                            <li><a href="#"><i class="ti-flickr"></i></a></li>
+                            <li><a href="#"><i class="ti-instagram"></i></a></li>
+                        </ul>
+                    </div>
+                    <!-- End Single Widget -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer Top -->
+    <div class="copyright">
+        <div class="container">
+            <div class="inner">
+                <div class="row">
+                    <div class="col-lg-6 col-12">
+                        <div class="left">
+                            <p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-12">
+                        <div class="right">
+                            <img src="images/payments.png" alt="#">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- /End Footer Area -->
+
+<!-- Jquery -->
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery-migrate-3.0.0.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<!-- Popper JS -->
+<script src="js/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="js/bootstrap.min.js"></script>
+<!-- Color JS -->
+<script src="js/colors.js"></script>
+<!-- Slicknav JS -->
+<script src="js/slicknav.min.js"></script>
+<!-- Owl Carousel JS -->
+<script src="js/owl-carousel.js"></script>
+<!-- Magnific Popup JS -->
+<script src="js/magnific-popup.js"></script>
+<!-- Waypoints JS -->
+<script src="js/waypoints.min.js"></script>
+<!-- Countdown JS -->
+<script src="js/finalcountdown.min.js"></script>
+<!-- Nice Select JS -->
+<script src="js/nicesellect.js"></script>
+<!-- Flex Slider JS -->
+<script src="js/flex-slider.js"></script>
+<!-- ScrollUp JS -->
+<script src="js/scrollup.js"></script>
+<!-- Onepage Nav JS -->
+<script src="js/onepage-nav.min.js"></script>
+<!-- Easing JS -->
+<script src="js/easing.js"></script>
+<!-- Active JS -->
+<script src="js/active.js"></script>
+</body>
 </html>
