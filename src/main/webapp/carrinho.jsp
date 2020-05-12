@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="pt-br">
     <head>
         <!-- Meta Tag -->
         <meta charset="utf-8">
@@ -143,7 +143,7 @@
                                 <div class="search-top">
                                     <form class="search-form">
                                         <input type="text" placeholder="O que procura ?" name="search">
-                                        <button value="search" type="submit"><i class="ti-search"></i></button>
+                                        <button value="search" type="submit" title="Buscar"><i class="ti-search"></i></button>
                                     </form>
                                 </div>
                                 <!--/ End Search Form -->
@@ -156,7 +156,7 @@
                                 <div class="search-bar">                                    
                                     <form>
                                         <input name="search" placeholder="O que você está procurando ?" type="search">
-                                        <button class="btnn"><i class="ti-search"></i></button>
+                                        <button class="btnn" title="Buscar"><i class="ti-search"></i></button>
                                     </form>
                                 </div>
                             </div>
@@ -290,14 +290,14 @@
                     <tbody>
                         <c:forEach items="${sessionScope.itensSelecionados.itens}" var="p">
                             <tr>                       
-                                <td class="image">
+                                <td class="image text-center" data-title="Imagem">
                                     <a href="${pageContext.request.contextPath}/ProdutoController?acao=listarWebDetalhe&id=${p.p.id}">
                                         <img src="imagens/${p.p.id}.jpg" width="100px" height="100px" alt="${p.p.nome}">
                                     </a>
                                 </td>
-                                <td>${p.p.nome}</td>               
-                                <td>${p.p.valor}</td>
-                                <td class="qty" data-title="Qty"><!-- Input Order -->
+                                <td class="product-name text-center" data-title="Nome">${p.p.nome}</td>               
+                                <td class="price text-center" data-title="Preço">${p.p.valor}</td>
+                                <td class="qty text-center" data-title="Qauntidade"><!-- Input Order -->
 
                                     <div class="input-group">
                                         <div class="button minus">
@@ -329,12 +329,12 @@
 
                                     <!--/ End Input Order -->
                                 </td>                   
-                                <td>${p.preco}</td>                      
-                                <td>
+                                <td class="total-amount text-center" data-title="Total">${p.preco}</td>                      
+                                <td class="action" data-title="Remover">
                                     <form name="#${p.p.id}" id="teste" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
                                         <input type="hidden" name="acao" value="retirarProduto">
                                         <input type="hidden" name="idProduto" value="${p.p.id}">
-                                        <button><i class="ti-trash remove-icon"></i></button>
+                                        <button><i class="ti-trash remove-icon" title="Remover"></i></button>
                                         <!--<a href="javascript:teste.submit()" class="btn">Remover</a>-->
                                     </form>
                                 </td>
@@ -355,7 +355,7 @@
                                 <div class="coupon">
                                     <form action="#" target="_blank">
                                         <input name="Coupon" placeholder="Calcule o Frete">
-                                        <button class="btn">Apply</button>
+                                        <button class="btn" title="Aplicar">Apply</button>
                                     </form>
                                 </div>
                             </div>
@@ -403,7 +403,7 @@
                     <!-- Single Widget -->
                     <div class="single-footer about">
                         <div class="logo">
-                            <a href="index.html"><img src="images/logo2.png" alt="#"></a>
+                            <a href="index.html"><img src="images/logo2.png" alt="logo"></a>
                         </div>
                         <p class="text">Projeto desenvolvido para a disciplina "PROJETO INTEGRADOR IV: DESENVOLVIMENTO DE SISTEMAS ORIENTADO A WEB E DISPOSITIVOS MÓVEIS" do curso de TADS - 4º Semestre.</p>
                         <p class="call">Tem Perguntas ? Ligue.<span><a href="tel:123456789">4002-8922</a></span></p>
@@ -463,7 +463,7 @@
                     </div>
                     <div class="col-lg-6 col-12">
                         <div class="right">
-                            <img src="images/payments.png" alt="#">
+                            <img src="images/payments.png" alt="payments">
                         </div>
                     </div>
                 </div>

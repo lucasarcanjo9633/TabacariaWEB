@@ -155,7 +155,7 @@
                                 <div class="search-top">
                                     <form class="search-form">
                                         <input type="text" placeholder="O que procura ?" name="search">
-                                        <button value="search" type="submit"><i class="ti-search"></i></button>
+                                        <button value="search" type="submit" title="Buscar"><i class="ti-search"></i></button>
                                     </form>
                                 </div>
                                 <!--/ End Search Form -->
@@ -168,7 +168,7 @@
                                 <div class="search-bar">                                    
                                     <form>
                                         <input name="search" placeholder="O que você está procurando ?" type="search">
-                                        <button class="btnn"><i class="ti-search"></i></button>
+                                        <button class="btnn"><i class="ti-search" title="Buscar"></i></button>
                                     </form>
                                 </div>
                             </div>
@@ -290,10 +290,10 @@
                     <div class="product-gallery">
                         <div class="quickview-slider-active">
                             <div class="single-slider">
-                                <img src="imagens/${p.img}.jpg" alt="#" height="569px;" width="528px;">
+                                <img src="imagens/${p.img}.jpg" alt="${p.nome}" height="569px;" width="528px;">
                             </div>
                             <div class="single-slider">
-                                <img src="imagens/${p.img}.jpg" alt="#">
+                                <img src="imagens/${p.img}.jpg" alt="${p.nome}">
                             </div>
                         </div>
                     </div>
@@ -361,7 +361,7 @@
 
                                     <div class="add-to-cart">
                                         <!-- Adiciona o carrinho-->
-                                        <button  class="btn">Add Carrinho</button>
+                                        <button  class="btn" title="Adicionar ao Carrinho">Add Carrinho</button>
                                         <!--<a href="javascript:carrinho.submit()" class="btn"></a>-->                                                    
                                     </div>
                                 </form>
@@ -409,8 +409,8 @@
                             <div class="single-product">
                                 <div class="product-img">
                                     <a href="product-details.html">
-                                        <img class="default-img" src="imagens/${p.img}.jpg" alt="#">
-                                        <img class="hover-img" src="imagens/${p.img}.jpg" alt="#">
+                                        <img class="default-img" src="imagens/${p.img}.jpg" alt="${p.nome}">
+                                        <img class="hover-img" src="imagens/${p.img}.jpg" alt="${p.nome}">
                                     </a>
                                     <div class="button-head">
                                         <div class="product-action">
@@ -443,7 +443,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Fechar"><span class="ti-close" aria-hidden="true"></span></button>
                     </div>
                     <div class="modal-body">
                         <div class="row no-gutters">
@@ -452,10 +452,10 @@
                                 <div class="product-gallery">
                                     <div class="quickview-slider-active">
                                         <div class="single-slider">
-                                            <img src="imagens/${p.img}.jpg" alt="#" height="569px;" width="528px;">
+                                            <img src="imagens/${p.img}.jpg" alt="${p.nome}" height="569px;" width="528px;">
                                         </div>
                                         <div class="single-slider">
-                                            <img src="imagens/${p.img}.jpg" alt="#">
+                                            <img src="imagens/${p.img}.jpg" alt="${p.nome}">
                                         </div>
                                     </div>
                                 </div>
@@ -614,7 +614,7 @@
                         </div>
                         <div class="col-lg-6 col-12">
                             <div class="right">
-                                <img src="images/payments.png" alt="#">
+                                <img src="images/payments.png" alt="payments">
                             </div>
                         </div>
                     </div>

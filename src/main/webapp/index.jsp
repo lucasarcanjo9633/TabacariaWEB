@@ -14,7 +14,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name='copyright' content=''>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">      
         <!-- Title Tag  -->
         <title>Ochaus the Louge</title>
         <!-- Favicon -->
@@ -157,7 +157,7 @@
                                 <div class="search-top">
                                     <form class="search-form">
                                         <input type="text" placeholder="O que procura ?" name="search">
-                                        <button value="search" type="submit"><i class="ti-search"></i></button>
+                                        <button value="search" type="submit" title="Buscar"><i class="ti-search"></i></button>
                                     </form>
                                 </div>
                                 <!--/ End Search Form -->
@@ -170,7 +170,7 @@
                                 <div class="search-bar">                                    
                                     <form>
                                         <input name="search" placeholder="O que você está procurando ?" type="search">
-                                        <button class="btnn"><i class="ti-search"></i></button>
+                                        <button class="btnn" title="Buscar"><i class="ti-search"></i></button>
                                     </form>
                                 </div>
                             </div>
@@ -346,8 +346,8 @@
                                                         <div class="product-img">
 
                                                             <a href="${pageContext.request.contextPath}/ProdutoController?acao=listarWebDetalhe&id=${p.id}">
-                                                                <img class="default-img" src="imagens/${p.img}.jpg" alt="#">
-                                                                <img class="hover-img" src="imagens/${p.img}.jpg" alt="#">
+                                                                <img class="default-img" src="imagens/${p.img}.jpg" alt="${p.nome}">
+                                                                <img class="hover-img" src="imagens/${p.img}.jpg" alt="${p.nome}">
                                                             </a>
 
                                                             <div class="button-head">
@@ -362,8 +362,8 @@
                                                                         <input type="hidden" name="nome"value="${p.nome}">
                                                                         <input type="hidden" name="valor"value="${p.valor}">
                                                                         <input type="hidden" name="quant[1]"value="1">
-                                                                        <button class="btn">Add Carrinho</button>                                                                    </form>
-                                                                    
+                                                                        <button class="btn" title="Adiconar Carrinho">Add Carrinho</button>                                                                    </form>
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -440,7 +440,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span class="ti-close" aria-hidden="true"></span></button>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Fechar"><span class="ti-close" aria-hidden="true"></span></button>
                         </div>
                         <div class="modal-body">
                             <div class="row no-gutters">
@@ -449,10 +449,10 @@
                                     <div class="product-gallery">
                                         <div class="quickview-slider-active">
                                             <div class="single-slider">
-                                                <img src="imagens/${p.img}.jpg" alt="#" height="569px;" width="528px;">
+                                                <img src="imagens/${p.img}.jpg" alt="${p.nome}" height="569px;" width="528px;">
                                             </div>
                                             <div class="single-slider">
-                                                <img src="imagens/${p.img}.jpg" alt="#">
+                                                <img src="imagens/${p.img}.jpg" alt="${p.nome}">
                                             </div>
                                         </div>
                                     </div>
@@ -520,7 +520,7 @@
 
                                                     <div class="add-to-cart">
                                                         <!-- Adiciona o carrinho-->
-                                                        <button  class="btn">Add Carrinho</button>
+                                                        <button  class="btn" title="Adicionar Carrinho">Add Carrinho</button>
                                                         <!--<a href="javascript:carrinho.submit()" class="btn"></a>-->                                                    
                                                     </div>
                                                 </form>
@@ -562,7 +562,7 @@
                             <!-- Single Widget -->
                             <div class="single-footer about">
                                 <div class="logo">
-                                    <a href="index.html"><img src="images/logo2.png" alt="#"></a>
+                                    <a href="index.html"><img src="images/logo2.png" alt="logo"></a>
                                 </div>
                                 <p class="text">Projeto desenvolvido para a disciplina "PROJETO INTEGRADOR IV: DESENVOLVIMENTO DE SISTEMAS ORIENTADO A WEB E DISPOSITIVOS MÓVEIS" do curso de TADS - 4º Semestre.</p>
                                 <p class="call">Tem Perguntas ? Ligue.<span><a href="tel:123456789">4002-8922</a></span></p>
@@ -622,7 +622,7 @@
                             </div>
                             <div class="col-lg-6 col-12">
                                 <div class="right">
-                                    <img src="images/payments.png" alt="#">
+                                    <img src="images/payments.png" alt="payments">
                                 </div>
                             </div>
                         </div>
