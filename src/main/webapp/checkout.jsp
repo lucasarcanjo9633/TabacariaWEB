@@ -55,85 +55,85 @@
 
         <script type="text/javascript" >
 
-        function onlynumber(evt) {
-            var theEvent = evt || window.event;
-            var key = theEvent.keyCode || theEvent.which;
-            key = String.fromCharCode(key);
-            //var regex = /^[0-9.,]+$/;
-            var regex = /^[0-9]+$/;
-            if (!regex.test(key)) {
-                theEvent.returnValue = false;
-                if (theEvent.preventDefault)
-                    theEvent.preventDefault();
+            function onlynumber(evt) {
+                var theEvent = evt || window.event;
+                var key = theEvent.keyCode || theEvent.which;
+                key = String.fromCharCode(key);
+                //var regex = /^[0-9.,]+$/;
+                var regex = /^[0-9]+$/;
+                if (!regex.test(key)) {
+                    theEvent.returnValue = false;
+                    if (theEvent.preventDefault)
+                        theEvent.preventDefault();
+                }
             }
-        }
-              
-        function limpa_formulário_cep() {
-            //Limpa valores do formulário de cep.
-            document.getElementById('rua').value = ("");
-            document.getElementById('bairro').value = ("");
-            document.getElementById('cidade').value = ("");
-            document.getElementById('uf').value = ("");
-        }
 
-        function meu_callback(conteudo) {
-            if (!("erro" in conteudo)) {
-                //Atualiza os campos com os valores.
-                document.getElementById('rua').value = (conteudo.logradouro);
-                document.getElementById('bairro').value = (conteudo.bairro);
-                document.getElementById('cidade').value = (conteudo.localidade);
-                document.getElementById('uf').value = (conteudo.uf);
-            } //end if.
-            else {
-                //CEP não Encontrado.
-                limpa_formulário_cep();
-                alert("CEP não encontrado.");
+            function limpa_formulário_cep() {
+                //Limpa valores do formulário de cep.
+                document.getElementById('rua').value = ("");
+                document.getElementById('bairro').value = ("");
+                document.getElementById('cidade').value = ("");
+                document.getElementById('uf').value = ("");
             }
-        }
 
-        function pesquisacep(valor) {
-
-            //Nova variável "cep" somente com dígitos.
-            var cep = valor.replace(/\D/g, '');
-
-            //Verifica se campo cep possui valor informado.
-            if (cep != "") {
-
-                //Expressão regular para validar o CEP.
-                var validacep = /^[0-9]{8}$/;
-
-                //Valida o formato do CEP.
-                if (validacep.test(cep)) {
-
-                    //Preenche os campos com "..." enquanto consulta webservice.
-                    document.getElementById('rua').value = "...";
-                    document.getElementById('bairro').value = "...";
-                    document.getElementById('cidade').value = "...";
-                    document.getElementById('uf').value = "...";
-
-                    //Cria um elemento javascript.
-                    var script = document.createElement('script');
-
-                    //Sincroniza com o callback.
-                    script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
-
-                    //Insere script no documento e carrega o conteúdo.
-                    document.body.appendChild(script);
-
+            function meu_callback(conteudo) {
+                if (!("erro" in conteudo)) {
+                    //Atualiza os campos com os valores.
+                    document.getElementById('rua').value = (conteudo.logradouro);
+                    document.getElementById('bairro').value = (conteudo.bairro);
+                    document.getElementById('cidade').value = (conteudo.localidade);
+                    document.getElementById('uf').value = (conteudo.uf);
                 } //end if.
                 else {
-                    //cep é inválido.
+                    //CEP não Encontrado.
                     limpa_formulário_cep();
-                    alert("Formato de CEP inválido.");
+                    alert("CEP não encontrado.");
                 }
-            } //end if.
-            else {
-                //cep sem valor, limpa formulário.
-                limpa_formulário_cep();
             }
-        }
 
-    </script>
+            function pesquisacep(valor) {
+
+                //Nova variável "cep" somente com dígitos.
+                var cep = valor.replace(/\D/g, '');
+
+                //Verifica se campo cep possui valor informado.
+                if (cep != "") {
+
+                    //Expressão regular para validar o CEP.
+                    var validacep = /^[0-9]{8}$/;
+
+                    //Valida o formato do CEP.
+                    if (validacep.test(cep)) {
+
+                        //Preenche os campos com "..." enquanto consulta webservice.
+                        document.getElementById('rua').value = "...";
+                        document.getElementById('bairro').value = "...";
+                        document.getElementById('cidade').value = "...";
+                        document.getElementById('uf').value = "...";
+
+                        //Cria um elemento javascript.
+                        var script = document.createElement('script');
+
+                        //Sincroniza com o callback.
+                        script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+                        //Insere script no documento e carrega o conteúdo.
+                        document.body.appendChild(script);
+
+                    } //end if.
+                    else {
+                        //cep é inválido.
+                        limpa_formulário_cep();
+                        alert("Formato de CEP inválido.");
+                    }
+                } //end if.
+                else {
+                    //cep sem valor, limpa formulário.
+                    limpa_formulário_cep();
+                }
+            }
+
+        </script>
 
     </head>
     <body class="js">
@@ -364,27 +364,29 @@
                             <div class="col-lg-6 col-md-6 col-12">
                                 <div class="form-group">
                                     <label>Nome<span>*</span></label>
-                                    <input type="text" name="nome" placeholder="" required="required">
+                                    <input type="text" name="nome" placeholder="" required="required" value="${sessionScope.cliente.nome}">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <div class="form-group">
                                     <label>Sobrenome<span>*</span></label>
-                                    <input type="text" name="sobrenome" placeholder="" required="required">
+                                    <input type="text" name="sobrenome" placeholder="" required="required" value="${sessionScope.cliente.sobrenome}">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <div class="form-group">
                                     <label>Email<span>*</span></label>
-                                    <input type="email" name="email" placeholder="" required="required">
+                                    <input type="email" name="email" placeholder="" required="required" value="${sessionScope.cliente.email}">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
                                 <div class="form-group">
                                     <label>Contato<span>*</span></label>
-                                    <input type="number" name="number" placeholder="" required="required">
-                                </div>
+                                    <input type="number" name="number" placeholder="" required="required" value="${sessionScope.cliente.telefone}">
+                                </div>                         
                             </div>
+
+                            <%--
                             <div class="col-lg-6 col-md-6 col-12">
                                 <div class="form-group">
                                     <label>CEP<span>*</span></label>
@@ -414,12 +416,56 @@
                                     <label>Estado:<span>*</span></label>
                                     <input name="uf" id="uf" type="text" placeholder="Ex: SP">
                                 </div>	
-                            </div>                            
+                            </div>
+                            --%>
+
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-group">
+                                    <label>Endereço<span>*</span></label>
+                                    <select name="endereco" id="endereco" style="display: none;">
+                                        <c:forEach items="${sessionScope.cliente.enderecos}" var="e" end="0">
+                                            <option value="${e.id}" selected>${e.endereco}</option>
+                                        </c:forEach>
+                                        <c:forEach items="${sessionScope.cliente.enderecos}" var="e" begin="1">
+                                            <option value="${e.id}">${e.endereco}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+
+
+
+                            <%--
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <hr>
+                                <div class="content">
+                                    <div class="checkbox">
+
+                                        <label><input name="endereco" id="${e.id}" type="radio">Endereço</label>
+                                        <p><span>CEP: ${e.CEP}</span></p>
+                                        <p><span>Endereço: ${e.endereco}</span></p>
+                                        <p><span>Bairro: ${e.bairro}</span></p>
+                                        <p><span>Cidade: ${e.cidade}</span></p>
+                                        <p><span>Estado: ${e.UF}</span></p>
+
+                                    </div>
+                                </div>
+                            </div>                               
+                            --%>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-12">
+                                <div class="form-group button">
+                                    <a href="enderecos.jsp" class="btn ">Novo Endereço</a>
+                                </div>
+                            </div>
                         </div>
                     </form>
                     <!--/ End Form -->
+
                 </div>
             </div>
+
             <div class="col-lg-4 col-12">
                 <div class="order-details">
                     <!-- Order Widget -->
@@ -427,9 +473,9 @@
                         <h2>TOTAL DO CARRINHO</h2>
                         <div class="content">
                             <ul>
-                                <li>Sub Total<span>$330.00</span></li>
+                                <li>Sub Total<span>RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span></li>
                                 <li>(+) Frete<span>$10.00</span></li>
-                                <li class="last">Total<span>$340.00</span></li>
+                                <li class="last">Total<span>RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span></li>
                             </ul>
                         </div>
                     </div>

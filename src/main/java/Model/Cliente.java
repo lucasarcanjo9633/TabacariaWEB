@@ -10,6 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,15 +27,11 @@ public class Cliente {
     private String CPF;
     private Date dtaNasc;
     private String senha;
-    private String CEP;
-    private String endereco;
-    private String bairro;
-    private String cidade;
-    private String UF;
+    private List<Endereco> enderecos;
     private String telefone;
     private boolean status;
 
-    public Cliente(int idCliente, String nome, String sobrenome, String email, String CPF, Date dtaNasc, String senha, String CEP, String endereco, String bairro, String cidade, String UF, String telefone, boolean status) {
+    public Cliente(int idCliente, String nome, String sobrenome, String email, String CPF, Date dtaNasc, String senha, List<Endereco> enderecos, String telefone, boolean status) {
         this.idCliente = idCliente;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -42,61 +39,44 @@ public class Cliente {
         this.CPF = CPF;
         this.dtaNasc = dtaNasc;
         this.senha = senha;
-        this.CEP = CEP;
-        this.endereco = endereco;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.UF = UF;
+        this.enderecos = enderecos;
         this.telefone = telefone;
         this.status = status;
     }
 
-    public Cliente(int idCliente, String nome, String sobrenome, Date dtaNasc, String senha, String CEP, String endereco, String bairro, String cidade, String UF, String telefone) {
-        this.idCliente = idCliente;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.dtaNasc = dtaNasc;
-        this.senha = senha;
-        this.CEP = CEP;
-        this.endereco = endereco;
-        this.bairro = bairro;
-        this.cidade = cidade;
-        this.UF = UF;
-        this.telefone = telefone;
-    }
-
-    public Cliente(String nome, String sobrenome, String email, String CPF, Date dtaNasc, String senha, String CEP, String endereco, String bairro, String cidade, String UF, String telefone) {
+    public Cliente(String nome, String sobrenome, String email, String CPF, Date dtaNasc, String senha, List<Endereco> enderecos, String telefone, boolean status) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.email = email;
         this.CPF = CPF;
         this.dtaNasc = dtaNasc;
         this.senha = senha;
-        this.CEP = CEP;
-        this.endereco = endereco;
-        this.bairro = bairro;
-        this.cidade = cidade;
+        this.enderecos = enderecos;
         this.telefone = telefone;
-        this.UF = UF;
+        this.status = status;
     }
-    
-     public Cliente(int idCliente, String nome, String sobrenome, Date dtaNasc, String CEP, String endereco, String bairro, String cidade, String UF, String telefone) {
+
+    public Cliente(int idCliente, String nome, String sobrenome, Date dtaNasc, String telefone) {
         this.idCliente = idCliente;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.dtaNasc = dtaNasc;
-        this.CEP = CEP;
-        this.endereco = endereco;
-        this.bairro = bairro;
-        this.cidade = cidade;
         this.telefone = telefone;
-        this.UF = UF;
     }
 
     public Cliente() {
 
     }
 
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
+
+    
     public String getTelefone() {
         return telefone;
     }
@@ -159,46 +139,6 @@ public class Cliente {
 
     public void setSenha(String senha) {
         this.senha = senha;
-    }
-
-    public String getCEP() {
-        return CEP;
-    }
-
-    public void setCEP(String CEP) {
-        this.CEP = CEP;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
-    public String getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
-
-    public String getBairro() {
-        return bairro;
-    }
-
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
-
-    public String getUF() {
-        return UF;
-    }
-
-    public void setUF(String UF) {
-        this.UF = UF;
     }
 
     public boolean isStatus() {

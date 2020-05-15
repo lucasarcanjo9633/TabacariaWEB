@@ -41,7 +41,7 @@ public class AutorizacaoCliente implements Filter {
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/index.jsp");
         }
     }
-    
+
 
     private boolean verificarPermissaoAcesso(
             HttpServletRequest httpRequest, Cliente cliente) {

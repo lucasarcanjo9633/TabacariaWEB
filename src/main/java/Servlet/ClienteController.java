@@ -9,10 +9,12 @@ import DAO.ClienteDAO;
 import DAO.ProdutoWebDAO;
 import Model.Cliente;
 import Model.Criptografar;
+import Model.Endereco;
 import Model.Produto;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -78,11 +80,18 @@ public class ClienteController extends HttpServlet {
         String bairro = request.getParameter("bairro");
         String uf = request.getParameter("uf");
         String telefone = request.getParameter("telefone");
+        
+        Endereco ed = new Endereco(cep, endereco, bairro, cidade, uf);
+        
+        ArrayList<Endereco> e = new ArrayList<>();
+        
+        e.add(ed);
 
-        Cliente cliente = new Cliente(nome, sobrenome, email, cpf, data, senha, cep, endereco, bairro, cidade, uf, telefone);
+        Cliente cliente = new Cliente(nome, sobrenome, email, cpf, data, senha, e, telefone, true);
+        
         cliente.setSenha(Criptografar.criptografar(senha));
 
-        if (DAO.ClienteDAO.salvar(cliente)) {
+        if (ClienteDAO.salvar(cliente)) {
 
             ArrayList<Produto> p = ProdutoWebDAO.getProduto();
             request.setAttribute("TodosProdutos", p);
@@ -111,11 +120,6 @@ public class ClienteController extends HttpServlet {
             request.setAttribute("sobreNomeAttr", c.getSobrenome());
             request.setAttribute("emailAttr", c.getEmail());
             request.setAttribute("cpfAttr", c.getCPF());
-            request.setAttribute("cepAttr", c.getCEP());
-            request.setAttribute("ruaAttr", c.getEndereco());
-            request.setAttribute("bairroAttr", c.getBairro());
-            request.setAttribute("cidadeAttr", c.getCidade());
-            request.setAttribute("estadoAttr", c.getUF());
             request.setAttribute("dateNascAttr", c.getDtaNasc());
             request.setAttribute("telefoneAttr", c.getTelefone());
             RequestDispatcher dispatcher = request.getRequestDispatcher("/perfilWeb.jsp");
@@ -132,14 +136,9 @@ public class ClienteController extends HttpServlet {
         String nome = request.getParameter("nome");
         String sobrenome = request.getParameter("sobrenome");
         Date data = Date.valueOf(request.getParameter("data"));
-        String cep = request.getParameter("cep");
-        String endereco = request.getParameter("rua");
-        String cidade = request.getParameter("cidade");
-        String bairro = request.getParameter("bairro");
-        String uf = request.getParameter("uf");
         String telefone = request.getParameter("telefone");
 
-        Cliente cliente = new Cliente(idCliente, nome, sobrenome, data, cep, endereco, bairro, cidade, uf, telefone);
+        Cliente cliente = new Cliente(idCliente, nome, sobrenome, data,telefone);
 
         if (ClienteDAO.editar(cliente)) {
             ArrayList<Produto> p = ProdutoWebDAO.getProduto();

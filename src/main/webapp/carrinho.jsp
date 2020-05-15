@@ -214,7 +214,7 @@
                                                         <span>Total:</span>
                                                         <span class="total-amount">RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span>
                                                     </div>
-                                                    <a href="checkout.html" class="btn animate">Checkout</a>
+                                                    <a href="checkout.jsp" class="btn animate">Checkout</a>
                                                 </div>
                                             </div>
                                         </c:when>
@@ -376,7 +376,7 @@
                                             <a href="${pageContext.request.contextPath}/loginWeb.jsp" class="btn"> Checkout</a> 
                                         </c:when>
                                         <c:otherwise>
-                                            <a href="#" class="btn"> Checkout</a>
+                                            <a href="checkout.jsp" class="btn"> Checkout</a>
                                         </c:otherwise>
                                     </c:choose>
 

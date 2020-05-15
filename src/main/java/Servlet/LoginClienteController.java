@@ -23,18 +23,14 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "LoginClienteController", urlPatterns = {"/LoginClienteController"})
 public class LoginClienteController extends HttpServlet {
 
-   
-
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 
-
     @Override
-        protected void doPost(HttpServletRequest request,
+    protected void doPost(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -42,12 +38,13 @@ public class LoginClienteController extends HttpServlet {
         String senha = request.getParameter("senha");
         senha = Criptografar.criptografar(senha);
         Cliente cliente = ClienteDAO.login(username, senha);
-        
 
         if (cliente != null && cliente.getSenha().equals(senha)) {
             // Usuario válido - adiciona na sessão
+            
+            Cliente c = ClienteDAO.buscaCliente(cliente.getIdCliente());
             HttpSession sessao = request.getSession();
-            sessao.setAttribute("cliente", cliente);
+            sessao.setAttribute("cliente", c);
 
             // Apresenta tela home para usuario.
             response.sendRedirect(request.getContextPath() + "/ProdutoController?acao=listarWeb");
@@ -59,7 +56,5 @@ public class LoginClienteController extends HttpServlet {
         }
 
     }
-
- 
 
 }

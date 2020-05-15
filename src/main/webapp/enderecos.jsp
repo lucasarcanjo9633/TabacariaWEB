@@ -1,6 +1,6 @@
 <%-- 
-    Document   : perfilWeb
-    Created on : 16/04/2020, 10:51:11
+    Document   : enderecos
+    Created on : 14/05/2020, 22:12:19
     Author     : Ochaus
 --%>
 
@@ -100,34 +100,55 @@
                     return false;
                 }
 
-                /*if (rua.toString().trim() == "" || rua.toString().trim() == null || rua.toString().trim().length < 1) {
-                 
-                 alert("Endereço inválido, preencha o campo corretamente.");
-                 document.getElementById("rua").focus();
-                 return false;
-                 }
-                 
-                 if (bairro.toString().trim() == "" || bairro.toString().trim() == null || bairro.toString().trim().length < 1) {
-                 
-                 alert("Bairro inválido, preencha o campo corretamente.");
-                 document.getElementById("bairro").focus();
-                 return false;
-                 }
-                 
-                 if (cidade.toString().trim() == "" || cidade.toString().trim() == null || cidade.toString().trim().length < 1) {
-                 
-                 alert("Cidade inválido, preencha o campo corretamente.");
-                 document.getElementById("cidade").focus();
-                 return false;
-                 }
-                 
-                 if (uf.toString().trim() == "" || uf.toString().trim() == null || uf.toString().trim().length < 1) {
-                 
-                 alert("Estado inválido, preencha o campo corretamente.");
-                 document.getElementById("uf").focus();
-                 return false;
-                 }
-                 */
+                if (senha.toString().trim() == "" || senha.toString().trim() == null || senha.toString().trim().length < 8) {
+
+                    alert("Senha inválido, preencha o campo corretamente.");
+                    document.getElementById("senha").focus();
+                    return false;
+                }
+
+                if (confSenha.toString().trim() == "" || confSenha.toString().trim() == null || confSenha.toString().trim().length < 8) {
+
+                    alert("Confirmação de senha inválido, preencha o campo corretamente.");
+                    document.getElementById("senha").focus();
+                    return false;
+                }
+
+                if (senha.toString().trim() != confSenha.toString().trim()) {
+
+                    alert("Senhas não correspondem, preencha os campos corretamente.");
+                    document.getElementById("senha").focus();
+                    return false;
+                }
+
+                if (rua.toString().trim() == "" || rua.toString().trim() == null || rua.toString().trim().length < 1) {
+
+                    alert("Endereço inválido, preencha o campo corretamente.");
+                    document.getElementById("rua").focus();
+                    return false;
+                }
+
+                if (bairro.toString().trim() == "" || bairro.toString().trim() == null || bairro.toString().trim().length < 1) {
+
+                    alert("Bairro inválido, preencha o campo corretamente.");
+                    document.getElementById("bairro").focus();
+                    return false;
+                }
+
+                if (cidade.toString().trim() == "" || cidade.toString().trim() == null || cidade.toString().trim().length < 1) {
+
+                    alert("Cidade inválido, preencha o campo corretamente.");
+                    document.getElementById("cidade").focus();
+                    return false;
+                }
+
+                if (uf.toString().trim() == "" || uf.toString().trim() == null || uf.toString().trim().length < 1) {
+
+                    alert("Estado inválido, preencha o campo corretamente.");
+                    document.getElementById("uf").focus();
+                    return false;
+                }
+
 
             }
 
@@ -218,7 +239,7 @@
 
         <c:if test="${message != null}">
             <script>
-                alert("${message}");
+        alert("${message}");
             </script>
         </c:if>
         <!-- End Notificação -->
@@ -240,7 +261,8 @@
                         </div>
                         <div class="col-lg-8 col-md-12 col-12">
                             <!-- Top Right -->
-                            <div class="right-content" style=" margin-right: 50px; margin-left: auto;">                               
+                            <div class="right-content" style=" margin-right: 50px; margin-left: auto;">
+
                                 <c:choose>
                                     <c:when test="${sessionScope.cliente != null}">
                                         <ul class="nav" >
@@ -278,7 +300,8 @@
                                         </ul>
                                     </c:otherwise>
                                 </c:choose>
-                            </div>     
+                            </div>
+
                             <!-- End Top Right -->
                         </div>
                     </div>
@@ -414,55 +437,17 @@
                         <div class="col-lg-12 col-12" style="margin-left: auto; margin-right: auto;">
                             <div class="form-main">
                                 <div class="title">
-                                    <h3>Perfil</h3>
+                                    <h3>Cadastrar Endereco</h3>
+                                    <br>
+                                    <h5>${mensagemAttr}</h2>
                                 </div>
 
-                                <form class="form" name="form" method="post" action="${pageContext.request.contextPath}/ClienteController" onsubmit=" return validacao();">
-                                    <input type="hidden" name="acao" value="editar">
-                                    <input type="hidden" name="idCliente" value="${idClienteAttr}">
+                                <form class="form" name="form" method="post" action="${pageContext.request.contextPath}/EnderecoController" onsubmit=" return validacao();">
+                                    <input type="hidden" name="acao" value="cadastrar">
+                                    <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">
                                     <div class="row">
-                                        <div class="col-lg-6 col-12">
-                                            <div class="form-group">
-                                                <label>Nome<span>*</span></label>
-                                                <input name="nome" id="nome" type="text" value="${nomeAttr}" placeholder="Ex: João ">
-                                            </div>
-                                        </div>
 
-                                        <div class="col-lg-6 col-12">
-                                            <div class="form-group">
-                                                <label>Sobrenome<span>*</span></label>
-                                                <input name="sobrenome" id="sobrenome" type="text" value="${sobreNomeAttr}" placeholder="Ex: Silva ">
-                                            </div>
-                                        </div>
 
-                                        <div class="col-lg-6 col-12">
-                                            <div class="form-group">
-                                                <label>Data de Nascimento: <span>*</span></label>
-                                                <input name="data" id="data" type="date" value="${dateNascAttr}">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6 col-12">
-                                            <div class="form-group">
-                                                <label>CPF<span>*</span></label>
-                                                <input name="cpf" id="cpf" type="text" value="${cpfAttr}" disabled>
-                                            </div>	
-                                        </div>
-
-                                        <div class="col-lg-6 col-12">
-                                            <div class="form-group">
-                                                <label>Email<span>*</span></label>
-                                                <input name="email" id="email" type="email" value="${emailAttr}" disabled >
-                                            </div>
-                                        </div>
-
-                                        <div class="col-lg-6 col-12">
-                                            <div class="form-group">
-                                                <label>Telefone<span>*</span></label>
-                                                <input name="telefone" id="telefone" type="telefone" value="${telefoneAttr}" placeholder="(11) 99999-9999">
-                                            </div>
-                                        </div>
-                                       <%--     
                                         <div class="col-lg-6 col-12">
                                             <div class="form-group">
                                                 <label>CEP<span>*</span></label>
@@ -493,7 +478,7 @@
                                                 <input name="uf" id="uf" type="text" value="${estadoAttr}" placeholder="Ex: SP">
                                             </div>	
                                         </div>
-                                       --%>
+
                                         <div class="col-12">
                                             <div class="form-group button">
                                                 <button type="submit" class="btn ">Salvar</button>

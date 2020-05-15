@@ -116,6 +116,7 @@
                                                             <a href="javascript:perfilSenha.submit()">Alterar Senha</a>
                                                         </form>
                                                     </li>
+                                                    <li><a href="enderecolistar.jsp">Meus Endereços</a></li>
                                                     <li><a href="#">Checkout</a></li>
                                                     <li><a href="#">Carrinho</a></li>
                                                     <li><a href="${pageContext.request.contextPath}/LogoutClienteController">Sair</a></li>
@@ -197,7 +198,7 @@
                                             <div class="shopping-item">
                                                 <div class="dropdown-cart-header">
                                                     <span>${sessionScope.itensSelecionados.quantidadeItem()} Item</span>
-                                                    <form name="carrinho" id="carrinho" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+                                                    <form name="carrinho" id="carrinho" action="carrinho.jsp" method="post">
                                                         <a href="javascript:carrinho.submit()">View Cart</a>
                                                     </form>
                                                 </div>
@@ -232,7 +233,7 @@
                                                             <a href="${pageContext.request.contextPath}/CarrinhoController" class="btn"> Carrinho</a> 
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <a href="checkout.html" class="btn animate">Checkout</a>
+                                                            <a href="carrinho.jsp" class="btn animate">Checkout</a>
                                                         </c:otherwise>
                                                     </c:choose>
 
