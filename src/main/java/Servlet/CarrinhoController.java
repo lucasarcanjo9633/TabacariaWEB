@@ -151,7 +151,7 @@ public class CarrinhoController extends HttpServlet {
 
         Item item = new Item(p, qtd, 0);
         item.precoTotal();
-        if (venda.itemQtd(p) == 0) {
+        if ((venda.itemQtd(p) == 0) && (qtd == -1)) {
             venda.removerItem(p.getId());
         } else if (venda.itemExisteCarrinho(p)) {
             venda.adicionarItemExistente(item);
