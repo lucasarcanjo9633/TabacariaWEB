@@ -77,9 +77,6 @@ public class CarrinhoController extends HttpServlet {
             case "alterarQtd":
                 alterarQtd(request, response, venda);
                 break;
-            case "cadastrarVenda":
-                cadastrarVenda(request, response, venda);
-                break;
             case "listarCarrinnho":
                 listarCarrinho(request, response, venda);
                 break;
@@ -87,16 +84,14 @@ public class CarrinhoController extends HttpServlet {
                 String formaPagamento = request.getParameter("tipoPagamento");
                 venda.setPagamento(formaPagamento);
                 switch (formaPagamento) {
-                    case "Cartao":
+                    case "cartao":
                         checkoutCartao(request, response, venda);
-                        RequestDispatcher dispatcher = request.getRequestDispatcher("/confirmar-pedido.jsp");
-                        dispatcher.forward(request, response);
                         break;
                     default:
                         cadastrarVenda(request, response, venda);
                 }
                 break;
-            case "CadastrarVenda":
+            case "cadastrarVenda":
                 cadastrarVendaCartao(request, response, venda);
                 break;
         }
@@ -220,8 +215,8 @@ public class CarrinhoController extends HttpServlet {
     protected void cadastrarVendaCartao(HttpServletRequest request, HttpServletResponse response, Venda venda)
             throws ServletException, IOException {
 
-            String nome = request.getParameter("nome");
-            venda.setPagamento(venda.getPagamento()+": "+nome);
+            //String nome = request.getParameter("numero");
+            venda.setPagamento(venda.getPagamento()+" de crédito");
         if (VendaDAO.salvar(venda)) {
             request.setAttribute("idVenda", venda.getIdVenda());
             request.setAttribute("qtdItem", venda.quantidadeItem());
