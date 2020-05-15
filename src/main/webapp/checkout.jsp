@@ -482,7 +482,7 @@
                             <div class="content">
                                 <ul>
                                     <li>Sub Total<span>RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span></li>
-                                    <li>(+) Frete<span>$10.00</span></li>
+                                    <li>(+) Frete<span>$Gratis</span></li>
                                     <li class="last">Total<span>RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span></li>
                                 </ul>
                             </div>
@@ -510,7 +510,7 @@
                                     <label class="checkbox-inline" ><input name="tipoPagamento" value="boleto" type="radio"> Boleto</label>
                                     <br>
                                     <label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-                                    <label class="checkbox-inline" ><input name="tipoPagamento" value="picpay" type="radio"> PayPal</label>
+                                    <label class="checkbox-inline" ><input name="tipoPagamento" value="paypal" type="radio"> PayPal</label>
                                 </div>
                             </div>
                         </div>

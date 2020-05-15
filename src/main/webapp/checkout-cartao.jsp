@@ -382,8 +382,8 @@
                             <h2>TOTAL DO CARRINHO</h2>
                             <div class="content">
                                 <ul>
-                                    <li>Sub Total<span>${sessionScope.itensSelecionados.getPrecoFinal()-20}</span></li>
-                                    <li>(+) Frete<span>$20.00</span></li>
+                                    <li>Sub Total<span>${sessionScope.itensSelecionados.getPrecoFinal()}</span></li>
+                                    <li>(+) Frete<span>Gratis</span></li>
                                     <li class="last">Total<span>${sessionScope.itensSelecionados.getPrecoFinal()}</span></li>
                                 </ul>
                             </div>
