@@ -116,6 +116,13 @@
                                                             <a href="javascript:perfilSenha.submit()">Alterar Senha</a>
                                                         </form>
                                                     </li>
+                                                    <li>
+                                                        <form name="meusPedidos" id="meusPedidos" action="${pageContext.request.contextPath}/VendaController" method="post">
+                                                            <input type="hidden" name="acao" value="listar">
+                                                            <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">
+                                                            <a href="javascript:meusPedidos.submit()">Meus Pedidos</a>
+                                                        </form>
+                                                    </li>
                                                     <li><a href="enderecolistar.jsp">Meus Endereços</a></li>
                                                     <li><a href="#">Checkout</a></li>
                                                     <li><a href="#">Carrinho</a></li>

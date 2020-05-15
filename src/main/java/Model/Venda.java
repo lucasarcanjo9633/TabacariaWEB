@@ -6,7 +6,6 @@
 package Model;
 
 import java.sql.Date;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -22,6 +21,7 @@ public class Venda {
     private double precoFinal;
     private Date dataVenda;
     private String pagamento;
+    private boolean status;
 
     public Venda(int idVenda, int idCliente, ArrayList<Item> itens, double precoFinal, Date dataVenda) {
         this.idVenda = idVenda;
@@ -41,7 +41,7 @@ public class Venda {
     public Venda() {
         itens = new ArrayList<>();
     }
-
+    
     public Venda(int idCliente, ArrayList<Item> itens, double precoFinal, Date dataVenda) {
         this.idCliente = idCliente;
         this.itens = itens;
@@ -63,6 +63,15 @@ public class Venda {
         return idVenda;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+      
+    
     public void setIdVenda(int idVenda) {
         this.idVenda = idVenda;
     }

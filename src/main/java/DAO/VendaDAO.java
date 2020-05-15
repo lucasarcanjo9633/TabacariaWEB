@@ -5,6 +5,7 @@
  */
 package DAO;
 
+import Model.Endereco;
 import Model.Item;
 import Model.Venda;
 import java.sql.Connection;
@@ -97,5 +98,69 @@ public class VendaDAO {
 
         return retorno;
 
+    }
+    
+    public static ArrayList<Venda> getVenda(int idCliente) {
+        
+        ArrayList<Venda> listaVendas = new ArrayList<>();
+        
+        Venda v = new Venda();             
+
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement(" SELECT idvenda, idcliente, idendereco, precofinal, datavenda, pagamento, status "
+                    + " FROM venda "
+                    + " WHERE "
+                    + " idcliente = " + idCliente + " ; ");
+
+            ResultSet rs = comando.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("idVenda");
+                v.setIdVenda(id);
+                v.setIdCliente(rs.getInt("idcliente"));
+                int idEndereco = rs.getInt("idendereco");
+                v.setPrecoFinal(rs.getDouble("precofinal"));
+                v.setDataVenda(rs.getDate("datavenda"));
+                v.setPagamento(rs.getString("pagamento"));
+                v.setStatus(rs.getBoolean("status"));
+               
+                
+                Endereco e = new Endereco();
+
+                PreparedStatement comando1 = conexao.prepareStatement(" SELECT idendereco, cep, endereco, bairro, cidade, uf FROM endereco"
+                        + " WHERE "
+                        + " idendereco = " + idEndereco + "; ");
+                ResultSet rs1 = comando1.executeQuery();
+
+                while (rs1.next()) {
+                    
+                    e.setId(rs1.getInt("idendereco"));
+                    e.setCEP(rs1.getString("cep"));
+                    e.setEndereco(rs1.getString("endereco"));
+                    e.setBairro(rs1.getString("bairro"));
+                    e.setCidade(rs1.getString("cidade"));
+                    e.setUF(rs1.getString("uf"));
+                }
+
+                v.setEndereco(e);
+                listaVendas.add(v);
+            }
+
+        } catch (ClassNotFoundException ex) {
+            listaVendas = null;
+        } catch (SQLException ex) {
+            listaVendas = null;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                listaVendas = null;
+            }
+
+        }
+        return listaVendas;
     }
 }

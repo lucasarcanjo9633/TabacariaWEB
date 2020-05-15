@@ -203,8 +203,6 @@
                                                             </form>
 
                                                         </li>
-
-
                                                     </c:forEach>
                                                 </ul>
                                                 <div class="bottom">
@@ -269,47 +267,62 @@
 <!--/ End Header -->
 <!-- Shopping Cart -->
 <div class="shopping-cart section">
-    <div class="container" style="border-width: 3px; border-style: solid; border-color: #F7941D;">
-        <hr>
-        <h5>Pedido: 45646549849</h5>
-        <hr>
-        <div class="container">
-            <div class="row">
-                <div class="col" style="text-align: left;">Pedido Recebido 11/05/2020</div>
-                <div class="col" style="text-align: right;">Pedido Aprovado</div>
-                <div class="col-12">                   
-                    <div class="progress">           
-                        <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
+    <c:forEach items="${TodasVendas}" var="v">
+        <div class="container" style="border-width: 3px; border-style: solid; border-color: #F7941D;">
+            <hr>
+            <h5>Pedido: ${v.idVenda}</h5>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col" style="text-align: left;">Pedido Recebido ${v.dataVenda}</div>
+                    <div class="col" style="text-align: right;">Pedido Aprovado</div>
+
+                    <c:choose>
+                        <c:when test="${v.status == false}">
+                            <div class="col-12">                   
+                                <div class="progress">           
+                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="col-12">                   
+                                <div class="progress">           
+                                    <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
-            </div>
-        </div>        
-        <hr>
-        <h5>Pagamento</h5>
-        <hr>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div>
-                        <div class="row">                       
-                            <div class="col-lg-4 col-md-7 col-12">
-                                <div>
-                                    <ul>
-                                        <li>Total: <span>R$ 500</span></li>                                        
-                                    </ul>                               
+            </div>        
+            <hr>
+            <h5>Pagamento</h5>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div>
+                            <div class="row">                       
+                                <div class="col-lg-4 col-md-7 col-12">
+                                    <div>
+                                        <ul>
+                                            <li>Forma de Pagamento: <span>${v.pagamento}</span></li>
+                                            <li>Total: <span>R$ ${v.precoFinal}</span></li>                                        
+                                        </ul>                               
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <hr>
+            <div class="button">
+                <a href="pedidos-detalhe.jsp" class="btn">Detalhes</a>
+            </div>
+            <hr>
         </div>
-        <hr>
-        <div class="button">
-            <a href="pedidos-detalhe.jsp" class="btn">Detalhes</a>
-        </div>
-        <hr>
-    </div>
+    </c:forEach>
 </div>
 <!--/ End Shopping Cart -->
 <!-- Start Footer Area -->
