@@ -24,29 +24,52 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "VendaController", urlPatterns = {"/VendaController"})
 public class VendaController extends HttpServlet {
 
-  
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-    }
 
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        listar(request, response);
+        
+        String acao = request.getParameter("acao");
+
+        switch (acao) {
+            case "listar":
+                listar(request, response);
+                break;
+            case "detalhe":
+                detalhe(request, response);
+                break;
+        }
+
     }
+
     protected void listar(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-       int idCliente = Integer.valueOf(request.getParameter("idCliente"));
-       
-       ArrayList<Venda> vendas = VendaDAO.getVenda(idCliente);
-       
-       request.setAttribute("TodasVendas", vendas);
-       RequestDispatcher dispatcher = request.getRequestDispatcher("/pedidos.jsp");
-       dispatcher.forward(request, response);
+
+        int idCliente = Integer.valueOf(request.getParameter("idCliente"));
+
+        ArrayList<Venda> vendas = VendaDAO.getVenda(idCliente);
+
+        request.setAttribute("TodasVendas", vendas);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/pedidos.jsp");
+        dispatcher.forward(request, response);
+    }
+    
+    protected void detalhe(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        int idCliente = Integer.valueOf(request.getParameter("idCliente"));
+        int idVenda = Integer.valueOf(request.getParameter("idVenda"));
+
+        Venda vendas = VendaDAO.getVenda(idCliente, idVenda);
+
+        request.setAttribute("Vendas", vendas);
+        request.setAttribute("Itens", vendas.getItens());
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/pedidos-detalhe.jsp");
+        dispatcher.forward(request, response);
     }
 }

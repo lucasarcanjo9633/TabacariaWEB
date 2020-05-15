@@ -269,19 +269,30 @@
 <!--/ End Header -->
 <!-- Shopping Cart -->
 <div class="shopping-cart section">
-    <div class="container" style="border-width: 3px; border-style: solid; border-color: #F7941D;">
+    <div class="container" style="border-width: 3px; border-style: solid; border-color: #F7941D;">      
         <hr>
-        <h5>Pedido: 45646549849</h5>
+        <h5>Pedido: ${Vendas.idVenda}</h5>
         <hr>
         <div class="container">
             <div class="row">
                 <div class="col" style="text-align: left;">Pedido Recebido</div>
                 <div class="col" style="text-align: right;">Pedido Aprovado</div>
-                <div class="col-12">                   
-                    <div class="progress">           
-                        <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
+                <c:choose>
+                        <c:when test="${Vendas.status == false}">
+                            <div class="col-12">                   
+                                <div class="progress">           
+                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="col-12">                   
+                                <div class="progress">           
+                                    <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
             </div>
         </div>
         <hr>
@@ -300,19 +311,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <%--<c:forEach items="" var="p">--%> 
+                            <c:forEach items="${Itens}" var="p">
                                 <tr>                       
                                     <td class="image text-center" data-title="Imagem">
                                         <a href="#">
-                                            <img src="imagens/5.jpg" width="100px" height="100px" alt="">
+                                            <img src="imagens/${p.p.img}.jpg" width="100px" height="100px" alt="">
                                         </a>
                                     </td>
-                                    <td class="product-name text-center" data-title="Nome">Nome do Produto</td>               
-                                    <td class="price text-center" data-title="Preço">R$ 500,00</td>
-                                    <td class="qty text-center" data-title="Qauntidade">2</td>
-                                    <td class="total-amount text-center" data-title="Total">R$ 1000,00</td>                                                      
+                                    <td class="product-name text-center" data-title="Nome">${p.p.nome}</td>               
+                                    <td class="price text-center" data-title="Preço">R$ ${p.preco}</td>
+                                    <td class="qty text-center" data-title="Qauntidade">${p.qtd}</td>
+                                    <td class="total-amount text-center" data-title="Total">R$ ${p.preco * p.qtd}</td>                                                      
                                 </tr>
-                            <%--</c:forEach>--%>
+                            </c:forEach>
                         </tbody>
                     </table>
                     <!--/ End Shopping Summery -->
@@ -330,12 +341,11 @@
                             <div class="col-lg-4 col-md-7 col-12">
                                 <div>
                                     <ul>
-                                        <li>Nome: <span>*</span></li>
-                                        <li>Endereço<span>*</span></li>                                        
-                                        <li>Bairro: <span>*</span></li>
-                                        <li>Cidade: <span>*</span></li>
-                                        <li>Estado: <span>*</span></li>
-                                        <li>CEP: <span>*</span></li>
+                                        <li>CEP: <span>${Vendas.endereco.CEP}</span></li>
+                                        <li>Endereço: <span>${Vendas.endereco.endereco}</span></li>                                        
+                                        <li>Bairro: <span>${Vendas.endereco.bairro}</span></li>
+                                        <li>Cidade: <span>${Vendas.endereco.cidade}</span></li>
+                                        <li>Estado: <span>${Vendas.endereco.UF}</span></li>                                      
                                     </ul>                               
                                 </div>
                             </div>
@@ -354,11 +364,9 @@
                         <div class="row">                       
                             <div class="col-lg-4 col-md-7 col-12">
                                 <div>
-                                    <ul>
-                                        <li>Subtotal: <span>R$ 500</span></li>
-                                        <li>Frete: <span>Gratis</span></li>                                        
-                                        <li>Total a pagar: <span>R$ 500</span></li>
-                                        <li>Forma de Pagamento: <span>Boleto</span></li>
+                                    <ul>                                     
+                                        <li>Total a pagar: <span>R$ ${Vendas.precoFinal}</span></li>
+                                        <li>Forma de Pagamento: <span>${Vendas.pagamento}</span></li>
                                     </ul>                               
                                 </div>
                             </div>

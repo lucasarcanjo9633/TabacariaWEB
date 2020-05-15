@@ -317,9 +317,14 @@
                 </div>
             </div>
             <hr>
+            <form action="${pageContext.request.contextPath}/VendaController" method="post">
+                <input type="hidden" name="acao" value="detalhe">
+                <input type="hidden" name="idVenda" value="${v.idVenda}">
+                <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">
             <div class="button">
-                <a href="pedidos-detalhe.jsp" class="btn">Detalhes</a>
+                <button type="submit" class="btn">Detalhes</button>
             </div>
+            </form>
             <hr>
         </div>
     </c:forEach>
