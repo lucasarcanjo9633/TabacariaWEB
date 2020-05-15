@@ -289,13 +289,15 @@
 <!-- Start Checkout -->
 <section class="shop checkout section">
     <div class="container">
-        <div class="row"> 
-            <div class="col-lg-8 col-12">
-                <div class="checkout-form">
-                    <h2>Finalize sua compra</h2>
-                    <p>Confirme os dados do cartão</p>
-                    <!-- Form -->
-                    <form class="form" method="post" action="#">
+        <form action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+            <input type="hidden" name="acao" value="pagamento"> 
+            <div class="row"> 
+                <div class="col-lg-8 col-12">
+                    <div class="checkout-form">
+                        <h2>Finalize sua compra</h2>
+                        <p>Confirme os dados do cartão</p>
+                        <!-- Form -->
+                        <!--<form class="form" method="post" action="#">-->
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-12">
                                 <div class="form-group">
@@ -356,167 +358,171 @@
                                 <div class="form-group">
                                     <label>Parcelas<span>*</span></label>
                                     <select name="parcela" id="parcela">
-                                        <option value="parcela" selected="selected">1 x ${1000 / 1}</option>
-                                        <option>2 x ${1000 / 2}</option>
-                                        <option>3 x ${1000 / 3}</option>
-                                        <option>4 x ${1000 / 4}</option>
-                                        <option>5 x ${1000 / 5}</option>
+                                        <option value="parcela" selected="selected">1 x ${precoFinal() / 1}</option>
+                                        <option>2 x ${precoFinal() / 2}</option>
+                                        <option>3 x ${precoFinal() / 3}</option>
+                                        <option>4 x ${precoFinal() / 4}</option>
+                                        <option>5 x ${precoFinal() / 5}</option>
                                     </select>
                                 </div>
+
                             </div>                           
                         </div>
-                    </form>
-                    <!--/ End Form -->
+                        <!--</form> -->
+                        <!--/ End Form -->
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-12">
-                <div class="order-details">
-                    <!-- Order Widget -->
-                    <div class="single-widget">
-                        <h2>TOTAL DO CARRINHO</h2>
-                        <div class="content">
-                            <ul>
-                                <li>Sub Total<span>$980.00</span></li>
-                                <li>(+) Frete<span>$20.00</span></li>
-                                <li class="last">Total<span>$1000.00</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--/ End Order Widget -->
-                    <!-- Payment Method Widget -->
-                    <div class="single-widget payement">
-                        <div class="content">
-                            <img src="images/payment-method.png" alt="#">
-                        </div>
-                    </div>
-                    <!--/ End Payment Method Widget -->
-                    <!-- Button Widget -->
-                    <div class="single-widget get-button">
-                        <div class="content">
-                            <div class="button">
-                                <a href="#" class="btn">Finalizar a Compra</a>
+
+                <div class="col-lg-4 col-12">
+                    <div class="order-details">
+                        <!-- Order Widget -->
+                        <div class="single-widget">
+                            <h2>TOTAL DO CARRINHO</h2>
+                            <div class="content">
+                                <ul>
+                                    <li>Sub Total<span>${precoFinal()-20}</span></li>
+                                    <li>(+) Frete<span>$20.00</span></li>
+                                    <li class="last">Total<span>${precoFinal()}</span></li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                    <!--/ End Button Widget -->
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--/ End Checkout -->
+                        <!--/ End Order Widget -->
+                        <!-- Payment Method Widget -->
+                        <div class="single-widget payement">
+                            <div class="content">
+                                <img src="images/payment-method.png" alt="#">
+                            </div>
+                        </div>
+                        <!--/ End Payment Method Widget -->
+                        <!-- Button Widget -->
+                        <div class="single-widget get-button">
+                            <div class="content">
+                                <div class="button">
+                                    <button class="btn">Finalizar a Compra<button></a>
+                                            </div>
+                                            </div>
+                                            </div>
+                                            <!--/ End Button Widget -->
+                                            </div>
+                                            </div>
+                                            </div>
+                                            </form>
+                                            </div>
+                                            </section>
+                                            </form>
+                                            <!--/ End Checkout -->
 
-<!-- Start Footer Area -->
-<footer class="footer">
-    <!-- Footer Top -->
-    <div class="footer-top section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5 col-md-6 col-12">
-                    <!-- Single Widget -->
-                    <div class="single-footer about">
-                        <div class="logo">
-                            <a href="index.html"><img src="images/logo2.png" alt="#"></a>
-                        </div>
-                        <p class="text">Projeto desenvolvido para a disciplina "PROJETO INTEGRADOR IV: DESENVOLVIMENTO DE SISTEMAS ORIENTADO A WEB E DISPOSITIVOS MÓVEIS" do curso de TADS - 4º Semestre.</p>
-                        <p class="call">Tem Perguntas ? Ligue.<span><a href="tel:123456789">4002-8922</a></span></p>
-                    </div>
-                    <!-- End Single Widget -->
-                </div>
-                <div class="col-lg-2 col-md-6 col-12">
-                    <!-- Single Widget -->
-                    <div class="single-footer links">
-                        <h4>Informação</h4>
-                        <ul>
-                            <li><a href="#">Sobre</a></li>
-                            <li><a href="#">Perguntas Frequentes</a></li>
-                            <li><a href="#">Termos e Condições</a></li>
-                            <li><a href="#">Contato</a></li>
-                            <li><a href="#">Ajuda</a></li>
-                        </ul>
-                    </div>
-                    <!-- End Single Widget -->
-                </div>
+                                            <!-- Start Footer Area -->
+                                            <footer class="footer">
+                                                <!-- Footer Top -->
+                                                <div class="footer-top section">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-lg-5 col-md-6 col-12">
+                                                                <!-- Single Widget -->
+                                                                <div class="single-footer about">
+                                                                    <div class="logo">
+                                                                        <a href="index.html"><img src="images/logo2.png" alt="#"></a>
+                                                                    </div>
+                                                                    <p class="text">Projeto desenvolvido para a disciplina "PROJETO INTEGRADOR IV: DESENVOLVIMENTO DE SISTEMAS ORIENTADO A WEB E DISPOSITIVOS MÓVEIS" do curso de TADS - 4º Semestre.</p>
+                                                                    <p class="call">Tem Perguntas ? Ligue.<span><a href="tel:123456789">4002-8922</a></span></p>
+                                                                </div>
+                                                                <!-- End Single Widget -->
+                                                            </div>
+                                                            <div class="col-lg-2 col-md-6 col-12">
+                                                                <!-- Single Widget -->
+                                                                <div class="single-footer links">
+                                                                    <h4>Informação</h4>
+                                                                    <ul>
+                                                                        <li><a href="#">Sobre</a></li>
+                                                                        <li><a href="#">Perguntas Frequentes</a></li>
+                                                                        <li><a href="#">Termos e Condições</a></li>
+                                                                        <li><a href="#">Contato</a></li>
+                                                                        <li><a href="#">Ajuda</a></li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!-- End Single Widget -->
+                                                            </div>
 
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Single Widget -->
-                    <div class="single-footer social">
-                        <h4>Fale conosco</h4>
-                        <!-- Single Widget -->
-                        <div class="contact">
-                            <ul>
-                                <li>Centro Universitário Senac</li>
-                                <li> Av. Eng. Eusébio Stevaux, 823 - Santo Amaro, São Paulo - SP</li>
-                                <li>ochaus-lounge@tabacaria.com</li>
-                                <li>+55 (11) 4002-8922</li>
-                            </ul>
-                        </div>
-                        <!-- End Single Widget -->
-                        <ul>
-                            <li><a href="#"><i class="ti-facebook"></i></a></li>
-                            <li><a href="#"><i class="ti-twitter"></i></a></li>
-                            <li><a href="#"><i class="ti-flickr"></i></a></li>
-                            <li><a href="#"><i class="ti-instagram"></i></a></li>
-                        </ul>
-                    </div>
-                    <!-- End Single Widget -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Footer Top -->
-    <div class="copyright">
-        <div class="container">
-            <div class="inner">
-                <div class="row">
-                    <div class="col-lg-6 col-12">
-                        <div class="left">
-                            <p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-12">
-                        <div class="right">
-                            <img src="images/payments.png" alt="#">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- /End Footer Area -->
+                                                            <div class="col-lg-3 col-md-6 col-12">
+                                                                <!-- Single Widget -->
+                                                                <div class="single-footer social">
+                                                                    <h4>Fale conosco</h4>
+                                                                    <!-- Single Widget -->
+                                                                    <div class="contact">
+                                                                        <ul>
+                                                                            <li>Centro Universitário Senac</li>
+                                                                            <li> Av. Eng. Eusébio Stevaux, 823 - Santo Amaro, São Paulo - SP</li>
+                                                                            <li>ochaus-lounge@tabacaria.com</li>
+                                                                            <li>+55 (11) 4002-8922</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <!-- End Single Widget -->
+                                                                    <ul>
+                                                                        <li><a href="#"><i class="ti-facebook"></i></a></li>
+                                                                        <li><a href="#"><i class="ti-twitter"></i></a></li>
+                                                                        <li><a href="#"><i class="ti-flickr"></i></a></li>
+                                                                        <li><a href="#"><i class="ti-instagram"></i></a></li>
+                                                                    </ul>
+                                                                </div>
+                                                                <!-- End Single Widget -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Footer Top -->
+                                                <div class="copyright">
+                                                    <div class="container">
+                                                        <div class="inner">
+                                                            <div class="row">
+                                                                <div class="col-lg-6 col-12">
+                                                                    <div class="left">
+                                                                        <p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6 col-12">
+                                                                    <div class="right">
+                                                                        <img src="images/payments.png" alt="#">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </footer>
+                                            <!-- /End Footer Area -->
 
-<!-- Jquery -->
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery-migrate-3.0.0.js"></script>
-<script src="js/jquery-ui.min.js"></script>
-<!-- Popper JS -->
-<script src="js/popper.min.js"></script>
-<!-- Bootstrap JS -->
-<script src="js/bootstrap.min.js"></script>
-<!-- Color JS -->
-<script src="js/colors.js"></script>
-<!-- Slicknav JS -->
-<script src="js/slicknav.min.js"></script>
-<!-- Owl Carousel JS -->
-<script src="js/owl-carousel.js"></script>
-<!-- Magnific Popup JS -->
-<script src="js/magnific-popup.js"></script>
-<!-- Waypoints JS -->
-<script src="js/waypoints.min.js"></script>
-<!-- Countdown JS -->
-<script src="js/finalcountdown.min.js"></script>
-<!-- Nice Select JS -->
-<script src="js/nicesellect.js"></script>
-<!-- Flex Slider JS -->
-<script src="js/flex-slider.js"></script>
-<!-- ScrollUp JS -->
-<script src="js/scrollup.js"></script>
-<!-- Onepage Nav JS -->
-<script src="js/onepage-nav.min.js"></script>
-<!-- Easing JS -->
-<script src="js/easing.js"></script>
-<!-- Active JS -->
-<script src="js/active.js"></script>
-</body>
-</html>
+                                            <!-- Jquery -->
+                                            <script src="js/jquery.min.js"></script>
+                                            <script src="js/jquery-migrate-3.0.0.js"></script>
+                                            <script src="js/jquery-ui.min.js"></script>
+                                            <!-- Popper JS -->
+                                            <script src="js/popper.min.js"></script>
+                                            <!-- Bootstrap JS -->
+                                            <script src="js/bootstrap.min.js"></script>
+                                            <!-- Color JS -->
+                                            <script src="js/colors.js"></script>
+                                            <!-- Slicknav JS -->
+                                            <script src="js/slicknav.min.js"></script>
+                                            <!-- Owl Carousel JS -->
+                                            <script src="js/owl-carousel.js"></script>
+                                            <!-- Magnific Popup JS -->
+                                            <script src="js/magnific-popup.js"></script>
+                                            <!-- Waypoints JS -->
+                                            <script src="js/waypoints.min.js"></script>
+                                            <!-- Countdown JS -->
+                                            <script src="js/finalcountdown.min.js"></script>
+                                            <!-- Nice Select JS -->
+                                            <script src="js/nicesellect.js"></script>
+                                            <!-- Flex Slider JS -->
+                                            <script src="js/flex-slider.js"></script>
+                                            <!-- ScrollUp JS -->
+                                            <script src="js/scrollup.js"></script>
+                                            <!-- Onepage Nav JS -->
+                                            <script src="js/onepage-nav.min.js"></script>
+                                            <!-- Easing JS -->
+                                            <script src="js/easing.js"></script>
+                                            <!-- Active JS -->
+                                            <script src="js/active.js"></script>
+                                            </body>
+                                            </html>

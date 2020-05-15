@@ -351,95 +351,103 @@
 <!--/ End Header -->
 
 <!-- Start Checkout -->
-<section class="shop checkout section">
-    <div class="container">
-        <div class="row"> 
-            <div class="col-lg-8 col-12">
-                <div class="checkout-form">
-                    <h2>Finalize sua compra</h2>
-                    <p>Confirme os dados para entrega</p>
-                    <!-- Form -->
-                    <form class="form" method="post" action="#">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Nome<span>*</span></label>
-                                    <input type="text" name="nome" placeholder="" required="required" value="${sessionScope.cliente.nome}">
+<form action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+    <input type="hidden" name="acao" value="pagamento">  
+    <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">  
+    <section class="shop checkout section">
+        <div class="container">
+            <div class="row"> 
+                <!--<form action="${pageContext.request.contextPath}/CarrinhoController" method="post">-->
+
+                <div class="col-lg-8 col-12">
+                    <div class="checkout-form">
+                        <h2>Finalize sua compra</h2>
+                        <p>Confirme os dados para entrega</p>
+                        <!-- Form -->
+                        <div class="form">
+
+
+                            <!--<form class="form" method="post" action="#">-->
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Nome<span>*</span></label>
+                                        <input type="text" name="nome" placeholder="" required="required" value="${sessionScope.cliente.nome}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Sobrenome<span>*</span></label>
-                                    <input type="text" name="sobrenome" placeholder="" required="required" value="${sessionScope.cliente.sobrenome}">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Sobrenome<span>*</span></label>
+                                        <input type="text" name="sobrenome" placeholder="" required="required" value="${sessionScope.cliente.sobrenome}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Email<span>*</span></label>
-                                    <input type="email" name="email" placeholder="" required="required" value="${sessionScope.cliente.email}">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Email<span>*</span></label>
+                                        <input type="email" name="email" placeholder="" required="required" value="${sessionScope.cliente.email}">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Contato<span>*</span></label>
-                                    <input type="number" name="number" placeholder="" required="required" value="${sessionScope.cliente.telefone}">
-                                </div>                         
-                            </div>
-
-                            <%--
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>CEP<span>*</span></label>
-                                    <input name="cep" id="cep" type="text" onblur="pesquisacep(this.value)" size="10" maxlength="9" placeholder="Ex: 01234567" onkeypress="return onlynumber()">
-                                </div>	
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Endereço<span>*</span></label>
-                                    <input name="rua" id="rua" type="text" placeholder="Ex: Av. Eng. Eusébio Stevaux, 823">
-                                </div>	
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Bairro<span>*</span></label>
-                                    <input name="bairro" id="bairro" type="text" placeholder="Ex: Jurubatuba">
-                                </div>	
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Cidade:<span>*</span></label>
-                                    <input name="cidade" id="cidade" type="text" placeholder="Ex: São Paulo">
-                                </div>	
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Estado:<span>*</span></label>
-                                    <input name="uf" id="uf" type="text" placeholder="Ex: SP">
-                                </div>	
-                            </div>
-                            --%>
-
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group">
-                                    <label>Endereço<span>*</span></label>
-                                    <select name="endereco" id="endereco" style="display: none;">
-                                        <c:forEach items="${sessionScope.cliente.enderecos}" var="e" end="0">
-                                            <option value="${e.id}" selected>${e.endereco}</option>
-                                        </c:forEach>
-                                        <c:forEach items="${sessionScope.cliente.enderecos}" var="e" begin="1">
-                                            <option value="${e.id}">${e.endereco}</option>
-                                        </c:forEach>
-                                    </select>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Contato<span>*</span></label>
+                                        <input type="number" name="number" placeholder="" required="required" value="${sessionScope.cliente.telefone}">
+                                    </div>                         
                                 </div>
-                            </div>
+
+                                <%--
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>CEP<span>*</span></label>
+                                        <input name="cep" id="cep" type="text" onblur="pesquisacep(this.value)" size="10" maxlength="9" placeholder="Ex: 01234567" onkeypress="return onlynumber()">
+                                    </div>	
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Endereço<span>*</span></label>
+                                        <input name="rua" id="rua" type="text" placeholder="Ex: Av. Eng. Eusébio Stevaux, 823">
+                                    </div>	
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Bairro<span>*</span></label>
+                                        <input name="bairro" id="bairro" type="text" placeholder="Ex: Jurubatuba">
+                                    </div>	
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Cidade:<span>*</span></label>
+                                        <input name="cidade" id="cidade" type="text" placeholder="Ex: São Paulo">
+                                    </div>	
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Estado:<span>*</span></label>
+                                        <input name="uf" id="uf" type="text" placeholder="Ex: SP">
+                                    </div>	
+                                </div>
+                                --%>
+
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label>Endereço<span>*</span></label>
+                                        <select name="endereco" id="endereco" style="display: none;">
+                                            <c:forEach items="${sessionScope.cliente.enderecos}" var="e" end="0">
+                                                <option value="${e.id}" selected>${e.endereco}</option>
+                                            </c:forEach>
+                                            <c:forEach items="${sessionScope.cliente.enderecos}" var="e" begin="1">
+                                                <option value="${e.id}">${e.endereco}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
 
 
 
-                            <%--
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <hr>
-                                <div class="content">
-                                    <div class="checkbox">
+                                <%--
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <hr>
+                                    <div class="content">
+                                        <div class="checkbox">
 
                                         <label><input name="endereco" id="${e.id}" type="radio">Endereço</label>
                                         <p><span>CEP: ${e.CEP}</span></p>
@@ -451,68 +459,92 @@
                                     </div>
                                 </div>
                             </div>                               
-                            --%>
+                                --%>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-12">
+                                    <div class="form-group button">
+                                        <a href="enderecos.jsp" class="btn ">Novo Endereço</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--</form>-->
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-12">
-                                <div class="form-group button">
-                                    <a href="enderecos.jsp" class="btn ">Novo Endereço</a>
+                        <!--/ End Form -->
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-12">
+                    <div class="order-details">
+                        <!-- Order Widget -->
+                        <div class="single-widget">
+                            <h2>TOTAL DO CARRINHO</h2>
+                            <div class="content">
+                                <ul>
+                                    <li>Sub Total<span>RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span></li>
+                                    <li>(+) Frete<span>$10.00</span></li>
+                                    <li class="last">Total<span>RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--/ End Order Widget -->
+                        <!-- Order Widget -->
+                       <!-- <form action="${pageContext.request.contextPath}/CarrinhoController" method="post">-->
+
+
+                        <div class="single-widget">
+                            <h2>PAGAMENTOS</h2>
+                            <div class="content">
+                                <!-- <div class="checkbox">
+                                          <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox" > Cartão de Crédito</label>
+                                          <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox"> Boleto</label>
+                                          <label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox"> PayPal</label>
+                                      </div> -->
+
+                                <div>
+                                    <br>
+                                    <label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+                                    <label class="checkbox-inline" ><input name="tipoPagamento" value="cartao"  type="radio" > Cartão de Crédito</label>
+                                    <br>
+                                    <label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+                                    <label class="checkbox-inline" ><input name="tipoPagamento" value="boleto" type="radio"> Boleto</label>
+                                    <br>
+                                    <label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+                                    <label class="checkbox-inline" ><input name="tipoPagamento" value="picpay" type="radio"> PayPal</label>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <!--/ End Form -->
 
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-12">
-                <div class="order-details">
-                    <!-- Order Widget -->
-                    <div class="single-widget">
-                        <h2>TOTAL DO CARRINHO</h2>
-                        <div class="content">
-                            <ul>
-                                <li>Sub Total<span>RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span></li>
-                                <li>(+) Frete<span>$10.00</span></li>
-                                <li class="last">Total<span>RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!--/ End Order Widget -->
-                    <!-- Order Widget -->
-                    <div class="single-widget">
-                        <h2>PAGAMENTOS</h2>
-                        <div class="content">
-                            <div class="checkbox">
-                                <label class="checkbox-inline" for="1"><input name="updates" id="1" type="checkbox"> Cartão de Crédito</label>
-                                <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox"> Boleto</label>
-                                <label class="checkbox-inline" for="3"><input name="news" id="3" type="checkbox"> PayPal</label>
+                        <!--/ End Order Widget -->
+                        <!-- Payment Method Widget -->
+                        <div class="single-widget payement">
+                            <div class="content">
+                                <img src="images/payment-method.png" alt="#">
                             </div>
                         </div>
-                    </div>
-                    <!--/ End Order Widget -->
-                    <!-- Payment Method Widget -->
-                    <div class="single-widget payement">
-                        <div class="content">
-                            <img src="images/payment-method.png" alt="#">
-                        </div>
-                    </div>
-                    <!--/ End Payment Method Widget -->
-                    <!-- Button Widget -->
-                    <div class="single-widget get-button">
-                        <div class="content">
-                            <div class="button">
-                                <a href="#" class="btn">Finalizar a Compra</a>
+                        <!--/ End Payment Method Widget -->
+                        <!-- Button Widget -->
+                        <div class="single-widget get-button">
+                            <div class="content">
+                                <div class="button">
+
+
+
+                                    <!--<a href="#" class="btn">Finalizar a Compra</a>-->
+                                    <button class="btn">Finalizar a Compra</button>
+
+                                </div>
                             </div>
                         </div>
+                        <!--</form>-->
+                        <!--/ End Button Widget -->
                     </div>
-                    <!--/ End Button Widget -->
                 </div>
+                <!--</form>-->
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</form>
 <!--/ End Checkout -->
 
 <!-- Start Footer Area -->

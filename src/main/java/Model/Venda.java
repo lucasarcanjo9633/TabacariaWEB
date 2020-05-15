@@ -17,9 +17,11 @@ public class Venda {
 
     private int idVenda;
     private int idCliente;
+    private Endereco endereco;
     private ArrayList<Item> itens;
     private double precoFinal;
     private Date dataVenda;
+    private String pagamento;
 
     public Venda(int idVenda, int idCliente, ArrayList<Item> itens, double precoFinal, Date dataVenda) {
         this.idVenda = idVenda;
@@ -45,6 +47,16 @@ public class Venda {
         this.itens = itens;
         this.precoFinal = precoFinal;
         this.dataVenda = dataVenda;
+    }
+
+    public Venda(int idVenda, int idCliente, ArrayList<Item> itens, double precoFinal, Date dataVenda, String pagamento, Endereco endereco) {
+        this.idVenda = idVenda;
+        this.idCliente = idCliente;
+        this.itens = itens;
+        this.precoFinal = precoFinal;
+        this.dataVenda = dataVenda;
+        this.pagamento = pagamento;
+        this.endereco = endereco;
     }
 
     public int getIdVenda() {
@@ -145,6 +157,7 @@ public class Venda {
         this.itens = new ArrayList<>();
         this.idCliente = 0;
         this.precoFinal = 0;
+        this.pagamento = "";
     }
 
     public int quantidadeItem() {
@@ -156,5 +169,23 @@ public class Venda {
         String valorFinal;
         return valorFinal = String.format("%.2f", this.precoFinal);
     }
+
+    public String getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(String pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+    
+   
 
 }

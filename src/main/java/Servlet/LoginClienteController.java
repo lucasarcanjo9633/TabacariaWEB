@@ -37,15 +37,33 @@ public class LoginClienteController extends HttpServlet {
         String username = request.getParameter("email");
         String senha = request.getParameter("senha");
         senha = Criptografar.criptografar(senha);
-        Cliente cliente = ClienteDAO.login(username, senha);
+        Cliente clientes = ClienteDAO.login(username, senha);
 
-        if (cliente != null && cliente.getSenha().equals(senha)) {
+        if (clientes != null && clientes.getSenha().equals(senha)) {
             // Usuario válido - adiciona na sessão
-            
-            Cliente c = ClienteDAO.buscaCliente(cliente.getIdCliente());
-            HttpSession sessao = request.getSession();
-            sessao.setAttribute("cliente", c);
 
+            Cliente c = ClienteDAO.buscaCliente(clientes.getIdCliente());
+
+            HttpSession sessao = request.getSession();
+
+            // Verifica se já existe atributo itensSelecionados na sessao
+            // Se nao existir cria um novo
+            if (sessao.getAttribute("cliente") == null) {
+                sessao.setAttribute("cliente", new Cliente());
+            }
+            
+            Cliente cliente = (Cliente) sessao.getAttribute("cliente");
+            
+            cliente.setIdCliente(c.getIdCliente());
+            cliente.setNome(c.getNome());
+            cliente.setSobrenome(c.getSobrenome());
+            cliente.setCPF(c.getCPF());
+            cliente.setEmail(c.getEmail());
+            cliente.setDtaNasc(c.getDtaNasc());
+            cliente.setTelefone(c.getTelefone());
+            cliente.setSenha(c.getSenha());
+            cliente.setEnderecos(c.getEnderecos());
+             
             // Apresenta tela home para usuario.
             response.sendRedirect(request.getContextPath() + "/ProdutoController?acao=listarWeb");
         } else {

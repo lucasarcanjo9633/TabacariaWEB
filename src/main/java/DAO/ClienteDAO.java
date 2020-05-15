@@ -164,7 +164,7 @@ public class ClienteDAO {
                 ArrayList<Endereco> enderecos = new ArrayList<>();
 
                 PreparedStatement comando1 = conexao.prepareStatement("SELECT idendereco, cep, endereco, bairro, cidade, uf FROM endereco WHERE "
-                        + " idcliente = " + id + " AND status = 1; ");
+                        + " idcliente = " + id +" AND status = 1;");
 
                 ResultSet rs1 = comando1.executeQuery();
 

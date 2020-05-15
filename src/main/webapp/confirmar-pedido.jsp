@@ -297,7 +297,7 @@
                     <div class="col-auto">
                         <div>
                             <label>Numero do Pedido:</label>
-                            <h5>6545646546</h5>
+                            <h5>${idVenda}</h5>
                         </div>
                         <div class="button" style="padding-top: 5px;">
                             <a href="pedidos.jsp" class="btn">Consultar Pedidos</a>
@@ -306,9 +306,9 @@
                     <div class="col-auto" style="">
                         <div>                        
                             <ul>
-                                <li>Sacola (Itens): <span>*</span></li>
-                                <li>Total (produtos + frete): <span>*</span></li>                                        
-                                <li>Pagamento: <span>*</span></li>
+                                <li>Sacola (Itens): <span>${qtdItem}</span></li>
+                                <li>Total (produtos + frete): <span>${valorTotal}</span></li>                                        
+                                <li>Pagamento: <span>${pagamento}</span></li>
                             </ul>
                         </div>
                     </div>
