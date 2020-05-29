@@ -271,21 +271,59 @@
         <div class="container" style="border-width: 3px; border-style: solid; border-color: #F7941D;">
             <hr>
             <h5>Pedido: ${v.idVenda}</h5>
+            <h5>Data: ${v.dataVenda}</h5>
             <hr>
             <div class="container">
-                <div class="row">
-                    <div class="col" style="text-align: left;">Pedido Recebido ${v.dataVenda}</div>
-                    <div class="col" style="text-align: right;">Pedido Aprovado</div>
+                <div class="row">                                       
 
                     <c:choose>
-                        <c:when test="${v.status == false}">
+                        <c:when test="${v.status == 'aguardando pagamento'}">
+                            <div class="col" style="text-align: left;">aguardando pagamento</div>
+                            <div class="col" style="text-align: right;">Entregue</div>
+                            <div class="col-12">                   
+                                <div class="progress">           
+                                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:when test="${v.status == 'pagamento rejeitado'}">
+                            <div class="col" style="text-align: left;">pagamento rejeitado</div>
+                            <div class="col" style="text-align: right;">Entregue</div>
+                            <div class="col-12">                   
+                                <div class="progress">           
+                                    <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:when test="${v.status == 'pagamento aprovado'}">
+                            <div class="col" style="text-align: left;">pagamento aprovado</div>
+                            <div class="col" style="text-align: right;">Entregue</div>
+                            <div class="col-12">                   
+                                <div class="progress">           
+                                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:when test="${v.status == 'aguardando retirada'}">
+                            <div class="col" style="text-align: left;">aguardando retirada</div>
+                            <div class="col" style="text-align: right;">Entregue</div>
                             <div class="col-12">                   
                                 <div class="progress">           
                                     <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                         </c:when>
+                        <c:when test="${v.status == 'em transito'}">
+                            <div class="col" style="text-align: left;">em transito</div>
+                            <div class="col" style="text-align: right;">Entregue</div>
+                            <div class="col-12">                   
+                                <div class="progress">           
+                                    <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </c:when>
                         <c:otherwise>
+                            <div class="col" style="text-align: right;">Entregue</div>
                             <div class="col-12">                   
                                 <div class="progress">           
                                     <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>

@@ -21,7 +21,7 @@ public class Venda {
     private double precoFinal;
     private Date dataVenda;
     private String pagamento;
-    private boolean status;
+    private String status;
 
     public Venda(int idVenda, int idCliente, ArrayList<Item> itens, double precoFinal, Date dataVenda) {
         this.idVenda = idVenda;
@@ -63,15 +63,14 @@ public class Venda {
         return idVenda;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
-      
-    
+
     public void setIdVenda(int idVenda) {
         this.idVenda = idVenda;
     }

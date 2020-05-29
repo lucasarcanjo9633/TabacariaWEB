@@ -98,6 +98,45 @@ public class VendaDAO {
         return retorno;
 
     }
+    
+    public static boolean atualizar(int idVenda, String status) {
+
+        boolean retorno = false;    
+
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement("UPDATE venda SET status=? WHERE idvenda=?");
+
+            comando.setString(1, status);
+            comando.setInt(2, idVenda);
+
+            int linhasAfetadas = comando.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                retorno = true;
+            } else {
+                retorno = false;
+            }
+
+        } catch (ClassNotFoundException ex) {
+            retorno = false;
+        } catch (SQLException ex) {
+            retorno = false;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                retorno = false;
+            }
+
+        }
+
+        return retorno;
+
+    }
 
     public static ArrayList<Venda> getVenda(int idCliente) {
 
@@ -125,7 +164,7 @@ public class VendaDAO {
                 v.setPrecoFinal(rs.getDouble("precofinal"));
                 v.setDataVenda(rs.getDate("datavenda"));
                 v.setPagamento(rs.getString("pagamento"));
-                v.setStatus(rs.getBoolean("status"));
+                v.setStatus(rs.getString("status"));
 
                 PreparedStatement comando1 = conexao.prepareStatement(" SELECT idendereco, cep, endereco, bairro, cidade, uf FROM endereco"
                         + " WHERE "
@@ -205,7 +244,7 @@ public class VendaDAO {
                 v.setPrecoFinal(rs.getDouble("precofinal"));
                 v.setDataVenda(rs.getDate("datavenda"));
                 v.setPagamento(rs.getString("pagamento"));
-                v.setStatus(rs.getBoolean("status"));
+                v.setStatus(rs.getString("status"));
 
                 PreparedStatement comando1 = conexao.prepareStatement(" SELECT idendereco, cep, endereco, bairro, cidade, uf FROM endereco"
                         + " WHERE "
@@ -258,5 +297,85 @@ public class VendaDAO {
 
         }
         return v;
+    }
+    
+    public static ArrayList<Venda> getVenda() {
+
+        ArrayList<Venda> listaVendas = new ArrayList<>();
+        ArrayList<Item> listaItems = new ArrayList<>();
+
+        try {
+
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection(URL, LOGIN, SENHA);
+
+            PreparedStatement comando = conexao.prepareStatement(" SELECT idvenda, idcliente, idendereco, precofinal, datavenda, pagamento, status "
+                    + " FROM venda;");
+
+            ResultSet rs = comando.executeQuery();
+            while (rs.next()) {
+
+                Venda v = new Venda();
+                int idVenda = rs.getInt("idVenda");
+                v.setIdVenda(idVenda);
+                v.setIdCliente(rs.getInt("idcliente"));
+                int idEndereco = rs.getInt("idendereco");
+                v.setPrecoFinal(rs.getDouble("precofinal"));
+                v.setDataVenda(rs.getDate("datavenda"));
+                v.setPagamento(rs.getString("pagamento"));
+                v.setStatus(rs.getString("status"));
+
+                PreparedStatement comando1 = conexao.prepareStatement(" SELECT idendereco, cep, endereco, bairro, cidade, uf FROM endereco"
+                        + " WHERE "
+                        + " idendereco = " + idEndereco + "; ");
+                ResultSet rs1 = comando1.executeQuery();
+
+                while (rs1.next()) {
+                    Endereco e = new Endereco();
+                    e.setId(rs1.getInt("idendereco"));
+                    e.setCEP(rs1.getString("cep"));
+                    e.setEndereco(rs1.getString("endereco"));
+                    e.setBairro(rs1.getString("bairro"));
+                    e.setCidade(rs1.getString("cidade"));
+                    e.setUF(rs1.getString("uf"));
+                    v.setEndereco(e);
+
+                    PreparedStatement comando2 = conexao.prepareStatement(" select produto.id, produto.nome, produto.img, saida_produto.qtde, saida_produto.valor_venda from produto, saida_produto where produto.id = saida_produto.id_produto and saida_produto.id_venda = "+idVenda+";");
+                    ResultSet rs2 = comando2.executeQuery();
+
+                    while (rs2.next()) {
+                        
+                        Item i = new Item();
+                        Produto p = new Produto();
+                        
+                        
+                        p.setId(rs2.getInt(1));
+                        p.setNome(rs2.getString(2));
+                        p.setImg(rs2.getString(3));                      
+                        i.setQtd(rs2.getInt(4));
+                        i.setPreco(rs2.getDouble(5));
+                        i.setP(p);
+                        listaItems.add(i);
+                    }
+                }
+                
+                v.setItens(listaItems);
+
+                listaVendas.add(v);
+            }
+
+        } catch (ClassNotFoundException ex) {
+            listaVendas = null;
+        } catch (SQLException ex) {
+            listaVendas = null;
+        } finally {
+            try {
+                conexao.close();
+            } catch (SQLException ex) {
+                listaVendas = null;
+            }
+
+        }
+        return listaVendas;
     }
 }

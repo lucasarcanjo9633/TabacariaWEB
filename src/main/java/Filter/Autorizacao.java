@@ -79,6 +79,9 @@ public class Autorizacao implements Filter {
         }else if (urlAcessada.endsWith("/CadastroEstoque.jsp")
                 && usuario.verificarPapel("ESTOQUE")) {
             return true;
+        }else if (urlAcessada.endsWith("/ListarPedidos.jsp")
+                && usuario.verificarPapel("ESTOQUE")) {
+            return true;
         }
         return false;
     }

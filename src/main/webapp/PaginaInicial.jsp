@@ -70,7 +70,17 @@
                         <button class="btn btn-primary" type="submit" class="btn btn-primary">Acessar &raquo</button>
                     </form> 
                 </div>
-                </c:if>         
+                </c:if>
+                <c:if test="${sessionScope.usuario.verificarPapel('ESTOQUE')}">
+                <div class="jumbotron">
+                    <h2>Pedidos</h2>
+                    <p class="lead"> Consultar ou alterar status do pedido. </p>
+                    <form action="${pageContext.request.contextPath}/VendaController" method="get">
+                        <input type="hidden" value="todosPedidos" name="acao">
+                        <button class="btn btn-primary" type="submit" class="btn btn-primary">Acessar &raquo</button>
+                    </form> 
+                </div>
+                </c:if>
                 <div class="jumbotron">
                     <h2>Web Site</h2>
                     <p class="lead"> Em desenvolvimento. </p>

@@ -17,15 +17,10 @@ CREATE TABLE `tabacaria`.`cliente` (
   `sobrenome` VARCHAR(100) NOT NULL,
   `email` VARCHAR(100) NOT NULL,
   `cpf` VARCHAR(15) NOT NULL,
-  `senha` VARCHAR(30) NOT NULL,
-  `cep` VARCHAR(10) NOT NULL,
-  `endereco` VARCHAR(100) NOT NULL,
-  `bairro` VARCHAR(100) NOT NULL,
-  `cidade` VARCHAR(50) NOT NULL,
-  `uf` VARCHAR(50) NOT NULL,
+  `senha` VARCHAR(150) NOT NULL,
   `telefone` VARCHAR(15) NULL,
   `dateNasc` VARCHAR(45) NULL,
-  PRIMARY KEY (`idcliente`);
+  PRIMARY KEY (`idcliente`));
 
 CREATE table modulo(
 idmodulo int auto_increment not null primary key,
@@ -146,3 +141,28 @@ BEGIN
       CALL SP_AtualizaEstoque (old.id_produto, old.qtde, old.valor_venda);
 END //
 DELIMITER ;
+
+CREATE TABLE endereco (
+  idendereco INT NOT NULL AUTO_INCREMENT primary key,
+  idcliente INT NOT NULL,
+  cep VARCHAR(10) NOT NULL,
+  endereco VARCHAR(100) NOT NULL,
+  bairro VARCHAR(100) NOT NULL,
+  cidade VARCHAR(50) NOT NULL,
+  uf VARCHAR(50) NOT NULL,
+  status boolean default true,
+  FOREIGN KEY (idcliente) REFERENCES CLIENTE (idcliente));
+
+create table venda(
+idvenda int not null auto_increment primary key,
+idcliente int not null,
+idendereco int not null,
+precofinal double not null,
+datavenda date,
+pagamento varchar(20),
+status varchar(30) DEFAULT 'aguardando pagamento',
+foreign key(idcliente) references cliente (idcliente),
+foreign key(idendereco) references endereco (idendereco)
+);
+
+

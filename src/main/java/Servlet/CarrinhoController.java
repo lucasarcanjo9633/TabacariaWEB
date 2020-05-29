@@ -5,19 +5,12 @@
  */
 package Servlet;
 
-import DAO.ClienteDAO;
-import DAO.ProdutoDAO;
-import DAO.ProdutoWebDAO;
 import DAO.VendaDAO;
-import Model.Cliente;
 import Model.Endereco;
 import Model.Item;
 import Model.Produto;
 import Model.Venda;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
