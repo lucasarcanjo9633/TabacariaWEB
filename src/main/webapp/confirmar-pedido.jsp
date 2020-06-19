@@ -205,7 +205,7 @@
                                             <div class="shopping-item">
                                                 <div class="dropdown-cart-header">
                                                     <span>${sessionScope.itensSelecionados.quantidadeItem()} Item</span>
-                                                    <form name="carrinho" id="carrinho" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+                                                    <form name="carrinho" id="carrinho" action="carrinho.jsp" method="post">
                                                         <a href="javascript:carrinho.submit()">View Cart</a>
                                                     </form>
                                                 </div>
@@ -216,7 +216,7 @@
                                                                 <button class="remove" title="Remover item"><i class="fa fa-remove"></i></button>
                                                                 <!--<a href="javascript:remover.submit()" class="remove" title="Remover item"><i class="fa fa-remove"></i></a>-->
                                                                 <input type="hidden" name="acao" value="retirarProduto">
-                                                                <input type="hidden" name="pagina" value="carrinho">
+                                                                <input type="hidden" name="pagina" value="index">
                                                                 <input type="hidden" name="idProduto" value="${p.p.id}">
                                                                 <a href="${pageContext.request.contextPath}/ProdutoController?acao=listarWebDetalhe&id=${p.p.id}" class="cart-img">
                                                                     <img src="imagens/${p.p.id}.jpg" alt="${p.p.nome}">
@@ -228,15 +228,22 @@
 
                                                         </li>
 
-
                                                     </c:forEach>
                                                 </ul>
                                                 <div class="bottom">
                                                     <div class="total">
                                                         <span>Total:</span>
-                                                        <span class="total-amount">RS ${sessionScope.itensSelecionados.getPrecoFinal()}</span>
+                                                        <span class="total-amount">RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span>
                                                     </div>
-                                                    <a href="checkout.html" class="btn animate">Checkout</a>
+                                                    <c:choose>
+                                                        <c:when test="${sessionScope.cliente == null}">
+                                                            <a href="${pageContext.request.contextPath}/CarrinhoController" class="btn"> Carrinho</a> 
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="carrinho.jsp" class="btn animate">Checkout</a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+
                                                 </div>
                                             </div>
                                         </c:when>
@@ -306,7 +313,11 @@
                             <h5>${idVenda}</h5>
                         </div>
                         <div class="button" style="padding-top: 5px;">
-                            <a href="pedidos.jsp" class="btn">Consultar Pedidos</a>
+                            <form name="pedidos" id="pedidos" action="${pageContext.request.contextPath}/VendaController" method="post">
+                                <input type="hidden" name="acao" value="listar">
+                                <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">
+                                <a href="javascript:pedidos.submit()" class="btn">Meus Pedidos</a>
+                            </form>
                         </div>
                     </div>
                     <div class="col-auto" style="">

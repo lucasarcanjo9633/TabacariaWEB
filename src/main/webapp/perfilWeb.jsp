@@ -336,41 +336,64 @@
                                     <a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                                 </div>
                                 <div class="sinlge-bar shopping">
-                                    <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">3</span></a>
-                                    <!-- Shopping Item -->
-                                    <div class="shopping-item">
-                                        <div class="dropdown-cart-header">
-                                            <span>3 Items</span>
-                                            <a href="#">View Cart</a>
-                                        </div>
-                                        <ul class="shopping-list">
-                                            <li>
-                                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                                <h4><a href="#">Woman Ring</a></h4>
-                                                <p class="quantity">1x - <span class="amount">$99.00</span></p>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                                <h4><a href="#">Woman Necklace</a></h4>
-                                                <p class="quantity">1x - <span class="amount">$35.00</span></p>
-                                            </li>
-                                            <li>
-                                                <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-                                                <a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-                                                <h4><a href="#">Woman Necklace</a></h4>
-                                                <p class="quantity">1x - <span class="amount">$35.00</span></p>
-                                            </li>
-                                        </ul>
-                                        <div class="bottom">
-                                            <div class="total">
-                                                <span>Total</span>
-                                                <span class="total-amount">$134.00</span>
+
+                                    <c:choose>
+                                        <c:when test="${sessionScope.itensSelecionados != null}">
+
+                                            <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">${sessionScope.itensSelecionados.quantidadeItem()}</span></a>
+                                            <!-- Shopping Item -->
+                                            <div class="shopping-item">
+                                                <div class="dropdown-cart-header">
+                                                    <span>${sessionScope.itensSelecionados.quantidadeItem()} Item</span>
+                                                    <form name="carrinho" id="carrinho" action="carrinho.jsp" method="post">
+                                                        <a href="javascript:carrinho.submit()">View Cart</a>
+                                                    </form>
+                                                </div>
+                                                <ul class="shopping-list">
+                                                    <c:forEach items="${sessionScope.itensSelecionados.itens}" var="p">
+                                                        <li>
+                                                            <form name="remover" id="remover" action="${pageContext.request.contextPath}/CarrinhoController" method="post">
+                                                                <button class="remove" title="Remover item"><i class="fa fa-remove"></i></button>
+                                                                <!--<a href="javascript:remover.submit()" class="remove" title="Remover item"><i class="fa fa-remove"></i></a>-->
+                                                                <input type="hidden" name="acao" value="retirarProduto">
+                                                                <input type="hidden" name="pagina" value="index">
+                                                                <input type="hidden" name="idProduto" value="${p.p.id}">
+                                                                <a href="${pageContext.request.contextPath}/ProdutoController?acao=listarWebDetalhe&id=${p.p.id}" class="cart-img">
+                                                                    <img src="imagens/${p.p.id}.jpg" alt="${p.p.nome}">
+                                                                </a>
+                                                                <!--<a class="cart-img" href="#"><img src="imagens/${p.p.id}.jpg" alt="${p.p.nome}"></a>-->
+                                                                <h4><a href="#">${p.p.getNome()}</a></h4>
+                                                                <p class="quantity">${p.qtd}x - <span class="amount">${p.p.valor}</span></p>
+                                                            </form>
+
+                                                        </li>
+
+                                                    </c:forEach>
+                                                </ul>
+                                                <div class="bottom">
+                                                    <div class="total">
+                                                        <span>Total:</span>
+                                                        <span class="total-amount">RS ${sessionScope.itensSelecionados.mostrarValorFinal()}</span>
+                                                    </div>
+                                                    <c:choose>
+                                                        <c:when test="${sessionScope.cliente == null}">
+                                                            <a href="${pageContext.request.contextPath}/CarrinhoController" class="btn"> Carrinho</a> 
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <a href="carrinho.jsp" class="btn animate">Checkout</a>
+                                                        </c:otherwise>
+                                                    </c:choose>
+
+                                                </div>
                                             </div>
-                                            <a href="checkout.html" class="btn animate">Checkout</a>
-                                        </div>
-                                    </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">0</span></a>
+                                        </c:otherwise>
+
+                                    </c:choose>
+
+
                                     <!--/ End Shopping Item -->
                                 </div>
                             </div>

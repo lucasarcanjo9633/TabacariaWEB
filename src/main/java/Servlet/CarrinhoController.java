@@ -75,6 +75,14 @@ public class CarrinhoController extends HttpServlet {
                 listarCarrinho(request, response, venda);
                 break;
             case "pagamento":
+                
+                if(venda.getItens().isEmpty()){
+                
+                request.setAttribute("message", "Selecione ao menos 1 produto antes de finalizar.");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/checkout.jsp");
+                dispatcher.forward(request, response);
+                
+                }
                 String formaPagamento = request.getParameter("tipoPagamento");
                 venda.setPagamento(formaPagamento);
                 switch (formaPagamento) {
