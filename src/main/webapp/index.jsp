@@ -123,9 +123,7 @@
                                                             <a href="javascript:meusPedidos.submit()">Meus Pedidos</a>
                                                         </form>
                                                     </li>
-                                                    <li><a href="enderecolistar.jsp">Meus Endereços</a></li>
-                                                    <li><a href="#">Checkout</a></li>
-                                                    <li><a href="#">Carrinho</a></li>
+                                                    <li><a href="enderecolistar.jsp">Meus Endereços</a></li>           
                                                     <li><a href="${pageContext.request.contextPath}/LogoutClienteController">Sair</a></li>
                                                 </ul>
                                             </li>

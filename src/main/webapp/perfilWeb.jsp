@@ -240,7 +240,8 @@
                         </div>
                         <div class="col-lg-8 col-md-12 col-12">
                             <!-- Top Right -->
-                            <div class="right-content" style=" margin-right: 50px; margin-left: auto;">                               
+                            <div class="right-content" style=" margin-right: 50px; margin-left: auto;">
+
                                 <c:choose>
                                     <c:when test="${sessionScope.cliente != null}">
                                         <ul class="nav" >
@@ -260,8 +261,14 @@
                                                             <a href="javascript:perfilSenha.submit()">Alterar Senha</a>
                                                         </form>
                                                     </li>
-                                                    <li><a href="#">Checkout</a></li>
-                                                    <li><a href="#">Carrinho</a></li>
+                                                    <li>
+                                                        <form name="meusPedidos" id="meusPedidos" action="${pageContext.request.contextPath}/VendaController" method="post">
+                                                            <input type="hidden" name="acao" value="listar">
+                                                            <input type="hidden" name="idCliente" value="${sessionScope.cliente.idCliente}">
+                                                            <a href="javascript:meusPedidos.submit()">Meus Pedidos</a>
+                                                        </form>
+                                                    </li>
+                                                    <li><a href="enderecolistar.jsp">Meus Endereços</a></li>           
                                                     <li><a href="${pageContext.request.contextPath}/LogoutClienteController">Sair</a></li>
                                                 </ul>
                                             </li>
@@ -278,7 +285,7 @@
                                         </ul>
                                     </c:otherwise>
                                 </c:choose>
-                            </div>     
+                            </div>      
                             <!-- End Top Right -->
                         </div>
                     </div>
