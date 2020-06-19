@@ -6,6 +6,7 @@
 package Servlet;
 
 import DAO.VendaDAO;
+import Model.Cliente;
 import Model.Endereco;
 import Model.Item;
 import Model.Produto;
@@ -86,6 +87,9 @@ public class CarrinhoController extends HttpServlet {
                 break;
             case "cadastrarVenda":
                 cadastrarVendaCartao(request, response, venda);
+                break;
+            case "salvarVenda":
+                salvarVenda(request, response, venda);
                 break;
         }
     }
@@ -190,19 +194,25 @@ public class CarrinhoController extends HttpServlet {
         Endereco end = new Endereco();
         end.setId(idEndereco);
         venda.setEndereco(end);
+        
+        HttpSession sessao = request.getSession();
+        
+        Cliente cliente = (Cliente) sessao.getAttribute("cliente");
+            
+            for (int i = 0; i < cliente.getEnderecos().size(); i++) {
+                
+                if(cliente.getEnderecos().get(i).getId() == venda.getEndereco().getId()){
+                    
+                    venda.setEndereco(cliente.getEnderecos().get(i));
+                }
+            }
+            
+        sessao.setAttribute("itensSelecionados", venda);
+            
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/resumo-pedido.jsp");
+        dispatcher.forward(request, response);
 
-        if (VendaDAO.salvar(venda)) {
-            request.setAttribute("idVenda", venda.getIdVenda());
-            request.setAttribute("qtdItem", venda.quantidadeItem());
-            request.setAttribute("valorTotal", venda.getPrecoFinal());
-            request.setAttribute("pagamento", venda.getPagamento());
-            venda.vendarealizada();
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/confirmar-pedido.jsp");
-            dispatcher.forward(request, response);
-
-        } else {
-            response.sendRedirect(request.getContextPath() + "/ProdutoController?acao=listarWeb");
-        }
+        
     }
 
     protected void cadastrarVendaCartao(HttpServletRequest request, HttpServletResponse response, Venda venda)
@@ -210,18 +220,26 @@ public class CarrinhoController extends HttpServlet {
 
             //String nome = request.getParameter("numero");
             venda.setPagamento(venda.getPagamento()+" de crédito");
-        if (VendaDAO.salvar(venda)) {
-            request.setAttribute("idVenda", venda.getIdVenda());
-            request.setAttribute("qtdItem", venda.quantidadeItem());
-            request.setAttribute("valorTotal", venda.getPrecoFinal());
-            request.setAttribute("pagamento", venda.getPagamento());
-            venda.vendarealizada();
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/confirmar-pedido.jsp");
+            
+            HttpSession sessao = request.getSession();
+            
+            Cliente cliente = (Cliente) sessao.getAttribute("cliente");
+            
+            for (int i = 0; i < cliente.getEnderecos().size(); i++) {
+                
+                if(cliente.getEnderecos().get(i).getId() == venda.getEndereco().getId()){
+                    
+                    venda.setEndereco(cliente.getEnderecos().get(i));
+                }
+            }
+            
+            sessao.setAttribute("itensSelecionados", venda);
+                                  
+            
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/resumo-pedido.jsp");
             dispatcher.forward(request, response);
-
-        } else {
-            response.sendRedirect(request.getContextPath() + "/ProdutoController?acao=listarWeb");
-        }
+        
     }
 
     protected void listarCarrinho(HttpServletRequest request, HttpServletResponse response, Venda venda)
@@ -237,15 +255,32 @@ public class CarrinhoController extends HttpServlet {
     protected void checkoutCartao(HttpServletRequest request, HttpServletResponse response, Venda venda)
             throws ServletException, IOException {
         int idCliente = Integer.parseInt(request.getParameter("idCliente"));
-        //int idEndereco = Integer.parseInt(request.getParameter("idEndereco"));
+        int idEndereco = Integer.parseInt(request.getParameter("endereco"));
         venda.setIdCliente(idCliente);
         Endereco end = new Endereco();
-        end.setId(1);
+        end.setId(idEndereco);
         venda.setEndereco(end);
         request.setAttribute("precoFinal", venda.getPrecoFinal());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/checkout-cartao.jsp");
         dispatcher.forward(request, response);
         
+    }
+    
+    protected void salvarVenda(HttpServletRequest request, HttpServletResponse response, Venda venda)
+            throws ServletException, IOException {
+        
+        if (VendaDAO.salvar(venda)) {
+            request.setAttribute("idVenda", venda.getIdVenda());
+            request.setAttribute("qtdItem", venda.quantidadeItem());
+            request.setAttribute("valorTotal", venda.getPrecoFinal());
+            request.setAttribute("pagamento", venda.getPagamento());
+            venda.vendarealizada();
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/confirmar-pedido.jsp");
+            dispatcher.forward(request, response);
+
+        } else {
+            response.sendRedirect(request.getContextPath() + "/ProdutoController?acao=listarWeb");
+        }     
     }
 
 }
